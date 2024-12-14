@@ -1,78 +1,148 @@
-'use client'
-import { appContent } from '@/constants/variants'
-import Image from 'next/image'
-import React, { useState } from 'react'
-import { IoSearchOutline } from 'react-icons/io5'
-import { RiAccountCircleLine } from 'react-icons/ri'
-import { RiMenu3Line, RiCloseLine } from 'react-icons/ri'
-
+'use client';
+import { appContent } from '@/constants/variants';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { IoSearchOutline } from 'react-icons/io5';
+import { RiAccountCircleLine } from 'react-icons/ri';
+import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const route = [
+    {
+      title: 'Home',
+      path: '/',
+    },
+    {
+      title: 'Course',
+      path: '/courses',
+    },
+    {
+      title: 'Admin',
+      path: '/admin',
+    },
+  ];
 
-    return (
-        <div className={appContent({ className: 'flex justify-between items-center pt-4 sticky z-50 px-4 h-[60px] md:h-[110px]' })}>
-            <div className='relative size-16 md:size-24'>
-                <Image className='absolute' fill src="/harvinlogo.jpg" alt="Harvin" />
+  return (
+    <div className="fixed top-0 left-0 right-0 bg-background  z-[20] h-[55px] sm:h-[67px] md:h-[83px] border-b border-border shadow-sm">
+      <div
+        className={
+          ' lg:max-w-screen-xl lg:mx-auto flex justify-between items-center px-4 sm:px-6   '
+        }
+      >
+        <Link href="/">
+          <div className="relative size-12 md:size-20">
+            <Image
+              className="absolute"
+              fill
+              src="/harvinlogo.jpg"
+              alt="Harvin"
+            />
+          </div>
+        </Link>
+
+        <button
+          className="lg:hidden text-3xl text-foreground"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <RiCloseLine /> : <RiMenu3Line />}
+        </button>
+
+        <div
+          className={`lg:hidden fixed inset-0 bg-background z-50 transition-transform duration-300 ${
+            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          <div className="p-6 space-y-8">
+            <div className="flex justify-end">
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="text-3xl text-foreground"
+              >
+                <RiCloseLine />
+              </button>
             </div>
-
-            <button 
-                className='lg:hidden text-2xl'
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-                {isMenuOpen ? <RiCloseLine /> : <RiMenu3Line />}
-            </button>
-
-            <div className={`lg:hidden fixed inset-0 bg-white z-50 transition-transform duration-300 ${
-                isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}>
-                <div className='p-4 space-y-6'>
-                    <div className='flex justify-end'>
-                        <button 
-                            onClick={() => setIsMenuOpen(false)}
-                            className='text-2xl'
-                        >
-                            <RiCloseLine />
-                        </button>
-                    </div>
-                    <div className='relative'>
-                        <IoSearchOutline className='absolute right-4 top-3 text-gray-500 text-2xl' />
-                        <input className='p-[10px] rounded-xl w-full outline-none border text-xl ring-1 hover:ring-blue-600 transition-all duration-300' 
-                            placeholder='Search...'
-                        />
-                    </div>
-                    <ul className='space-y-4 text-xl'>
-                        <li>Home</li>
-                        <li>Course</li>
-                        <li>Admin</li>
-                    </ul>
-                    <div className='flex justify-center'>
-                        <div className='p-2 bg-blue-400 rounded-full'>
-                            <RiAccountCircleLine className='text-3xl text-white' />
-                        </div>
-                    </div>
-                </div>
+            <div className="flex flex-col items-center space-y-4">
+              <div className="p-3 bg-primary rounded-full">
+                <RiAccountCircleLine className="text-4xl text-white" />
+              </div>
+              <div className="flex flex-col items-center gap-3 w-full">
+                <Link
+                  href="/login"
+                  className="w-full text-center py-3 px-4 text-base font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/signup"
+                  className="w-full text-center py-3 px-4 text-base font-medium border border-primary text-primary rounded-lg hover:bg-primary/10 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Sign Up
+                </Link>
+              </div>
             </div>
-
-            <div className='gap-6 items-center hidden lg:flex'>
-                <div className='mr-4 relative group'>
-                    <IoSearchOutline className='absolute right-4 top-3 text-gray-500 text-2xl group-hover:text-black transition-all duration-300' />
-                    <input 
-                        className='p-[10px] rounded-xl w-[400px] outline-none border text-xl ring-1 hover:ring-blue-600 transition-all duration-300' 
-                        placeholder='Search...'
-                    />
-                </div>
-                <ul className='flex gap-6 text-xl'>
-                    <li>Home</li>
-                    <li>Course</li>
-                    <li>Admin</li>
-                </ul>
-                <div className='p-2 bg-blue-400 rounded-full'>
-                    <RiAccountCircleLine className='text-3xl text-white' />
-                </div>
-            </div>
+            <ul className="space-y-6">
+              {route.map((item, index) => (
+                <Link
+                  href={item.path}
+                  key={index}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <li className="text-lg font-medium text-foreground hover:text-primary transition-all duration-300 tracking-tight">
+                    {item.title}
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          </div>
         </div>
-    )
-}
 
-export default Header
+        <div className="gap-6 items-center hidden lg:flex">
+          <ul className="flex gap-6 text-xl">
+            {route.map((item, index) => (
+              <Link href={item.path} key={index}>
+                <li className="text-foreground hover:text-primary transition-all duration-300 tracking-tight text-lg">
+                  {item.title}
+                </li>
+              </Link>
+            ))}
+          </ul>
+          <div className="flex items-center gap-4 bg-primary rounded-full">
+            <DropdownMenu>
+              <DropdownMenuTrigger className="p-2 flex justify-center items-center outline-none">
+                <RiAccountCircleLine className="text-2xl text-white" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href="/login" className="w-full">
+                    Sign In
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/signup" className="w-full">
+                    Sign Up
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Header;

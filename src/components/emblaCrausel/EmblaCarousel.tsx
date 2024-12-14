@@ -1,8 +1,8 @@
-'use client'
-import React from 'react'
-import { DotButton, useDotButton } from '.'
-import useEmblaCarousel from 'embla-carousel-react'
-import './embla.css'    
+'use client';
+import React from 'react';
+import { DotButton, useDotButton } from '.';
+import useEmblaCarousel from 'embla-carousel-react';
+import './embla.css';
 
 interface EmblaCarouselProps {
   slides: any[];
@@ -15,10 +15,11 @@ const EmblaCarousel: React.FC<EmblaCarouselProps> = ({
   slides,
   options,
   renderSlide,
-  showDots = true
+  showDots = true,
 }) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options)
-  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi)
+  const [emblaRef, emblaApi] = useEmblaCarousel(options);
+  const { selectedIndex, scrollSnaps, onDotButtonClick } =
+    useDotButton(emblaApi);
 
   return (
     <section className="embla">
@@ -50,7 +51,7 @@ const EmblaCarousel: React.FC<EmblaCarouselProps> = ({
         </div>
       )}
     </section>
-  )
-}
+  );
+};
 
-export default EmblaCarousel
+export default EmblaCarousel;

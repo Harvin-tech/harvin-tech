@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    --navbarHeight: 60px;
+    --bothNavHeight: 102px;
+    --secondaryNavbarHeight: 42px;
+
+    --clr-primary: hsl(237, 85%, 63%);
+    --clr-primary-dark: hsl(237, 85%, 57%);
+    // MAIN
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --content1: 0 0% 100%;
+    --content2: 0 0% 98%;
+    --content3: 0 0% 96%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 219 98% 57%;
+    --primary-dark: 219 97% 51%;
+    --primary-foreground: 219 98% 57%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.5rem;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+
+    @media screen and (max-width: 768px) {
+      --navbarHeight: 62px;
+      --bothNavHeight: 112px;
+      --secondaryNavbarHeight: 50px;
+    }
+  }
+
+  html[data-theme='dark'] {
+    --background: 240 10% 3.9%;
+    --foreground: 210 20% 98%;
+    --content1: 240 10% 8%;
+    --content2: 240 10% 12%;
+    --content3: 240 10% 16%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 219 98% 57%;
+    --primary-dark: 219 97% 51%;
+    --primary-foreground: 219 98% 57%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 263.4 70% 50.4%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+  }
+}
+
+body,
+* {
+  /* // font-weight: 500; */
+  scroll-margin-top: 80px;
+  scroll-behavior: smooth;
+}
