@@ -42,9 +42,10 @@ export default function Login() {
       await authService.login(formData);
       toast.dismiss(loadingToast);
       toast.success('Signed in successfully!');
-      router.push('/');
+      window.location.href = '/'; // TODO: User router.push('/') after fixing the issue login state management issue
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || 'Invalid email or password';
+      const errorMessage =
+        err.response?.data?.message || 'Invalid email or password';
       setError(errorMessage);
       toast.dismiss(loadingToast);
       toast.error(errorMessage);
