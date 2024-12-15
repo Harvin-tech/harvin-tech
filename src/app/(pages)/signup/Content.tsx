@@ -113,7 +113,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center pt-6 pb-16 bg-background text-foreground mt-[83px]">
+    <div className="flex flex-col items-center justify-center pt-6 pb-16 bg-background text-foreground ">
       <div className="text-center text-xl md:text-2xl pb-4 font-semibold tracking-tight">
         Create your account
       </div>

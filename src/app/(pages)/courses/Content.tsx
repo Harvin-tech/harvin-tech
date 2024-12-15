@@ -5,7 +5,7 @@ export default function Courses() {
   return (
     <div
       className={appContent({
-        className: ' min-h-screen mt-[83px]',
+        className: ' min-h-screen ',
       })}
     >
       

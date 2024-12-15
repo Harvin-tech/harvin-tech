@@ -35,7 +35,7 @@ const Header = () => {
     },
     {
       title: 'Admin',
-      path: '/admin',
+      path: '/dashboard',
     },
   ];
 

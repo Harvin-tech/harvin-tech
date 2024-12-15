@@ -13,7 +13,7 @@ const HeroSection = () => {
     <div
       className={appContent({
         className:
-          ' flex flex-col lg:flex-row lg:items-center justify-between  sm:py-4 lg:pt-20 xl:pt-16',
+          ' flex flex-col lg:flex-row lg:items-center justify-between gap-4 md:gap-8 ',
       })}
     >
       <div className="space-y-2 md:space-y-4 order-2 lg:order-1 lg:max-w-[470px] text-center lg:text-left">
@@ -34,7 +34,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className="flex-1 relative w-full max-w-[630px] aspect-square mt-4 lg:mt-[-16px] order-1 lg:order-2 mx-auto lg:mx-0">
+      <div className=" relative w-full max-w-[490px] md:max-w-[590px] aspect-[13/10] lg:aspect-[9.7/9]  order-1 lg:order-2 mx-auto lg:mx-0">
         <Image
           className="absolute object-contain"
           fill
