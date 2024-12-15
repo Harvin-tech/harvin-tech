@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const Trusted = () => {
   return (
-    <div className="mb-12 lg:mb-20 space-y-5 relative">
+    <div className=" bg-gray-50 space-y-5 relative pt-10">
       {/* Heading */}
       <div className="text-center text-3xl font-semibold tracking-tight text-foreground/90">
         Trusted by 500+ Mentors

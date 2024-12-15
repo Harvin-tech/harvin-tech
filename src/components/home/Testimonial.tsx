@@ -5,7 +5,7 @@ import Marquee from 'react-fast-marquee';
 
 const Testimonial = () => {
   return (
-    <section className="mb-12 md:mb-20 bg-background ">
+    <section className=" py-16 bg-background ">
       <div className=" mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-4 text-foreground/90">
           Hear it from our students

@@ -15,6 +15,10 @@ const config: Config = {
           foreground: 'hsl(var(--primary-foreground))',
         },
         'primary-dark': 'hsl(var(--clr-primary-dark))',
+        'primary-dark2': {
+          DEFAULT: 'hsl(var(--primary-dark2))',
+          foreground: 'hsl(var(--primary-dark2-foreground))',
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

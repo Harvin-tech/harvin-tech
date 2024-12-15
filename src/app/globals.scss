@@ -3,6 +3,7 @@
 @tailwind utilities;
 @layer base {
   :root {
+    --body-bg: hsl(263, 75%, 93%);
     --navbarHeight: 60px;
     --bothNavHeight: 102px;
     --secondaryNavbarHeight: 42px;
@@ -19,7 +20,8 @@
     --content3: 0 0% 96%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
-    --primary: 219 98% 57%;
+    --primary-dark2: 219 98% 57%;
+    --primary: 270 57% 56%;
     --primary-dark: 219 97% 51%;
     --primary-foreground: 219 98% 57%;
     --secondary: 220 14.3% 95.9%;

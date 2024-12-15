@@ -4,6 +4,7 @@ import { AppProviders } from '@/lib/providers';
 import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
 import { Poppins } from 'next/font/google';
+import { Toaster } from 'sonner';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -23,11 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className}`}>
+      <body className={`${poppins.className} bg-[var(--body-bg)]`}>
         {/* Include  all Providers in file '@/lib/providers.tsx' insead of here */}
         <AppProviders>
           <Header />
           {children}
+          <Toaster position="top-center" richColors />
           <Footer />
         </AppProviders>
       </body>

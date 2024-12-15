@@ -5,9 +5,10 @@ export default function Courses() {
   return (
     <div
       className={appContent({
-        className: 'bg-background min-h-screen mt-[83px]',
+        className: ' min-h-screen mt-[83px]',
       })}
     >
+      
       {/* Header */}
       <section className="p-4 md:p-8 max-w-lg ">
         <div className="max-w-4xl mx-auto space-y-2">
@@ -19,10 +20,10 @@ export default function Courses() {
               Skills
             </span>
           </div>
-          <h1 className="font-semibold text-2xl tracking-tight">
+          <h1 className="font-semibold text-2xl xl:text-3xl tracking-tight">
             Fundamentals Programs html,css,java
           </h1>
-          <p className="text-muted-foreground text-xs tracking-wide ">
+          <p className="text-muted-foreground text-sm tracking-wide ">
             (Fundamentals Programs) is a rapidly evolving field and has changed
             from an unimaginable sci-fi dream to a very realistic future. This
             course will teach you the basics of IoT and help you to keep up with

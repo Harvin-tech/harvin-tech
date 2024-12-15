@@ -10,6 +10,7 @@ import {
   CarouselPrevious,
 } from '../ui/carousel';
 import { Card, CardContent } from '../ui/card';
+import { appContent } from '@/constants/variants';
 
 const TopCourse = () => {
   const handleEnrollClick = (courseName: string) => {
@@ -63,7 +64,7 @@ const TopCourse = () => {
   ];
 
   return (
-    <div className=" mx-auto px-4 md:px-8 lg:px-12 mb-12 md:mb-20">
+    <div className={appContent({ className: ' max-w-screen-lg mx-auto mb-12 md:mb-20' })}>
       <div className="max-w-3xl mx-auto text-center space-y-2 mb-8">
         <div className="text-4xl md:text-5xl text-primary font-semibold tracking-tight">
           Top Courses
@@ -85,7 +86,7 @@ const TopCourse = () => {
             {courses.map((course, index) => (
               <CarouselItem
                 key={index}
-                className="pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                className="pl-4 basis-full sm:basis-1/2  lg:basis-1/3"
               >
                 <Card className="shadow-none border-0 bg-transparent h-full">
                   <CardContent className="p-0 h-full">

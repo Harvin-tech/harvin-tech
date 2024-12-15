@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MailIcon, LockIcon } from 'lucide-react';
 import Link from 'next/link';
 import { inputStyle } from '@/constants';
+import { authService } from '@/api/services/authService';
+import { toast } from 'sonner';
 
 export default function Login() {
   const router = useRouter();
@@ -13,28 +14,42 @@ export default function Login() {
     password: '',
   });
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    // Manual form validation
+    if (!formData.email.trim()) {
+      toast.error('Please enter your email');
+      return;
+    }
 
-      if (response.ok) {
-        router.push('/dashboard');
-      } else {
-        const data = await response.json();
-        setError(data.message || 'Invalid email or password');
-      }
-    } catch (err) {
-      setError('An error occurred during login');
+    if (!validateEmail(formData.email)) {
+      return;
+    }
+
+    if (!formData.password.trim()) {
+      toast.error('Please enter your password');
+      return;
+    }
+
+    const loadingToast = toast.loading('Signing in...');
+    setIsLoading(true);
+
+    try {
+      await authService.login(formData);
+      toast.dismiss(loadingToast);
+      toast.success('Signed in successfully!');
+      router.push('/');
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || 'Invalid email or password';
+      setError(errorMessage);
+      toast.dismiss(loadingToast);
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -43,6 +58,16 @@ export default function Login() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    if (error) setError('');
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error('Please enter a valid email address');
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -51,50 +76,39 @@ export default function Login() {
         Sign in to your account
       </div>
       <div className="max-w-sm md:max-w-md w-full space-y-8 p-8 bg-card rounded-lg shadow-md border border-border">
-        <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-6 space-y-6" onSubmit={handleSubmit} noValidate>
           {error && (
             <div className="text-destructive text-sm text-center">{error}</div>
           )}
           <div className="rounded-md space-y-3">
+            {/* Email */}
             <div className="relative">
-              <div className="absolute z-10 inset-y-0 left-0 top-6 pl-3 flex items-center pointer-events-none">
-                <MailIcon
-                  className="h-5 w-5 text-muted-foreground"
-                  strokeWidth={2}
-                />
-              </div>
               <div className="space-y-1">
-                <div className="text-sm text-muted-foreground">Email</div>
+                <div className="text-sm text-muted-foreground">Email *</div>
                 <input
-                  id="email"
                   name="email"
                   type="email"
-                  required
                   className={inputStyle}
                   placeholder="Email address"
                   value={formData.email}
                   onChange={handleChange}
+                  disabled={isLoading}
                 />
               </div>
             </div>
+
+            {/* Password */}
             <div className="relative">
-              <div className="absolute inset-y-0 z-10 left-0 top-[-5px] pl-3 flex items-center pointer-events-none">
-                <LockIcon
-                  className="h-5 w-5 text-muted-foreground"
-                  strokeWidth={2}
-                />
-              </div>
               <div className="space-y-1">
-                <div className="text-sm text-muted-foreground">Password</div>
+                <div className="text-sm text-muted-foreground">Password *</div>
                 <input
-                  id="password"
                   name="password"
                   type="password"
-                  required
                   className={inputStyle}
                   placeholder="Password"
                   value={formData.password}
                   onChange={handleChange}
+                  disabled={isLoading}
                 />
                 <div className="text-right">
                   <Link
@@ -108,14 +122,13 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button
-              type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
-            >
-              Sign in
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring disabled:opacity-50"
+          >
+            {isLoading ? 'Signing in...' : 'Sign in'}
+          </button>
 
           <div className="text-sm text-center text-muted-foreground">
             Don&apos;t have an account?{' '}
