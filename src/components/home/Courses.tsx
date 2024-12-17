@@ -26,11 +26,11 @@ const Courses = () => {
           </div>
 
           <div className="absolute inset-0 flex flex-col items-center justify-end p-6 text-center">
-            <div className="mb-4">
+            <div className="mb-4 flex flex-col items-center justify-between max-w-sm">
               <span className="inline-block px-4 py-1.5 bg-white/80 text-primary rounded-full text-sm font-medium mb-2 group-hover:bg-primary group-hover:text-background transition-all duration-300">
                 {item.category}
               </span>
-              <h3 className="text-2xl font-bold text-foreground mb-2">
+              <h3 className="text-2xl font-bold text-foreground mb-2 tracking-tight">
                 {item.title}
               </h3>
               <p className="text-foreground/70 text-sm mb-4">
@@ -79,59 +79,59 @@ export default Courses;
 
 const COURSES = [
   {
-    img: '/harvinlogo.jpg',
+    img: '/Images/home/course1.png',
     title: 'Cyber Security Fundamentals',
     category: 'Security',
     description:
       'Learn the essential principles of cybersecurity and protect digital assets.',
   },
   {
-    img: '/harvinlogo.jpg',
+    img: '/Images/home/course2.png',
     title: 'Data Science & Analytics',
     category: 'Data',
     description:
       'Master data analysis techniques and make data-driven decisions.',
   },
   {
-    img: '/harvinlogo.jpg',
+    img: '/Images/home/course3.png',
     title: 'Full-Stack Web Development',
     category: 'Development',
     description: 'Build modern web applications from front-end to back-end.',
   },
   {
-    img: '/harvinlogo.jpg',
+    img: '/Images/home/course1.png',
     title: 'Machine Learning Engineering',
     category: 'AI & ML',
     description:
       'Implement machine learning models and artificial intelligence solutions.',
   },
   {
-    img: '/harvinlogo.jpg',
+    img: '/Images/home/course2.png',
     title: 'UI/UX Design Mastery',
     category: 'Design',
     description:
       'Create beautiful and functional user interfaces and experiences.',
   },
   {
-    img: '/harvinlogo.jpg',
+    img: '/Images/home/course3.png',
     title: 'Cloud Computing',
     category: 'Infrastructure',
     description: 'Learn cloud platforms and modern infrastructure management.',
   },
   {
-    img: '/harvinlogo.jpg',
+    img: '/Images/home/course1.png',
     title: 'Mobile App Development',
     category: 'Development',
     description: 'Build native and cross-platform mobile applications.',
   },
   {
-    img: '/harvinlogo.jpg',
+    img: '/Images/home/course2.png',
     title: 'Digital Marketing',
     category: 'Marketing',
     description: 'Master digital marketing strategies and analytics.',
   },
   {
-    img: '/harvinlogo.jpg',
+    img: '/Images/home/course3.png',
     title: 'Blockchain Development',
     category: 'Blockchain',
     description: 'Develop decentralized applications and smart contracts.',

@@ -27,7 +27,7 @@ const ClassCard = ({
           src={image}
           alt={title}
           fill
-          className="object-contain"
+          className="object-cover"
           priority
         />
       </div>

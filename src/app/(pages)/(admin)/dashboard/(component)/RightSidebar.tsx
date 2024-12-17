@@ -5,7 +5,7 @@ import { PiDotsThreeOutlineVertical } from 'react-icons/pi'
 const RightSidebar = () => {
   // You can replace these with actual user data from your authentication system
   const user = {
-    name: 'Siva',
+    name: 'Shiva',
     profileImage: '/harvinlogo.jpg', // Replace with actual image path
   }
 
@@ -18,7 +18,7 @@ const RightSidebar = () => {
   }
 
   return (
-    <div className="w-64 bg-card p-4 shadow-lg h-screen">
+    <div className="w-64 bg-card p-4 shadow-lg min-h-[600px]">
       <div className="flex justify-between items-center mb-4">
         <span className="text-sm font-medium text-muted-foreground">Your Profile</span>
         <button className="text-muted-foreground hover:text-foreground transition-colors">

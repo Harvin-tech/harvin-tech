@@ -101,7 +101,7 @@ const TestimonialCard = ({
 
 const testimonials = [
   {
-    image: '/harvinlogo.jpg',
+    image: '/Images/home/review1.png',
     name: 'James Wilson',
     role: 'Web Development Student',
     rating: 5,
@@ -109,15 +109,15 @@ const testimonials = [
       "The course structure and content quality exceeded my expectations. I've learned more in two months than I did in a year of self-study.",
   },
   {
-    image: '/harvinlogo.jpg',
+    image: '/Images/home/review2.jpeg',
     name: 'Sarah Chen',
     role: 'UI/UX Design Student',
-    rating: 5,
+    rating: 3,
     review:
       'The practical projects and mentor feedback helped me build a strong portfolio. I landed my dream job right after completing the course!',
   },
   {
-    image: '/harvinlogo.jpg',
+    image: '/Images/home/review3.jpeg',
     name: 'Michael Rodriguez',
     role: 'Full Stack Developer',
     rating: 4,
@@ -125,12 +125,20 @@ const testimonials = [
       'Comprehensive curriculum and excellent support system. The community of learners is incredibly helpful and encouraging.',
   },
   {
-    image: '/harvinlogo.jpg',
+    image: '/Images/home/review4.jpeg',
     name: 'Emily Thompson',
     role: 'Data Science Student',
     rating: 5,
     review:
       'The hands-on approach to learning and real-world projects made complex concepts much easier to grasp. Highly recommended!',
+  },
+  {
+    image: '/Images/home/review5.jpeg',
+    name: 'Emily Thompson',
+    role: 'Data Science Student',
+    rating: 3,
+    review:
+      'Comprehensive curriculum and excellent support system. The community of learners is incredibly helpful and encouraging.',
   },
 ];
 

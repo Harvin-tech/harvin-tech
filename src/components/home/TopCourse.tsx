@@ -19,42 +19,42 @@ const TopCourse = () => {
 
   const courses = [
     {
-      image: '/harvinlogo.jpg',
+      image: '/Images/home/topcourse1.png',
       title: 'Artificial Intelligence',
       subtitle: 'Professor @George Brown College',
       description: 'Learn the fundamentals of AI, machine learning, and more.',
       ctaText: 'Enroll the classes',
     },
     {
-      image: '/harvinlogo.jpg',
+      image: '/Images/home/topcourse2.png',
       title: 'Web Development',
       subtitle: 'Professor @MIT',
       description: 'Master modern web development techniques and tools.',
       ctaText: 'Start Learning Now',
     },
     {
-      image: '/harvinlogo.jpg',
+      image: '/Images/home/topcourse3.png',
       title: 'Artificial Intelligence',
       subtitle: 'Professor @George Brown College',
       description: 'Learn the fundamentals of AI, machine learning, and more.',
       ctaText: 'Enroll the classes',
     },
     {
-      image: '/harvinlogo.jpg',
+      image: '/Images/home/topcourse1.png',
       title: 'Web Development',
       subtitle: 'Professor @MIT',
       description: 'Master modern web development techniques and tools.',
       ctaText: 'Start Learning Now',
     },
     {
-      image: '/harvinlogo.jpg',
+      image: '/Images/home/topcourse2.png',
       title: 'Artificial Intelligence',
       subtitle: 'Professor @George Brown College',
       description: 'Learn the fundamentals of AI, machine learning, and more.',
       ctaText: 'Enroll the classes',
     },
     {
-      image: '/harvinlogo.jpg',
+      image: '/Images/home/topcourse3.png',
       title: 'Web Development',
       subtitle: 'Professor @MIT',
       description: 'Master modern web development techniques and tools.',
