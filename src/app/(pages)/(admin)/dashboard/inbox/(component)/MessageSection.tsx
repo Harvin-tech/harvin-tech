@@ -11,11 +11,15 @@ const MessageSection: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col p-6 ">
-      <h1 className="text-2xl font-bold mb-6">Private Messages</h1>
-      <div className="flex gap-4">
-        <MessageList messages={messages} />
-        <MessageForm onSendMessage={handleSendMessage} />
+    <div className="flex flex-col p-2 ">
+      <h1 className="font-semibold mb-2 text-base md:text-lg">Private Messages</h1>
+      <div className="flex flex-col md:flex-row gap-2">
+        <div className="order-2 md:-order-none w-full md:max-w-[30%] ">
+          <MessageList messages={messages} />
+        </div>
+        <div className="order-1 md:-order-none w-full md:max-w-[70%] ">
+          <MessageForm onSendMessage={handleSendMessage} />
+        </div>
       </div>
     </div>
   );

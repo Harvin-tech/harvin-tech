@@ -6,12 +6,12 @@ interface MessageListProps {
 
 const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   return (
-    <div className="w-1/3 h-[500px] overflow-y-auto bg-gray-100 rounded-md p-2">
-      <h3 className="text-sm font-semibold mb-2">New Messages</h3>
+    <div className=" h-[500px] overflow-y-auto bg-gray-100 rounded-md p-2">
+      <h3 className="text-sm font-medium mb-2">New Messages</h3>
       {messages.map((message, index) => (
         <div
           key={index}
-          className="bg-purple-200 text-center rounded-md py-2 mb-1 text-xs font-semibold"
+          className="bg-purple-200 text-center rounded-md py-2 mb-1 text-xs "
         >
           {message}
         </div>

@@ -14,9 +14,9 @@ interface CourseFilterProps {
 
 const CourseFilter: React.FC<CourseFilterProps> = ({ onFilter }) => {
   return (
-    <div className="bg-card shadow-md rounded-md p-4 mb-4 flex gap-4">
+    <div className="bg-card shadow-md rounded-md p-4 mb-2 flex flex-col sm:flex-row gap-2">
       <Select>
-        <SelectTrigger className="flex-1">
+        <SelectTrigger className="w-full">
           <SelectValue placeholder="Categories" />
         </SelectTrigger>
         <SelectContent>
@@ -27,7 +27,7 @@ const CourseFilter: React.FC<CourseFilterProps> = ({ onFilter }) => {
       </Select>
 
       <Select>
-        <SelectTrigger className="flex-1">
+        <SelectTrigger className="w-full">
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>
@@ -37,7 +37,7 @@ const CourseFilter: React.FC<CourseFilterProps> = ({ onFilter }) => {
       </Select>
 
       <Select>
-        <SelectTrigger className="flex-1">
+        <SelectTrigger className="w-full">
           <SelectValue placeholder="Instructor" />
         </SelectTrigger>
         <SelectContent>
@@ -47,7 +47,7 @@ const CourseFilter: React.FC<CourseFilterProps> = ({ onFilter }) => {
       </Select>
 
       <Select>
-        <SelectTrigger className="flex-1">
+        <SelectTrigger className="w-full">
           <SelectValue placeholder="Price" />
         </SelectTrigger>
         <SelectContent>
@@ -56,7 +56,7 @@ const CourseFilter: React.FC<CourseFilterProps> = ({ onFilter }) => {
         </SelectContent>
       </Select>
 
-      <Button onClick={onFilter} variant="default" className="text-white">
+      <Button onClick={onFilter} variant="default" className="text-white w-full sm:w-auto">
         Filter
       </Button>
     </div>

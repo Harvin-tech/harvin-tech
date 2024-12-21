@@ -15,10 +15,10 @@ const courses: Course[] = [
 
 const CourseList: React.FC = () => {
   return (
-    <div className="bg-white shadow-md rounded-md">
+    <div className="bg-card rounded-md shadow-sm">
       <table className="w-full">
-        <thead className="border-b">
-          <tr className="text-gray-600 text-left">
+        <thead className="border-b border-border">
+          <tr className="text-muted-foreground text-left">
             <th className="p-4">#</th>
             <th className="p-4">Title</th>
             <th className="p-4">Status</th>
@@ -26,9 +26,9 @@ const CourseList: React.FC = () => {
         </thead>
         <tbody>
           {courses.map((course) => (
-            <tr key={course.id} className="hover:bg-gray-50">
-              <td className="p-4 text-gray-600">{course.id}</td>
-              <td className="p-4 text-blue-600 underline cursor-pointer">
+            <tr key={course.id} className="hover:bg-muted/50">
+              <td className="p-4 text-muted-foreground">{course.id}</td>
+              <td className="p-4 text-primary underline cursor-pointer">
                 {course.title}
               </td>
               <td className="p-4">
@@ -37,7 +37,7 @@ const CourseList: React.FC = () => {
                     Unlock
                   </span>
                 ) : (
-                  <span className="text-red-600 border border-red-600 px-2 py-1 rounded-md">
+                  <span className="text-destructive border-destructive border px-2 py-1 rounded-md">
                     Lock
                   </span>
                 )}

@@ -64,7 +64,7 @@ const Courses = () => {
       </div>
 
       {/* Carousel Section */}
-      <div className="w-full max-w-screen-2xl mx-auto px-4 lg:px-8">
+      <div className="w-full max-w-screen-xl mx-auto px-4 lg:px-8">
         <EmblaCarousel
           slides={COURSES}
           options={OPTIONS}

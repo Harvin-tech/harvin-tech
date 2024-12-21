@@ -19,7 +19,7 @@ const CourseTable: React.FC<CourseTableProps> = ({ courses }) => {
           {courses.map((course, index) => (
             <tr key={index} className="border-b hover:bg-gray-50">
               <td className="p-3">{index + 1}</td>
-              <td className="p-3 text-blue-600 hover:underline cursor-pointer">
+              <td className="p-3 text-blue-600 hover:underline cursor-pointer text-sm md:text-base">
                 {course}
               </td>
             </tr>

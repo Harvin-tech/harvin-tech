@@ -80,17 +80,17 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="w-1/6 bg-background p-5 flex flex-col justify-between min-h-screen">
+    <aside className="w-[210px] xl:w-[250px] bg-background p-3 flex flex-col justify-between min-h-screen">
       <div>
         <div className="text-xl font-bold  text-foreground flex items-center gap-2 mb-4">
           <div className="relative size-6">
 
             <Image src="/Images/dashboard/logo.png" alt="Harvin Logo" fill className="object-contain" />
           </div>
-          <h2 className="text-xl font-bold  text-foreground">HARVIN</h2>
+          <h2 className="text-lg font-bold  text-foreground">HARVIN</h2>
         </div>
         <nav>
-          <ul className="space-y-4">
+          <ul className="space-y-4 whitespace-nowrap">
             {sidebarItems.map((item, index) => (
               <li key={index}>
                 {item.subItems ? (
@@ -98,14 +98,14 @@ const Sidebar = () => {
                     <div className="flex items-center justify-between w-full">
                       <Link
                         href={item.href}
-                        className={`flex items-center space-x-2 transition-colors flex-1
+                        className={`flex items-center space-x-2 transition-colors flex-1 text-sm 
                           ${item.active ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
                       >
                         {item.icon} <span>{item.label}</span>
                       </Link>
                       <button
                         onClick={() => setExpandedMenu(expandedMenu === item.label ? null : item.label)}
-                        className="p-1"
+                        className="p-1 text-sm "
                       >
                         <MdOutlineKeyboardArrowRight className={`transform transition-transform duration-200 ${
                           expandedMenu === item.label ? 'rotate-90' : ''
@@ -120,7 +120,7 @@ const Sidebar = () => {
                           <li key={`${index}-${subIndex}`}>
                             <Link
                               href={subItem.href}
-                              className={`block transition-colors
+                              className={`block transition-colors text-sm 
                                 ${subItem.active ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
                             >
                               {subItem.label}
@@ -133,7 +133,7 @@ const Sidebar = () => {
                 ) : (
                   <Link
                     href={item.href}
-                    className={`flex items-center space-x-2 transition-colors
+                    className={`flex items-center space-x-2 transition-colors text-sm 
                       ${item.active ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
                   >
                     {item.icon} <span>{item.label}</span>
@@ -147,12 +147,12 @@ const Sidebar = () => {
       
       <div className="space-y-4">
         <button
-          className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors"
+          className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors text-sm "
         >
           <IoSettingsSharp />  <span>Settings</span>
         </button>
         <button
-          className="flex items-center space-x-2 text-destructive font-medium hover:text-destructive/90 transition-colors"
+          className="flex items-center space-x-2 text-destructive font-medium hover:text-destructive/90 transition-colors text-sm "
         >
           <FaSignOutAlt /> <span>Logout</span>
         </button>

@@ -19,7 +19,7 @@ const CourseFilters: React.FC = () => {
         <h2 className="text-lg font-semibold">COURSE LIST</h2>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <Select>
             <SelectTrigger>
               <SelectValue placeholder="Categories" />

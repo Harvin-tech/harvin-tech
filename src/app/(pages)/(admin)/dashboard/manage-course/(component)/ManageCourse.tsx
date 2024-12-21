@@ -18,8 +18,8 @@ const ManageCourse: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Manage Course</h1>
+    <div className="p-2 bg-gray-50 min-h-screen">
+      <h1 className="text-base md:text-lg font-semibold mb-2">Manage Course</h1>
       {/* Stats */}
       <CourseStats activeCourses={15} pendingCourses={3} />
       {/* Filter */}

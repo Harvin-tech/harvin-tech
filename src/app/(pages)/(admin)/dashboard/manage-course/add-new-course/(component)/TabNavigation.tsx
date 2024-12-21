@@ -18,7 +18,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
       onValueChange={(value: string) => setActiveTab(parseInt(value))}
       className="w-full mb-2"
     >
-      <TabsList className="w-full justify-start ">
+      <TabsList className="w-full justify-start flex-col md:flex-row min-h-[148px] md:min-h-9 items-start md:items-center">
         {tabs.map((tab, index) => (
           <TabsTrigger key={index} value={index.toString()} className="w-full">
             {tab}

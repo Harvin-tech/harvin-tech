@@ -3,9 +3,7 @@ import Signup from './Content';
 
 const page = () => {
   return (
-    <div>
       <Signup />
-    </div>
   );
 };
 

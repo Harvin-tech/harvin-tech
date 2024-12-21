@@ -1,97 +1,104 @@
 import React from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+
 
 export const CourseForm: React.FC = () => {
   return (
-    <form className="space-y-4">
+    <form className="space-y-6">
       {/* Course Title */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Course Title *
-        </label>
-        <input
-          type="text"
-          placeholder="Enter course title"
-          className="w-full border rounded-md p-2 mt-1"
-        />
+      <div className="space-y-2">
+        <Label >Course Title *</Label>
+        <Input id="title" placeholder="Enter course title" />
       </div>
 
       {/* Short Description */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Short Description
-        </label>
-        <textarea
-          placeholder="Enter short description"
-          className="w-full border rounded-md p-2 mt-1"
-        />
+      <div className="space-y-2">
+        <Label >Short Description</Label>
+        <Textarea id="shortDescription" placeholder="Enter short description" />
       </div>
 
       {/* Description */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Description
-        </label>
-        <textarea
-          rows={4}
-          placeholder="Enter course description"
-          className="w-full border rounded-md p-2 mt-1"
-        />
+      <div className="space-y-2">
+        <Label >Description</Label>
+        <Textarea id="description" placeholder="Enter course description" rows={4} />
       </div>
 
       {/* Select Category and Level */}
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Select a Category
-          </label>
-          <select className="w-full border rounded-md p-2 mt-1">
-            <option>Development</option>
-            <option>Design</option>
-            <option>Marketing</option>
-          </select>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <Label htmlFor="category">Select a Category</Label>
+          <Select>
+            <SelectTrigger>
+              <SelectValue placeholder="Select category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Categories</SelectLabel>
+                <SelectItem value="development">Development</SelectItem>
+                <SelectItem value="design">Design</SelectItem>
+                <SelectItem value="marketing">Marketing</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Level
-          </label>
-          <select className="w-full border rounded-md p-2 mt-1">
-            <option>Beginner</option>
-            <option>Intermediate</option>
-            <option>Advanced</option>
-          </select>
+
+        <div className="space-y-2">
+          <Label htmlFor="level">Level</Label>
+          <Select>
+            <SelectTrigger>
+              <SelectValue placeholder="Select level" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Levels</SelectLabel>
+                <SelectItem value="beginner">Beginner</SelectItem>
+                <SelectItem value="intermediate">Intermediate</SelectItem>
+                <SelectItem value="advanced">Advanced</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
       {/* Language */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Language
-        </label>
-        <select className="w-full border rounded-md p-2 mt-1">
-          <option>English</option>
-          <option>Spanish</option>
-          <option>French</option>
-        </select>
+      <div className="space-y-2">
+        <Label htmlFor="language">Language</Label>
+        <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="Select language" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Languages</SelectLabel>
+              <SelectItem value="english">English</SelectItem>
+              <SelectItem value="spanish">Spanish</SelectItem>
+              <SelectItem value="french">French</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Checkboxes */}
-      <div className="space-y-2">
-        <label className="flex items-center space-x-2">
-          <input type="checkbox" />
-          <span>Keep it as private course</span>
-        </label>
-        <label className="flex items-center space-x-2">
-          <input type="checkbox" />
-          <span>Check if this course is top course</span>
-        </label>
+      <div className="space-y-4">
+        <div className="flex items-center space-x-2">
+          <Checkbox id="private" />
+          <Label >Keep it as private course</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox id="top" />
+          <Label >Check if this course is top course</Label>
+        </div>
       </div>
 
       {/* Pagination Buttons */}
-      <div className="flex justify-end space-x-2">
-        <button className="px-4 py-2 bg-gray-200 rounded-md">Back</button>
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-md">
-          Next
-        </button>
+      <div className="flex flex-col sm:flex-row gap-2 sm:justify-end">
+        <Button variant="outline">Back</Button>
+        <Button className="text-white bg-primary">Next</Button>
       </div>
     </form>
   );
