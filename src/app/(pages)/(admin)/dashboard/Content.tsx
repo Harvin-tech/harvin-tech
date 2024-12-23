@@ -1,10 +1,12 @@
+
 'use client'
 import React from "react";
-import { LineChart } from "./(component)/DashboardComponent/LineChart";
-import { StatCard } from "./(component)/DashboardComponent/StatsCard";
-import { VideoCard } from "./(component)/DashboardComponent/VideoCard";
+
 import EmblaCarousel from "@/components/emblaCrausel/EmblaCarousel";
 import styled from "styled-components";
+import { StatCard } from "./(component)/StatsCard";
+import { VideoCard } from "./(component)/VideoCard";
+import { LineChart } from "./(component)/LineChart";
 
 const Dashboard = () => {
   
@@ -24,7 +26,7 @@ const Dashboard = () => {
 
           {/* Line Chart Section */}
           <div className="w-full h-[200px] md:h-[260px] lg:h-[300px]">
-            <LineChart  />
+            <LineChart/>
           </div>
         </div>
       </div>

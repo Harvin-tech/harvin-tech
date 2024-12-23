@@ -18,7 +18,7 @@ const RightSidebar = () => {
   }
 
   return (
-    <div className="w-[210px] xl:w-[250px] bg-card p-4 shadow-lg min-h-[600px] hidden xl:block">
+    <div className="sticky top-[80px] h-screen w-[210px] xl:w-[250px] bg-card p-4 shadow-lg hidden xl:block overflow-y-auto">
       <div className="flex justify-between items-center mb-4">
         <span className="text-sm font-medium text-muted-foreground">Your Profile</span>
         <button className="text-muted-foreground hover:text-foreground transition-colors">

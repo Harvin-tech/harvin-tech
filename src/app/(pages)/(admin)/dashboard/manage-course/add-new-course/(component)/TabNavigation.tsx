@@ -14,13 +14,17 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
 }) => {
   return (
     <Tabs
-      defaultValue={activeTab.toString()}
+      value={activeTab.toString()}
       onValueChange={(value: string) => setActiveTab(parseInt(value))}
       className="w-full mb-2"
     >
       <TabsList className="w-full justify-start flex-col md:flex-row min-h-[148px] md:min-h-9 items-start md:items-center">
         {tabs.map((tab, index) => (
-          <TabsTrigger key={index} value={index.toString()} className="w-full">
+          <TabsTrigger 
+            key={index} 
+            value={index.toString()} 
+            className="w-full data-[state=active]:bg-primary data-[state=active]:text-white"
+          >
             {tab}
           </TabsTrigger>
         ))}

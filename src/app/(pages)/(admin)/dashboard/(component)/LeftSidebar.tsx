@@ -54,7 +54,7 @@ const Sidebar = () => {
 
   if (!mounted) {
     return (
-      <aside className="w-1/6 bg-background p-5 flex flex-col justify-between min-h-screen">
+      <aside className="sticky top-0 self-start w-1/6 bg-background p-5 flex flex-col justify-between ">
         <div>
           <div className="text-xl font-bold text-foreground flex items-center gap-2 mb-4">
             <div className="relative size-6">
@@ -80,7 +80,7 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="w-[210px] xl:w-[250px] bg-background p-3 flex flex-col justify-between min-h-screen">
+    <aside className="sticky top-[80px] h-screen w-[210px] xl:w-[250px] bg-background p-3 flex flex-col justify-between overflow-y-auto">
       <div>
         <div className="text-xl font-bold  text-foreground flex items-center gap-2 mb-4">
           <div className="relative size-6">

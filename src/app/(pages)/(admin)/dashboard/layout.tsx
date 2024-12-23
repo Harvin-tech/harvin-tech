@@ -2,16 +2,16 @@ import React from 'react'
 import LeftSidebar from './(component)/LeftSidebar';
 import RightSidebar from './(component)/RightSidebar';
 
-const DashboardLayout = ({children}: {children: React.ReactNode}) => {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className='flex'>
-        <LeftSidebar />
-      <div className='flex-1 max-w-screen-xl mx-auto'>
-        {children}
-      </div>
-        <RightSidebar />
+    <div className="flex min-h-screen">
+      <LeftSidebar />
+      <main className="flex-1 overflow-y-auto">{children}</main>
+      <RightSidebar />
     </div>
-  )
+  );
 }
-
-export default DashboardLayout;
