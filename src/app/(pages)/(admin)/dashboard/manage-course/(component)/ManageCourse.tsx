@@ -18,7 +18,7 @@ const ManageCourse: React.FC = () => {
   };
 
   return (
-    <div className="p-2 bg-gray-50 min-h-screen">
+    <div className="px-4 pt-2 min-h-screen">
       <h1 className="text-base md:text-lg font-semibold mb-2">Manage Course</h1>
       {/* Stats */}
       <CourseStats activeCourses={15} pendingCourses={3} />

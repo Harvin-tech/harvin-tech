@@ -12,13 +12,13 @@ const Dashboard = () => {
   
 
   return (
-    <div className="p-2 space-y-4 md:space-y-6 w-full">
+    <div className="px-3 pt-2 space-y-2 md:space-y-3 w-full">
       {/* Statistics and Chart Container */}
       <div className="max-w-screen-xl">
         <div className="font-semibold mb-2 text-base md:text-lg">Overview</div>
         <div className="relative bg-white p-3 md:p-4 lg:p-6 border rounded-md shadow-sm">
           {/* Statistics Section */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6 mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
             <StatCard title="Number of Courses" value={15} />
             <StatCard title="Number of Enrolment" value={1502} />
             <StatCard title="Number of Students" value={302} />

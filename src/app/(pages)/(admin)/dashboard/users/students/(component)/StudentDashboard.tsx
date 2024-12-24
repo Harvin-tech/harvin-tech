@@ -5,7 +5,7 @@ import CourseList from "./CourseList";
 
 const StudentDashboard: React.FC = () => {
   return (
-    <div className="p-2 bg-gray-50 min-h-screen">
+    <div className="p-2  min-h-screen">
       <h1 className="text-base md:text-lg font-semibold mb-2">Students</h1>
 
       {/* Student Profile */}

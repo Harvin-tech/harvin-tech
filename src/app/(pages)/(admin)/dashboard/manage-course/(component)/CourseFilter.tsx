@@ -14,7 +14,7 @@ interface CourseFilterProps {
 
 const CourseFilter: React.FC<CourseFilterProps> = ({ onFilter }) => {
   return (
-    <div className="bg-card shadow-md rounded-md p-4 mb-2 flex flex-col sm:flex-row gap-2">
+    <div className="bg-card shadow-md rounded-md p-4 mb-3 flex flex-col sm:flex-row gap-2">
       <Select>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Categories" />
