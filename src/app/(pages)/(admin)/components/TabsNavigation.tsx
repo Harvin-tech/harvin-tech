@@ -14,7 +14,7 @@ interface TabsNavigationProps {
 
 const TabsNavigation: React.FC<TabsNavigationProps> = ({ tabs, activeTab, onTabChange }) => {
   return (
-    <TabsList className="flex space-x-2 justify-between ">
+    <TabsList className="w-full justify-between flex-col md:flex-row min-h-[148px] md:min-h-9 items-start md:items-center ">
       {tabs.map((tab) => (
         <TabsTrigger
           key={tab.value}

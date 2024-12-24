@@ -49,7 +49,7 @@ const UserForm: React.FC = () => {
             case "basicInfo":
                 return (
                     <div className="space-y-6">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
                                     First Name <span className="text-red-500">*</span>
@@ -248,7 +248,7 @@ const UserForm: React.FC = () => {
     };
 
     return (
-        <div className="space-y-6 bg-white p-6 rounded-lg shadow-md">
+        <div className="space-y-6 bg-white p-4 md:p-6 rounded-lg shadow-md">
             <Tabs value={activeTab} className="w-full">
                 <TabsNavigation
                     tabs={tabs}

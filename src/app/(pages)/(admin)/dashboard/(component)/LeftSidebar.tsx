@@ -80,7 +80,7 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="sticky top-[80px] h-screen w-[210px] xl:w-[250px] bg-background p-3 flex flex-col justify-between overflow-y-auto">
+    <aside className="sticky top-[55px] md:top-[83px] h-screen w-[210px] xl:w-[250px] bg-background p-3 flex flex-col justify-between overflow-y-auto">
       <div>
         <div className="text-xl font-bold  text-foreground flex items-center gap-2 mb-4">
           <div className="relative size-6">
