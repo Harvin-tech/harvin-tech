@@ -2,7 +2,7 @@ import React from "react";
 
 const EnrolmentForm: React.FC = () => {
   return (
-    <div className="bg-white shadow-md rounded-md p-4 mb-2">
+    <div className="bg-white shadow-md rounded-md p-4 mb-3">
       <h2 className="text-sm font-medium mb-2">Enrolment form</h2>
 
       {/* Users Input */}

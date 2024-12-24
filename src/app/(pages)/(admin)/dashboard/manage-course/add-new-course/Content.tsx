@@ -243,9 +243,9 @@ export default function AddCourse() {
   };
 
   return (
-    <div className="p-2 bg-background min-h-screen">
+    <div className="px-4 pt-2  min-h-screen">
       <h1 className="text-base md:text-lg font-semibold mb-2">Add New Course</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
       <StatCard label="Active Courses" value={15} />
       <StatCard label="Pending Courses" value={0} />
       </div>
