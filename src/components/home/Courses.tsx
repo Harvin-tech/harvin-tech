@@ -6,6 +6,7 @@ import EmblaCarousel from '../emblaCrausel/EmblaCarousel';
 import { appContent } from '@/constants/variants';
 import { Card, CardContent } from '../ui/card';
 import { ArrowRight } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
 const Courses = () => {
   const OPTIONS = { slidesToScroll: 1, align: 'start' };

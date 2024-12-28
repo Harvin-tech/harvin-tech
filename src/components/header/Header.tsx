@@ -44,6 +44,7 @@ const Header = () => {
     const userData = localStorage.getItem('user');
     if (userData) {
       setIsAuthenticated(true);
+      setUser(JSON.parse(userData));
     }
   }, []);
 
@@ -143,7 +144,7 @@ const Header = () => {
               {isAuthenticated ? (
                 <div className="flex flex-col items-center gap-3 w-full">
                   <div className="text-lg font-medium">
-                    Welcome, {user?.firstName || 'User'}
+                    Welcome, {user?.firstName ? user.firstName : 'User'}
                   </div>
                   <Link
                     href="/profile"

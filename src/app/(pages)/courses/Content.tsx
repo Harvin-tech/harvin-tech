@@ -5,9 +5,34 @@ import TopCourse from '@/components/home/TopCourse';
 import Courses from '@/components/home/Courses';
 import CoursePayment from './component/CoursePayment';
 import Cta from './component/Cta';
-
+import { use, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function CoursesPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+useEffect(() => {
+  // Check if user is logged in
+  const userData = localStorage.getItem('user');
+  if (!userData) {
+    router.push('/login');
+    
+  }else{
+    setLoading(false);
+  }
+}, []);  
+
+ if (loading) {
+    return (
+      <div className="flex justify-center items-center w-full h-screen">
+        {/* You can use a spinner, or a simple loading text */}
+        <div className="text-xl font-semibold">Loading...</div>
+      </div>
+    );
+  }
+
+
+ 
   return (
     <div
       className={appContent({

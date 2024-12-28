@@ -1,17 +1,41 @@
 
 'use client'
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import EmblaCarousel from "@/components/emblaCrausel/EmblaCarousel";
 import styled from "styled-components";
 import { StatCard } from "./(component)/StatsCard";
 import { VideoCard } from "./(component)/VideoCard";
 import { LineChart } from "./(component)/LineChart";
+import { useRouter } from 'next/navigation';
 
 const Dashboard = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true); // Track loading state
+
+  useEffect(() => {
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
+    if (!user || (user.role !== 'admin' && user.role !== 'superadmin')) {
+      router.push("/login");
+    } else {
+      setLoading(false); // User is valid, stop loading
+    }
+  }, [router]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center w-full h-screen">
+        {/* You can use a spinner, or a simple loading text */}
+        <div className="text-xl font-semibold">Loading...</div>
+      </div>
+    );
+  }
+
+ 
   
 
   return (
+    
     <div className="px-3 pt-2 space-y-2 md:space-y-3 w-full">
       {/* Statistics and Chart Container */}
       <div className="max-w-screen-xl">

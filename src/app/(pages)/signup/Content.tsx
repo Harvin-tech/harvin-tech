@@ -73,7 +73,8 @@ export default function Signup() {
     setIsLoading(true);
 
     try {
-      await authService.signup(signupData);
+      const res = await authService.signup(signupData);
+      console.log(res , "signup response");
       toast.dismiss(loadingToast);
       toast.success('Account created successfully!');
       router.push('/login');
