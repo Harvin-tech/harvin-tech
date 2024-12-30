@@ -8,6 +8,7 @@ import { Toaster } from 'sonner';
 import { Provider } from 'react-redux';
 import store from '@/app/store';
 import GlobalProvider from './GlobalProvider';
+import {NextUIProvider} from "@nextui-org/react";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -31,10 +32,13 @@ export default function RootLayout({
         {/* Include  all Providers in file '@/lib/providers.tsx' insead of here */}
         <GlobalProvider>
           <AppProviders>
+            <NextUIProvider>
             <Header />
             {children}
             <Footer />
             <Toaster position="top-center" richColors />
+
+            </NextUIProvider>
           </AppProviders>
         </GlobalProvider>
        

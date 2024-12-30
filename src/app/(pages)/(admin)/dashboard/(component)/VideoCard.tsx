@@ -27,15 +27,15 @@ export const VideoCard: React.FC<VideoCardProps> = ({
   originalPrice,
 }) => {
   return (
-    <Link href="/" className=" group">
-      <Card className="relative rounded-xl overflow-hidden transform transition-all duration-300 hover:shadow-xl border-0">
+    <Link href="/courses" className=" group">
+      <Card className="relative rounded-xl overflow-hidden transform transition-all duration-300 hover:shadow-xl border-0 min-w-[300px] ">
         <CardContent className="p-0">
           {/* Image Container */}
           <div className="relative w-full aspect-[13/10]">
             <Image
               src={imageSrc}
               alt={title}
-              className="object-cover "
+              className="object-contain "
               fill
             />
           </div>
@@ -57,7 +57,7 @@ export const VideoCard: React.FC<VideoCardProps> = ({
                   />
                 ))}
                 <span className="text-xs text-foreground/70 ml-1">
-                  ({reviewsCount.toLocaleString()})
+                  ({reviewsCount || 0} Reviews)
                 </span>
               </div>
 

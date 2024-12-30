@@ -1,162 +1,117 @@
-
+// pages/dashboard.tsx
 'use client'
-import React, { useEffect, useState } from "react";
-
-import EmblaCarousel from "@/components/emblaCrausel/EmblaCarousel";
+import React, { useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserCourse } from "@/api";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Mousewheel } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/free-mode";
 import styled from "styled-components";
 import { StatCard } from "./(component)/StatsCard";
 import { VideoCard } from "./(component)/VideoCard";
 import { LineChart } from "./(component)/LineChart";
-import { useRouter } from 'next/navigation';
+import { setCourses, setLoading } from "@/app/store/courseSlice";
 
 const Dashboard = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(true); // Track loading state
+  const dispatch = useDispatch();
+  const { courses, loading } = useSelector((state: any) => state.courses);
+
 
   useEffect(() => {
-    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
-    if (!user || (user.role !== 'admin' && user.role !== 'superadmin')) {
+    const userData = localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user") as string)
+      : null;
+
+    if (!userData) {
       router.push("/login");
     } else {
-      setLoading(false); // User is valid, stop loading
+      const fetchData = async (userId: string) => {
+        dispatch(setLoading(true)); // Set loading state
+        const response = await getUserCourse(userId);
+        console.log(response, "resififi")
+        const userCourses = response.data.courses.map((item: any) => ({
+          id: item?._id,
+          courseId: item?.courseId, // Add courseId here
+          title: item?.courseDetails?.title || "No Title",
+          price: item?.courseDetails?.price || "N/A",
+          desc: item?.courseDetails?.description || "No Description",
+          instructor: item?.courseDetails?.instructor || "Unknown Instructor",
+          rating: item?.courseDetails?.rating || 0,
+          reviewsCount: item?.courseDetails?.reviewsCount || 0,
+        }));
+
+
+        dispatch(setCourses(userCourses)); // Store courses data in Redux
+      };
+      fetchData(userData._id);
     }
-  }, [router]);
+  }, [router, dispatch]);
+
 
   if (loading) {
     return (
       <div className="flex justify-center items-center w-full h-screen">
-        {/* You can use a spinner, or a simple loading text */}
         <div className="text-xl font-semibold">Loading...</div>
       </div>
     );
   }
 
- 
-  
+
+  const handleCourseClick = (course: any) => {
+    router.push(`/courses?id=${course.courseId}`); // Pass the course ID
+  };
 
   return (
-    
-    <div className="px-3 pt-2 space-y-2 md:space-y-3 w-full">
-      {/* Statistics and Chart Container */}
+    <div className="px-3 pt-2 space-y-2 md:space-y-3 w-full mb-4">
       <div className="max-w-screen-xl">
         <div className="font-semibold mb-2 text-base md:text-lg">Overview</div>
         <div className="relative bg-white p-3 md:p-4 lg:p-6 border rounded-md shadow-sm">
-          {/* Statistics Section */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
-            <StatCard title="Number of Courses" value={15} />
+            <StatCard title="Number of Courses" value={courses.length} />
             <StatCard title="Number of Enrolment" value={1502} />
             <StatCard title="Number of Students" value={302} />
           </div>
 
-          {/* Line Chart Section */}
           <div className="w-full h-[200px] md:h-[260px] lg:h-[300px]">
-            <LineChart/>
+            <LineChart />
           </div>
         </div>
       </div>
 
-      {/* Continue Watching Section */}
       <div>
         <h3 className="text-base md:text-lg font-semibold mb-2">Continue Watching</h3>
-        <VideoStyle >
-          <EmblaCarousel
-            slides={VIDEODATA}
-            options={{ 
-              align: "start", 
-              containScroll: "trimSnaps",
-              dragFree: true,
-              slidesToScroll: 1,
-            }}
-            renderSlide={(item) => (
-                
-                <VideoCard
-                  imageSrc={item.imageSrc}
-                  title={item.title}
-                  instructor={item.instructor}
-                  rating={item.rating}
-                  reviewsCount={item.reviewsCount}
-                  price={item.price}
-                  originalPrice={item.originalPrice}
-                />
-            )}
-          />
-        </VideoStyle>
+          <Swiper
+            slidesPerView="auto"
+            spaceBetween={10}
+            freeMode={true}
+            mousewheel={true}
+            modules={[FreeMode, Mousewheel]}
+            className="w-full h-auto mx-12"
+          >
+            {courses.map((video: any) => (
+              <SwiperSlide key={video} className="!w-auto mt-2">
+                <div onClick={() => handleCourseClick(video)}>
+                  <VideoCard
+                    imageSrc="/harvinlogo.jpg"
+                    title={video.title}
+                    instructor={video.instructor}
+                    rating={video.rating}
+                    reviewsCount={video.reviewsCount}
+                    price={Number(video.price)}
+                    originalPrice={video.originalPrice || 0}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
       </div>
     </div>
   );
 };
 
 export default Dashboard;
-
-const VideoStyle = styled.div`
-@media (max-width: 374px) {
-  width: 180px;
-}
-@media (min-width: 375px) and (max-width: 425px) {
-  width: 200px;
-}
-@media (min-width: 426px) and (max-width: 524px) {
-  width: 280px;
-}
-@media (min-width: 625px) and (max-width: 768px) {
-  width: 538px;
-}
-@media (min-width: 769px) and (max-width: 1024px) {
-  width: 100%;
-}
-@media (min-width: 1025px) {
-  width: 100%;
-}
-`
-
-
-
-const VIDEODATA = [
-    {
-      imageSrc: "/harvinlogo.jpg",
-      title: "The Complete AI-Powered Copywriting Course & ChatGPT",
-      instructor: "Ing. Tomas Moravek, Learn Digital",
-      rating: 4.6,
-      reviewsCount: 1694,
-      price: 549,
-      originalPrice: 3099,
-    },
-    {
-      imageSrc: "/harvinlogo.jpg",
-      title: "The Complete AI-Powered Copywriting Course & ChatGPT",
-      instructor: "Ing. Tomas Moravek, Learn Digital",
-      rating: 4.6,
-      reviewsCount: 1694,
-      price: 549,
-      originalPrice: 3099,
-    },
-    {
-      imageSrc: "/harvinlogo.jpg",
-      title: "The Complete AI-Powered Copywriting Course & ChatGPT",
-      instructor: "Ing. Tomas Moravek, Learn Digital",
-      rating: 4.6,
-      reviewsCount: 1694,
-      price: 549,
-      originalPrice: 3099,
-    },
-    {
-      imageSrc: "/harvinlogo.jpg",
-      title: "The Complete AI-Powered Copywriting Course & ChatGPT",
-      instructor: "Ing. Tomas Moravek, Learn Digital",
-      rating: 4.6,
-      reviewsCount: 1694,
-      price: 549,
-      originalPrice: 3099,
-    },
-    {
-      imageSrc: "/harvinlogo.jpg",
-      title: "The Complete AI-Powered Copywriting Course & ChatGPT",
-      instructor: "Ing. Tomas Moravek, Learn Digital",
-      rating: 4.6,
-      reviewsCount: 1694,
-      price: 549,
-      originalPrice: 3099,
-    },
-  ];
 
 
