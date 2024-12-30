@@ -165,6 +165,9 @@ export default function CoursesPage() {
                 <Image
                 fill
                   src="/Images/home/topcourse1.png" 
+
+
+                  
                   alt="Author" 
                   className="abolute object-cover"
                 />
