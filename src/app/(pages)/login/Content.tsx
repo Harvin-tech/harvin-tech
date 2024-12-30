@@ -6,9 +6,12 @@ import Link from 'next/link';
 import { inputStyle } from '@/constants';
 import { authService } from '@/api/services/authService';
 import { toast } from 'sonner';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess } from '@/app/store/authSlice';
 
 export default function Login() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -39,7 +42,9 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      await authService.login(formData);
+      const res = await authService.login(formData);
+      
+      dispatch(loginSuccess(res.data));
       toast.dismiss(loadingToast);
       toast.success('Signed in successfully!');
       window.location.href = '/'; // TODO: User router.push('/') after fixing the issue login state management issue

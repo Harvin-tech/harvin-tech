@@ -5,6 +5,10 @@ import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
+import { Provider } from 'react-redux';
+import store from '@/app/store';
+import GlobalProvider from './GlobalProvider';
+import {NextUIProvider} from "@nextui-org/react";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -26,12 +30,18 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} bg-[var(--body-bg)]`}>
         {/* Include  all Providers in file '@/lib/providers.tsx' insead of here */}
-        <AppProviders>
-          <Header />
-          {children}
-          <Footer />
-          <Toaster position="top-center" richColors />
-        </AppProviders>
+        <GlobalProvider>
+          <AppProviders>
+            <NextUIProvider>
+            <Header />
+            {children}
+            <Footer />
+            <Toaster position="top-center" richColors />
+
+            </NextUIProvider>
+          </AppProviders>
+        </GlobalProvider>
+       
       </body>
     </html>
   );

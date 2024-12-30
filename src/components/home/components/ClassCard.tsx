@@ -35,7 +35,7 @@ const ClassCard = ({
       {/* Card Content */}
       <div className="flex flex-col flex-grow justify-between p-4 md:p-6 space-y-3 border-t border-border">
         {/* Title */}
-        <h3 className="text-base md:text-lg font-semibold text-primary line-clamp-2">
+        <h3 className=" font-semibold text-primary line-clamp-2">
           {title}
         </h3>
 

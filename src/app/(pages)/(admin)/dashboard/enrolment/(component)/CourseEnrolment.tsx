@@ -9,9 +9,6 @@ const CourseEnrolment: React.FC = () => {
 
       {/* Enrolment Form */}
       <EnrolmentForm />
-
-      {/* Enrolment History */}
-      <EnrolmentHistory />
     </div>
   );
 };

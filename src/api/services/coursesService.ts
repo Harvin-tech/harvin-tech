@@ -33,12 +33,35 @@ export const getChapterById = async (chapterId: string) => {
   return response.data;
 };
 
-export const enrollCourse = async (courseId: string) => {
-  const response = await apiClient.post(API_ENDPOINTS.COURSES.ENROLL, { courseId });
+export const enrollCourse = async (courseId: string, userId: string) => {
+  const response = await apiClient.post(API_ENDPOINTS.COURSES.ENROLL, { courseId ,userId});
   return response.data;
 };
 
+export const getEnrollDetail =  async () => {
+  const response = await apiClient.get(API_ENDPOINTS.COURSES.GET_ENROLL);
+  return response.data;
+  
+}
 export const getEnrolledCourseByUser = async (userId: string) => {
   const response = await apiClient.get(API_ENDPOINTS.COURSES.GET_ENROLLED_BY_USER(userId));
   return response.data;
 };
+
+
+export const getUserCourse = async (userId: string) => {
+  const response = await apiClient.get(API_ENDPOINTS.COURSES.GET_USER_COURSE(userId));
+  return response.data;
+
+};
+
+export const getEnrolledCourse = async(userId:string) => {
+  const response = await apiClient.get(API_ENDPOINTS.COURSES.GET_BY_ID(userId));
+  return response.data;
+}
+
+export const getCourseChapter = async (chapterId: string) => {
+  const response = await apiClient.get(API_ENDPOINTS.COURSES.GET_CHAPTER(chapterId));
+  return response.data;
+}
+

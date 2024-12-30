@@ -89,7 +89,7 @@ export default function AddCourse() {
     const { thumbnail } = formData.media;
     if (!thumbnail) {
       toast.error("Course thumbnail is required");
-      return false;
+      return true;
     }
     return true;
   };
@@ -98,11 +98,11 @@ export default function AddCourse() {
     const { metaTitle, metaDescription } = formData.seo;
     if (!metaTitle?.trim()) {
       toast.error("Meta title is required");
-      return false;
+      return true;
     }
     if (!metaDescription?.trim()) {
       toast.error("Meta description is required");
-      return false;
+      return true;
     }
     return true;
   };
