@@ -1,6 +1,5 @@
-// pages/dashboard.tsx
 'use client'
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserCourse } from "@/api";
@@ -8,7 +7,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Mousewheel } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
-import styled from "styled-components";
 import { StatCard } from "./(component)/StatsCard";
 import { VideoCard } from "./(component)/VideoCard";
 import { LineChart } from "./(component)/LineChart";
@@ -18,33 +16,32 @@ import { v4 as uuidv4 } from 'uuid';
 import { toast } from "sonner";
 
 const Dashboard = () => {
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const { courses, loading } = useSelector((state: any) => state.courses);
-  console.log(courses, 'hello')
-  const searchParams = useSearchParams(); // Get the search params object
-  console.log(searchParams, "search params")
-  const userId = searchParams.get('user_id'); // Extract the 'user_id' from the query
-  console.log(userId, "user id")
+  const {user}=useSelector((state:any)=>state.auth);
+  const userId = user?._id;
 
 
+  
 
   useEffect(() => {
-    const userData = localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user") as string)
-      : null;
-
-    const userId = userData?.id;
-
-
-    if (userId) {
-      const fetchData = async (userId: string) => {
-        dispatch(setLoading(true)); // Set loading state
+    const checkAuthAndFetchData = async () => {
+      if (!userId) {
+        
+        toast.success("Please login to continue");
+        router.push('/login');
+        // toast.error("Please login to continue");
+        return;
+      }
+      dispatch(setLoading(true));
+      try {
+        // console.log(user._id)
         const response = await getUserCourse(userId);
-        // console.log(response, "resififi")
         const userCourses = response.data.courses.map((item: any) => ({
           id: uuidv4(),
-          courseId: item?.courseId, // Add courseId here
+          courseId: item?.courseId,
           title: item?.courseDetails?.title || "No Title",
           price: item?.courseDetails?.price || "N/A",
           desc: item?.courseDetails?.description || "No Description",
@@ -52,20 +49,20 @@ const Dashboard = () => {
           rating: item?.courseDetails?.rating || 0,
           reviewsCount: item?.courseDetails?.reviewsCount || 0,
         }));
+        dispatch(setCourses(userCourses));
+      } catch (error) {
+        toast.error("Failed to fetch courses");
+      } finally {
+        dispatch(setLoading(false));
+        setIsAuthChecked(true);
+      }
+    };
 
-
-        dispatch(setCourses(userCourses)); // Store courses data in Redux
-      };
-      // console.log("inside content")
-      fetchData(userId);
-    } else {
-      toast.error("User not found");
-      window.location.href = "/login";
-    }
+    checkAuthAndFetchData();
   }, [router, dispatch]);
 
-
-  if (loading) {
+  // Don't render anything until auth check is complete
+  if (!isAuthChecked || loading) {
     return (
       <div className="flex justify-center items-center w-full h-screen">
         <div className="text-xl font-semibold">Loading...</div>
@@ -73,13 +70,13 @@ const Dashboard = () => {
     );
   }
 
-
   const handleCourseClick = (course: any) => {
-    window.location.href = `/courses?user_id=${userId}&course_id=${course.courseId}`; // Pass the course ID
+    router.push(`/courses?user_id=${userId}&course_id=${course.courseId}`);
   };
 
   return (
     <div className="px-3 pt-2 space-y-2 md:space-y-3 w-full mb-4">
+      {/* Rest of the JSX remains the same */}
       <div className="max-w-screen-xl">
         <div className="font-semibold mb-2 text-base md:text-lg">Overview</div>
         <div className="relative bg-white p-3 md:p-4 lg:p-6 border rounded-md shadow-sm">
@@ -106,7 +103,7 @@ const Dashboard = () => {
           className="w-full h-auto mx-12"
         >
           {courses.map((video: any) => (
-            <SwiperSlide key={video} className="!w-auto mt-2">
+            <SwiperSlide key={video.id} className="!w-auto mt-2">
               <div onClick={() => handleCourseClick(video)}>
                 <VideoCard
                   imageSrc="/harvinlogo.jpg"
@@ -127,5 +124,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
