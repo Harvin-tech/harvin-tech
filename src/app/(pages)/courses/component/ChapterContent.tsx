@@ -16,15 +16,15 @@ interface CollapsibleChapterProps {
 
 
 const ChapterContent = ({ chapter }: any) => {
-  console.log(chapter, "chapter");
+  // console.log(chapter, "chapter");
   const [courseChapter, setCourseChapter] = useState([]);
-  console.log(courseChapter, "courseChapter");
+  // console.log(courseChapter, "courseChapter");
 
   const handleChapterClick = async (chapterId: string) => {
     try {
       const fetchedChapter = await getCourseChapter(chapterId);
       setCourseChapter(fetchedChapter.data.lessons);
-      console.log(fetchedChapter.data, "Course Chapter Data");
+      // console.log(fetchedChapter.data, "Course Chapter Data");
     } catch (error) {
       console.error("Error fetching course chapter:", error);
     } finally {
@@ -37,7 +37,7 @@ const ChapterContent = ({ chapter }: any) => {
       try{
       const fetchedChapter = await getCourseChapter(chapterId);
         setCourseChapter(fetchedChapter.data.lessons);
-        console.log(fetchedChapter.data, "Course Chapter Data");
+        // console.log(fetchedChapter.data, "Course Chapter Data");
       
     } catch (error) {
       console.error("Error fetching course chapter:", error);

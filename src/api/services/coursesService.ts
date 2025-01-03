@@ -4,6 +4,8 @@ import apiClient from "./apiClient";
 interface Course {
   title: string;
   description: string;
+  status: Number;
+  category: string;
   // Add other course properties as needed
 }
 

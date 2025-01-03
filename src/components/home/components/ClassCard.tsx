@@ -1,14 +1,17 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 type ClassProps = {
   image: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   description: string;
   ctaText?: string;
-  onCtaClick?: () => void;
+  courseId:string
+  userId:string 
+  onClick: (v: void) => void
 };
 
 const ClassCard = ({
@@ -17,10 +20,12 @@ const ClassCard = ({
   subtitle,
   description,
   ctaText,
-  onCtaClick,
+  courseId,
+  userId,
+  onClick
 }: ClassProps) => {
   return (
-    <div className="bg-card shadow-md rounded-2xl w-full h-full flex flex-col border border-border">
+    <div  className="bg-card shadow-md rounded-2xl w-full h-full flex flex-col justify-between border border-border mb-2">
       {/* Card Image */}
       <div className="relative w-full aspect-[4/3] rounded-t-2xl overflow-hidden">
         <Image
@@ -40,7 +45,7 @@ const ClassCard = ({
         </h3>
 
         {/* Subtitle */}
-        <p className="text-xs md:text-sm text-muted-foreground">{subtitle}</p>
+        <p className="text-xs md:text-sm text-muted-foreground truncate">{subtitle}</p>
 
         {/* Description */}
         <p className="text-xs md:text-sm text-foreground/80 line-clamp-3">
@@ -48,14 +53,14 @@ const ClassCard = ({
         </p>
 
         {/* Call to Action */}
-        {ctaText && (
-          <Button
-            className="mt-auto pt-2 text-xs md:text-sm font-semibold text-white  transition-colors duration-200 cursor-pointer"
-            onClick={onCtaClick}
+       
+          <Link href={userId ? `/courses?user_id=${userId}&course_id=${courseId}` : '/courses?preview=true'}
+            onClick={() => onClick()} 
+            className="bg-primary mt-auto py-2 text-xs md:text-sm font-semibold text-white  transition-colors duration-200 cursor-pointer text-center rounded-lg"
           >
-            {ctaText}
-          </Button>
-        )}
+            Enroll Course
+          </Link>
+       
       </div>
     </div>
   );

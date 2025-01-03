@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import { authService } from '@/api/services/authService';
 
@@ -23,26 +23,33 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const searchParams = useSearchParams();
+  const courseId = searchParams?.get('course_id');
+
+
+  // First, modify the route array definition:
+  const userData = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
+  const userId = userData?.id;
 
   const route = [
     {
       title: 'Home',
-      path: '/',
+      path: "/",
     },
     {
       title: 'Course',
-      path: '/courses',
+      path: "/courses"
     },
     {
       title: 'Admin',
-      path: '/dashboard',
+      path: "/dashboard",
+      requiresAuth: true  // Add this flag to identify protected routes
     },
   ];
 
   useEffect(() => {
     // Check if user is logged in
-    const userData = localStorage.getItem('user');
-    if (userData) {
+    if (userId) {
       setIsAuthenticated(true);
       setUser(JSON.parse(userData));
     }
@@ -51,10 +58,16 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await authService.logout();
+      if (localStorage.getItem('user')) {
+        localStorage.removeItem('user')
+      } else {
+        toast.error("Something is error !")
+      }
+
       setIsAuthenticated(false);
       setUser(null);
       toast.success('Logged out successfully');
-      router.push('/login');
+      window.location.href = '/login';
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Error logging out');
       // Still set authenticated to false and clear user state
@@ -70,12 +83,12 @@ const Header = () => {
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem>
-        <Link href="/profile" className="w-full">
+        <Link href={`/profile`} className="w-full">
           Profile
         </Link>
       </DropdownMenuItem>
       <DropdownMenuItem>
-        <Link href="/dashboard" className="w-full">
+        <Link href={`/dashboard`} className="w-full">
           Dashboard
         </Link>
       </DropdownMenuItem>
@@ -104,7 +117,7 @@ const Header = () => {
   return (
     <div className="sticky top-0 left-0 right-0 bg-background z-[20] h-[55px] sm:h-[67px] md:h-[83px] border-b border-border shadow-sm">
       <div className="lg:max-w-screen-xl lg:mx-auto flex justify-between items-center px-4 sm:px-6">
-        <Link href="/">
+        <Link href={userId ? `/?user_id=${userId}` : "/"}>
           <div className="relative size-12 md:size-20">
             <Image
               className="absolute"
@@ -124,9 +137,8 @@ const Header = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden fixed inset-0 bg-background z-50 transition-transform duration-300 ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+          className={`lg:hidden fixed inset-0 bg-background z-50 transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
         >
           <div className="p-6 space-y-8">
             <div className="flex justify-end">
@@ -147,7 +159,7 @@ const Header = () => {
                     Welcome, {user?.firstName ? user.firstName : 'User'}
                   </div>
                   <Link
-                    href="/profile"
+                    href={`/profile/?user_id=${userId}`}
                     className="w-full text-center py-3 px-4 text-base font-medium border border-primary text-primary rounded-lg hover:bg-primary/10 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -187,7 +199,20 @@ const Header = () => {
                 <Link
                   href={item.path}
                   key={index}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => {
+                    if (item.requiresAuth) {
+                      e.preventDefault();
+                      if (!userData) {
+                        toast.error("Please login first to access dashboard");
+                        let timeoutId = setTimeout(() => {
+                         router.push('/login');
+                        }, 1000);
+                        return;
+                      }
+                      router.push(item.path);
+                    }
+                    setIsMenuOpen(false);
+                  }}
                 >
                   <li className="text-lg font-medium text-foreground hover:text-primary transition-all duration-300 tracking-tight">
                     {item.title}
@@ -202,7 +227,23 @@ const Header = () => {
         <div className="gap-6 items-center hidden lg:flex">
           <ul className="flex gap-6 text-xl">
             {route.map((item, index) => (
-              <Link href={item.path} key={index}>
+              <Link
+                href={item.path}
+                key={index}
+                onClick={(e) => {
+                  if (item.requiresAuth) {
+                    e.preventDefault(); // Prevent default navigation
+                    if (!userData) {
+                      toast.error("Please login first to access dashboard");
+                      let timeoutId = setTimeout(() => {
+                        router.push('/login');
+                      }, 1000);
+                      return;
+                    }
+                    router.push(item.path)
+                  }
+                }}
+              >
                 <li className="text-foreground hover:text-primary transition-all duration-300 tracking-tight text-lg">
                   {item.title}
                 </li>

@@ -13,11 +13,20 @@ import { StatCard } from "./(component)/StatsCard";
 import { VideoCard } from "./(component)/VideoCard";
 import { LineChart } from "./(component)/LineChart";
 import { setCourses, setLoading } from "@/app/store/courseSlice";
+import { useSearchParams } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
+import { toast } from "sonner";
 
 const Dashboard = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { courses, loading } = useSelector((state: any) => state.courses);
+  console.log(courses, 'hello')
+  const searchParams = useSearchParams(); // Get the search params object
+  console.log(searchParams, "search params")
+  const userId = searchParams.get('user_id'); // Extract the 'user_id' from the query
+  console.log(userId, "user id")
+
 
 
   useEffect(() => {
@@ -25,15 +34,16 @@ const Dashboard = () => {
       ? JSON.parse(localStorage.getItem("user") as string)
       : null;
 
-    if (!userData) {
-      router.push("/login");
-    } else {
+    const userId = userData?.id;
+
+
+    if (userId) {
       const fetchData = async (userId: string) => {
         dispatch(setLoading(true)); // Set loading state
         const response = await getUserCourse(userId);
-        console.log(response, "resififi")
+        // console.log(response, "resififi")
         const userCourses = response.data.courses.map((item: any) => ({
-          id: item?._id,
+          id: uuidv4(),
           courseId: item?.courseId, // Add courseId here
           title: item?.courseDetails?.title || "No Title",
           price: item?.courseDetails?.price || "N/A",
@@ -46,7 +56,11 @@ const Dashboard = () => {
 
         dispatch(setCourses(userCourses)); // Store courses data in Redux
       };
-      fetchData(userData._id);
+      // console.log("inside content")
+      fetchData(userId);
+    } else {
+      toast.error("User not found");
+      window.location.href = "/login";
     }
   }, [router, dispatch]);
 
@@ -61,7 +75,7 @@ const Dashboard = () => {
 
 
   const handleCourseClick = (course: any) => {
-    router.push(`/courses?id=${course.courseId}`); // Pass the course ID
+    window.location.href = `/courses?user_id=${userId}&course_id=${course.courseId}`; // Pass the course ID
   };
 
   return (
@@ -83,30 +97,30 @@ const Dashboard = () => {
 
       <div>
         <h3 className="text-base md:text-lg font-semibold mb-2">Continue Watching</h3>
-          <Swiper
-            slidesPerView="auto"
-            spaceBetween={10}
-            freeMode={true}
-            mousewheel={true}
-            modules={[FreeMode, Mousewheel]}
-            className="w-full h-auto mx-12"
-          >
-            {courses.map((video: any) => (
-              <SwiperSlide key={video} className="!w-auto mt-2">
-                <div onClick={() => handleCourseClick(video)}>
-                  <VideoCard
-                    imageSrc="/harvinlogo.jpg"
-                    title={video.title}
-                    instructor={video.instructor}
-                    rating={video.rating}
-                    reviewsCount={video.reviewsCount}
-                    price={Number(video.price)}
-                    originalPrice={video.originalPrice || 0}
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        <Swiper
+          slidesPerView="auto"
+          spaceBetween={10}
+          freeMode={true}
+          mousewheel={true}
+          modules={[FreeMode, Mousewheel]}
+          className="w-full h-auto mx-12"
+        >
+          {courses.map((video: any) => (
+            <SwiperSlide key={video} className="!w-auto mt-2">
+              <div onClick={() => handleCourseClick(video)}>
+                <VideoCard
+                  imageSrc="/harvinlogo.jpg"
+                  title={video.title}
+                  instructor={video.instructor}
+                  rating={video.rating}
+                  reviewsCount={video.reviewsCount}
+                  price={Number(video.price)}
+                  originalPrice={video.originalPrice || 0}
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   );

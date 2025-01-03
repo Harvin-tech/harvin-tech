@@ -12,67 +12,104 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
-const CourseFilters: React.FC = () => {
+interface CourseFiltersProps {
+  filters: {
+    category: string;
+    status: string;
+    instructor: string;
+    price: string;
+    search: string;
+  };
+  setFilters: React.Dispatch<
+    React.SetStateAction<{
+      category: string;
+      status: string;
+      instructor: string;
+      price: string;
+      search: string;
+    }>
+  >;
+  applyFilters: () => void;
+}
+
+const CourseFilters: React.FC<CourseFiltersProps> = ({
+  filters,
+  setFilters,
+  applyFilters,
+}) => {
   return (
-    <Card className="mb-6">
+    <Card className="mb-2">
       <CardHeader>
         <h2 className="text-lg font-semibold">COURSE LIST</h2>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-          <Select>
+          <Select
+            onValueChange={(value) =>
+              setFilters((prev) => ({ ...prev, category: value }))
+            }
+          >
             <SelectTrigger>
               <SelectValue placeholder="Categories" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              {/* Add more categories here */}
+              <SelectItem value="category1">medium</SelectItem>
+              <SelectItem value="category2">medium</SelectItem>
             </SelectContent>
           </Select>
 
-          <Select>
+          <Select
+            onValueChange={(value) =>
+              setFilters((prev) => ({ ...prev, status: value }))
+            }
+          >
             <SelectTrigger>
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              {/* Add more status options here */}
+              <SelectItem value="lock">Lock</SelectItem>
+              <SelectItem value="unlock">Unlock</SelectItem>
             </SelectContent>
           </Select>
 
-          <Select>
+          <Select
+            onValueChange={(value) =>
+              setFilters((prev) => ({ ...prev, instructor: value }))
+            }
+          >
             <SelectTrigger>
               <SelectValue placeholder="Instructor" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              {/* Add more instructor options here */}
+              <SelectItem value="instructor1">Instructor 1</SelectItem>
+              <SelectItem value="instructor2">Instructor 2</SelectItem>
             </SelectContent>
           </Select>
 
-          <Select>
+          <Select
+            onValueChange={(value) =>
+              setFilters((prev) => ({ ...prev, price: value }))
+            }
+          >
             <SelectTrigger>
               <SelectValue placeholder="Price" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              {/* Add more price options here */}
+              <SelectItem value="free">Free</SelectItem>
+              <SelectItem value="paid">Paid</SelectItem>
             </SelectContent>
           </Select>
 
-          <Button variant="default" className="text-white">
+          <Button variant="default" className="text-white" onClick={applyFilters}>
             Filter
           </Button>
         </div>
 
-        <div className="mt-4 space-y-2">
-          <label className="text-sm text-muted-foreground">Search:</label>
-          <Input
-            type="text"
-            placeholder="Search courses..."
-            className="w-full"
-          />
-        </div>
+      
       </CardContent>
     </Card>
   );

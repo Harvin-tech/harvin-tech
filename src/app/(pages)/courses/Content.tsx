@@ -7,41 +7,81 @@ import Cta from './component/Cta';
 import { use, useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import CourseDetails, { Course } from './component/CourseDetails';
-import { getCourseChapter, getEnrolledCourse } from '@/api';
+import { getCourseChapter, getEnrolledCourse, getUserCourse } from '@/api';
 import Image from 'next/image';
+import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
 
 export default function CoursesPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [courses, setCourses] = useState([]);
 
   // Retrieve the 'id' from query params
-  const course_id = searchParams.get('id'); // Assuming `id` is passed in the query string
+  const courseId = searchParams.get('course_id'); // Assuming `id` is passed in the query string
+  const userId = searchParams.get('user_id');
+  const  {courses:data}  = useSelector((state: any) => state.courses);
+  console.log(data, "inside courses")
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Now it's safe to use localStorage
-      const userData = localStorage.getItem('user');
-      if (!userData) {
-        router.push('/login');
-      } else {
-        setLoading(false);
-      }
-    }
-  }, [router]);
+
+  // useEffect(() => {
+  //   const fetchData = async (userId: string) => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await getUserCourse(userId);
+  //       const userCourses = response.data.courses.map((item: any) => ({
+  //         id: uuidv4(),
+  //         courseId: item?.courseId,
+  //         title: item?.courseDetails?.title || "No Title",
+  //         description: item?.courseDetails?.description || "No Description",
+  //         instructor: item?.courseDetails?.instructor || "Unknown Instructor",
+  //         rating: item?.courseDetails?.rating || 0,
+  //         reviewsCount: item?.courseDetails?.reviewsCount || 0,
+  //       }));
+  //       // console.log(userCourses, "userCourses")
+  //       setCourses(userCourses);
+  //     } catch (error) {
+  //       console.error("Error fetching courses:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   if (userId) {
+  //     fetchData(userId);
+  //   }
+  // }, [userId]);
 
   useEffect(() => {
     async function fetchEnrolledCourses() {
-      if (!course_id) return; // Prevent fetching if id is not available
+      if (!courseId) return; // Prevent fetching if id is not available
       try {
-        const response = await getEnrolledCourse(course_id);
+        const response = await getEnrolledCourse(courseId);
         if (response && response.data) {
           // Set the fetched data to enrolledCourses
           setEnrolledCourses(response.data.chapters.map((item: any) => ({
             title: item?.title,
             chapterId: item?._id,
           }))); // Ensure this is the correct structure
+          const courseDetails = response.data;
+          const courseData: any =
+          {
+
+            id: uuidv4(),
+            title: courseDetails?.title || "No Title",
+            description: courseDetails?.description || "No Description",
+            instructor: courseDetails?.instructor || "Unknown Instructor",
+            rating: courseDetails?.rating || 0,
+            reviewsCount: courseDetails?.reviewsCount || 0,
+            price: courseDetails?.price || 0,
+            instructorDesc:courseDetails?.instructorDesc || "No Description"
+          }
+
+
+          setCourses(courseData);
+          console.log(courseData, "sdfladsjfhan")
           console.log(response.data, 'Enrolled Courses Data');
         } else {
           console.warn('No enrolled courses data found');
@@ -54,7 +94,7 @@ export default function CoursesPage() {
     }
 
     fetchEnrolledCourses();
-  }, [course_id]);
+  }, [courseId]);
 
   if (loading) {
     return (
@@ -63,6 +103,7 @@ export default function CoursesPage() {
       </div>
     );
   }
+  console.log(courses,"course")
 
   return (
     <div className={appContent({ className: ' min-h-screen ' })}>
@@ -74,15 +115,19 @@ export default function CoursesPage() {
                 <span className="bg-primary text-white px-3 py-1 rounded-full text-xs">Courses</span>
                 <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-xs">Skills</span>
               </div>
-              <h1 className="font-semibold text-2xl xl:text-3xl tracking-tight">
-                Fundamentals Programs html,css,java
-              </h1>
-              <p className="text-foreground/80 text-sm md:text-base tracking-wide">
-                (Fundamentals Programs) is a rapidly evolving field and has changed from an unimaginable sci-fi dream to a very realistic future.
-              </p>
-              <p className="text-muted-foreground text-xs md:text-sm tracking-wide">
-                ~by University of California, Irvine
-              </p>
+               <div className='space-y-1'>
+                <h1 className="font-semibold text-2xl xl:text-3xl tracking-tight">
+                 {data.title ? data.title : "Fundamentals Programs html,css,java"} 
+                </h1>
+                <p className="text-foreground/80 text-sm md:text-base tracking-wide">
+                  {data.description ? data.description : "(Fundamentals Programs) is a rapidly evolving field and has changed from an unimaginable sci-fi dream to a very realistic future."}
+                </p>
+                <p className="text-muted-foreground text-xs md:text-sm tracking-wide">
+                  ~by University of California, Irvine
+                </p>
+
+              </div>
+             
             </div>
           </section>
 
@@ -134,12 +179,17 @@ export default function CoursesPage() {
                 <div className="relative size-12 overflow-hidden rounded-full">
                   <Image fill src="/Images/home/topcourse1.png" alt="Author" className="absolute object-cover" />
                 </div>
-                <div>
+               {!courseId ? (<div>
                   <h3 className="font-medium text-lg">Dr. Sarah Johnson</h3>
                   <p className="text-sm text-foreground/80 max-w-[550px]">
                     Professor of Computer Science at UC Irvine with over 15 years of experience in IoT and embedded systems.
                   </p>
-                </div>
+                </div> ):  (<div>
+                  {/* <h3 className="font-medium text-lg">{courses?.instructor}</h3> */}
+                  <p className="text-sm text-foreground/80 max-w-[550px]">
+                    {/* {courses?.instructorDesc} */}
+                  </p>
+                </div>) }
               </div>
             </div>
           </section>
