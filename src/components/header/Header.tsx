@@ -18,6 +18,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import { authService } from '@/api/services/authService';
 import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '@/app/store/authSlice';
 
 const Header = () => {
   const router = useRouter();
@@ -28,7 +29,7 @@ const Header = () => {
   
   // Get auth state from Redux instead of local state
   const {isAuthenticated, user: userData,error,loading} = useSelector((state: any) => state.auth);
-  console.log(userData)
+
   const role = userData?.role === 'admin';
   
 
@@ -41,14 +42,13 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await authService.logout();
-      // Dispatch logout action instead of manually managing state
-      dispatch({ type: 'auth/logout' });
+      dispatch(logout());
       toast.success('Logged out successfully');
       router.push('/login');
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Error logging out');
+      // toast.error(error.response?.data?.message || 'Error logging out');
+      toast.success(error.response?.data?.message || 'Error logging out')
       // Still logout on error to maintain consistent state
-      dispatch({ type: 'auth/logout' });
     }
   };
 

@@ -10,10 +10,9 @@ import { Card, CardContent } from '../ui/card';
 import { GoArrowRight } from "react-icons/go";
 import { useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import { getUserCourse } from '@/api';
 import { useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
-import { setCourses } from '@/app/store/courseSlice';
+import {  setOneCourses } from '@/app/store/courseSlice';
 // Define dummy data with the same structure as API data
 const dummyCourses = [
   {
@@ -139,7 +138,7 @@ const Courses = () => {
          
           <Swiper {...OPTIONS}>
             {displayCourses.map((course) => (
-              <SwiperSlide key={course.id} className="flex" onClick={()=>{dispatch(setCourses(course as any));}}>
+              <SwiperSlide key={course.id} className="flex" onClick={()=>{dispatch(setOneCourses(course as any));}}>
                 <Link 
                   href={'/courses?preview=true'} 
                   className="w-full"

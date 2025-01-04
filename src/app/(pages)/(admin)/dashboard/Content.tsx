@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserCourse } from "@/api";
@@ -11,33 +11,31 @@ import { StatCard } from "./(component)/StatsCard";
 import { VideoCard } from "./(component)/VideoCard";
 import { LineChart } from "./(component)/LineChart";
 import { setCourses, setLoading } from "@/app/store/courseSlice";
-import { useSearchParams } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from "sonner";
 
 const Dashboard = () => {
-  const [isAuthChecked, setIsAuthChecked] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const { courses, loading } = useSelector((state: any) => state.courses);
-  const {user}=useSelector((state:any)=>state.auth);
+  
+  // Get all required state in one selector
+  const { 
+    courses: { allCourses, loading: coursesLoading },
+    auth: { user, isAuthenticated, loading: authLoading }
+  } = useSelector((state: any) => state);
   const userId = user?._id;
 
-
-  
-
   useEffect(() => {
-    const checkAuthAndFetchData = async () => {
-      if (!userId) {
-        
-        toast.success("Please login to continue");
-        router.push('/login');
-        // toast.error("Please login to continue");
-        return;
-      }
+    // Handle authentication check inside useEffect
+    if (!userId) {
+      toast.error("Please login to continue");
+      router.push('/login');
+      return;
+    }
+
+    const fetchCourses = async () => {
       dispatch(setLoading(true));
       try {
-        // console.log(user._id)
         const response = await getUserCourse(userId);
         const userCourses = response.data.courses.map((item: any) => ({
           id: uuidv4(),
@@ -54,15 +52,14 @@ const Dashboard = () => {
         toast.error("Failed to fetch courses");
       } finally {
         dispatch(setLoading(false));
-        setIsAuthChecked(true);
       }
     };
 
-    checkAuthAndFetchData();
-  }, [router, dispatch]);
+    fetchCourses();
+  }, [userId, dispatch, router]);
 
-  // Don't render anything until auth check is complete
-  if (!isAuthChecked || loading) {
+  // Show loading state when either auth or courses are loading
+  if (authLoading || !isAuthenticated) {
     return (
       <div className="flex justify-center items-center w-full h-screen">
         <div className="text-xl font-semibold">Loading...</div>
@@ -71,17 +68,16 @@ const Dashboard = () => {
   }
 
   const handleCourseClick = (course: any) => {
-    router.push(`/courses?user_id=${userId}&course_id=${course.courseId}`);
+    router.push(`/courses?course_id=${course.courseId}`);
   };
 
   return (
     <div className="px-3 pt-2 space-y-2 md:space-y-3 w-full mb-4">
-      {/* Rest of the JSX remains the same */}
       <div className="max-w-screen-xl">
         <div className="font-semibold mb-2 text-base md:text-lg">Overview</div>
         <div className="relative bg-white p-3 md:p-4 lg:p-6 border rounded-md shadow-sm">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
-            <StatCard title="Number of Courses" value={courses.length} />
+            <StatCard title="Number of Courses" value={allCourses?.length} />
             <StatCard title="Number of Enrolment" value={1502} />
             <StatCard title="Number of Students" value={302} />
           </div>
@@ -90,34 +86,43 @@ const Dashboard = () => {
             <LineChart />
           </div>
         </div>
-      </div>
 
-      <div>
-        <h3 className="text-base md:text-lg font-semibold mb-2">Continue Watching</h3>
-        <Swiper
-          slidesPerView="auto"
-          spaceBetween={10}
-          freeMode={true}
-          mousewheel={true}
-          modules={[FreeMode, Mousewheel]}
-          className="w-full h-auto mx-12"
-        >
-          {courses.map((video: any) => (
-            <SwiperSlide key={video.id} className="!w-auto mt-2">
-              <div onClick={() => handleCourseClick(video)}>
-                <VideoCard
-                  imageSrc="/harvinlogo.jpg"
-                  title={video.title}
-                  instructor={video.instructor}
-                  rating={video.rating}
-                  reviewsCount={video.reviewsCount}
-                  price={Number(video.price)}
-                  originalPrice={video.originalPrice || 0}
-                />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className="mt-2">
+          <h3 className="text-base md:text-lg font-semibold">Continue Watching</h3>
+
+          {coursesLoading ? (
+            <div className="text-center text-gray-500">Loading courses...</div>
+          ) : !allCourses?.length ? (
+            <div className="text-center text-gray-500">You have no courses available.</div>
+          ) : (
+            <div>
+              <Swiper
+                slidesPerView="auto"
+                spaceBetween={10}
+                freeMode={true}
+                mousewheel={true}
+                modules={[FreeMode, Mousewheel]}
+                className="w-full h-auto mx-12"
+              >
+                {allCourses?.map((video: any) => (
+                  <SwiperSlide key={video.id} className="!w-auto mt-2">
+                    <div onClick={() => handleCourseClick(video)}>
+                      <VideoCard
+                        imageSrc="/harvinlogo.jpg"
+                        title={video.title}
+                        instructor={video.instructor}
+                        rating={video.rating}
+                        reviewsCount={video.reviewsCount}
+                        price={Number(video.price)}
+                        originalPrice={video.originalPrice || 0}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

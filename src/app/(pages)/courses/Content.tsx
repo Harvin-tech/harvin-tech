@@ -4,71 +4,38 @@ import IoTCard from './component/IoTCard';
 import Courses from '@/components/home/Courses';
 import CoursePayment from './component/CoursePayment';
 import Cta from './component/Cta';
-import { use, useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import CourseDetails, { Course } from './component/CourseDetails';
-import { getCourseChapter, getEnrolledCourse, getUserCourse } from '@/api';
+import CourseDetails  from './component/CourseDetails';
+import { getEnrolledCourse} from '@/api';
 import Image from 'next/image';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 
 export default function CoursesPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState<any>(null);
 
-  // Retrieve the 'id' from query params
-  const courseId = searchParams.get('course_id'); // Assuming `id` is passed in the query string
-  const userId = searchParams.get('user_id');
-  const  {courses:data}  = useSelector((state: any) => state.courses);
-  console.log(data, "inside courses")
-
-
-  // useEffect(() => {
-  //   const fetchData = async (userId: string) => {
-  //     setLoading(true);
-  //     try {
-  //       const response = await getUserCourse(userId);
-  //       const userCourses = response.data.courses.map((item: any) => ({
-  //         id: uuidv4(),
-  //         courseId: item?.courseId,
-  //         title: item?.courseDetails?.title || "No Title",
-  //         description: item?.courseDetails?.description || "No Description",
-  //         instructor: item?.courseDetails?.instructor || "Unknown Instructor",
-  //         rating: item?.courseDetails?.rating || 0,
-  //         reviewsCount: item?.courseDetails?.reviewsCount || 0,
-  //       }));
-  //       // console.log(userCourses, "userCourses")
-  //       setCourses(userCourses);
-  //     } catch (error) {
-  //       console.error("Error fetching courses:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   if (userId) {
-  //     fetchData(userId);
-  //   }
-  // }, [userId]);
+  const courseId = searchParams.get('course_id');
+  const preview = searchParams.get('preview');
+  const { courses: dummyData } = useSelector((state: any) => state.courses);
 
   useEffect(() => {
     async function fetchEnrolledCourses() {
-      if (!courseId) return; // Prevent fetching if id is not available
+      if (!courseId) return;
       try {
+        setLoading(true);
         const response = await getEnrolledCourse(courseId);
         if (response && response.data) {
-          // Set the fetched data to enrolledCourses
           setEnrolledCourses(response.data.chapters.map((item: any) => ({
             title: item?.title,
             chapterId: item?._id,
-          }))); // Ensure this is the correct structure
+          })));
+          
           const courseDetails = response.data;
-          const courseData: any =
-          {
-
+          const courseData = {
             id: uuidv4(),
             title: courseDetails?.title || "No Title",
             description: courseDetails?.description || "No Description",
@@ -76,20 +43,14 @@ export default function CoursesPage() {
             rating: courseDetails?.rating || 0,
             reviewsCount: courseDetails?.reviewsCount || 0,
             price: courseDetails?.price || 0,
-            instructorDesc:courseDetails?.instructorDesc || "No Description"
-          }
-
-
+            instructorDesc: courseDetails?.instructorDesc || "No Description"
+          };
           setCourses(courseData);
-          console.log(courseData, "sdfladsjfhan")
-          console.log(response.data, 'Enrolled Courses Data');
-        } else {
-          console.warn('No enrolled courses data found');
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching enrolled courses:", error);
-      } finally {
-        console.log("Finished fetching enrolled courses");
+        setLoading(false);
       }
     }
 
@@ -103,7 +64,27 @@ export default function CoursesPage() {
       </div>
     );
   }
-  console.log(courses,"course")
+
+  const getTitleAndDescription = () => {
+    if (courses && !preview) {
+      return {
+        title: courses.title,
+        description: courses.description
+      };
+    }
+    if (preview && dummyData) {
+      return {
+        title: dummyData.title,
+        description: dummyData.description
+      };
+    }
+    return {
+      title: "Fundamentals Programs html,css,java",
+      description: "(Fundamentals Programs) is a rapidly evolving field and has changed from an unimaginable sci-fi dream to a very realistic future."
+    };
+  };
+
+  const content = getTitleAndDescription();
 
   return (
     <div className={appContent({ className: ' min-h-screen ' })}>
@@ -115,19 +96,17 @@ export default function CoursesPage() {
                 <span className="bg-primary text-white px-3 py-1 rounded-full text-xs">Courses</span>
                 <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-xs">Skills</span>
               </div>
-               <div className='space-y-1'>
+              <div className='space-y-1'>
                 <h1 className="font-semibold text-2xl xl:text-3xl tracking-tight">
-                 {data.title ? data.title : "Fundamentals Programs html,css,java"} 
+                  {content.title}
                 </h1>
                 <p className="text-foreground/80 text-sm md:text-base tracking-wide">
-                  {data.description ? data.description : "(Fundamentals Programs) is a rapidly evolving field and has changed from an unimaginable sci-fi dream to a very realistic future."}
+                  {content.description}
                 </p>
                 <p className="text-muted-foreground text-xs md:text-sm tracking-wide">
                   ~by University of California, Irvine
                 </p>
-
               </div>
-             
             </div>
           </section>
 

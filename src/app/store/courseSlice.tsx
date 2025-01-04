@@ -5,6 +5,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
   courses: [],
+  allCourses:[],
   loading: true,
 };
 
@@ -12,9 +13,13 @@ const courseSlice = createSlice({
   name: 'courses',
   initialState,
   reducers: {
+    setOneCourses:(state,action:any)=>{
+      state.courses=action.payload;
+      state.loading=false;
+
+    },
     setCourses: (state, action: any) => {
-      console.log("ehdhe")
-      state.courses = action.payload;
+      state.allCourses = action.payload;
       state.loading = false;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -23,6 +28,6 @@ const courseSlice = createSlice({
   },
 });
 
-export const { setCourses, setLoading } = courseSlice.actions;
+export const { setCourses, setLoading,setOneCourses } = courseSlice.actions;
 
 export default courseSlice.reducer;

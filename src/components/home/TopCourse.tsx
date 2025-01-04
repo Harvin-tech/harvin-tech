@@ -13,7 +13,7 @@ import { appContent } from '@/constants/variants';
 import { useSearchParams } from 'next/navigation';
 import { getUserCourse } from '@/api';
 import {v4 as uuidv4} from 'uuid'
-import { setCourses } from '@/app/store/courseSlice';
+import { setCourses, setOneCourses } from '@/app/store/courseSlice';
 import { useDispatch } from 'react-redux';
 
 const dummyId = uuidv4();
@@ -107,7 +107,7 @@ const TopCourse = () => {
                         // ctaText={course?.ctaText || ""}
                         courseId={course.courseId}
                         userId={userId || ""} 
-                        onClick={()=>{dispatch(setCourses(course as any))}}
+                        onClick={()=>{dispatch(setOneCourses(course as any))}}
                       />
                     </CardContent>
                   </Card>

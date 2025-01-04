@@ -50,7 +50,6 @@ const DataTable: React.FC = () => {
 
   return (
     <div className="w-full space-y-2 bg-white p-6 rounded-lg">
-      {error && <div className="text-red-500">{error}</div>}
 
       <div className="mb-2 flex items-center space-x-2">
         <input
