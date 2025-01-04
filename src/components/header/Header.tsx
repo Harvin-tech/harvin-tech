@@ -2,7 +2,7 @@
 import { appContent } from '@/constants/variants';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import { RiAccountCircleLine } from 'react-icons/ri';
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
@@ -14,68 +14,57 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import { authService } from '@/api/services/authService';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '@/app/store/authSlice';
 
 const Header = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const searchParams = useSearchParams();
+  const courseId = searchParams?.get('course_id');
+  const dispatch = useDispatch();
+  
+  // Get auth state from Redux instead of local state
+  const {isAuthenticated, user: userData,error,loading} = useSelector((state: any) => state.auth);
+
+  const role = userData?.role === 'admin';
+  
 
   const route = [
-    {
-      title: 'Home',
-      path: '/',
-    },
-    {
-      title: 'Course',
-      path: '/courses',
-    },
-    {
-      title: 'Admin',
-      path: '/dashboard',
-    },
+    { title: 'Home', path: '/' },
+    { title: 'Course', path: '/courses' },
+    ...( role ? [{ title: 'Admin', path: '/dashboard', requiresAuth: true }] : []),
   ];
-
-  useEffect(() => {
-    // Check if user is logged in
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      setIsAuthenticated(true);
-      setUser(JSON.parse(userData));
-    }
-  }, []);
 
   const handleLogout = async () => {
     try {
       await authService.logout();
-      setIsAuthenticated(false);
-      setUser(null);
+      dispatch(logout());
       toast.success('Logged out successfully');
       router.push('/login');
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Error logging out');
-      // Still set authenticated to false and clear user state
-      setIsAuthenticated(false);
-      setUser(null);
+      // toast.error(error.response?.data?.message || 'Error logging out');
+      toast.success(error.response?.data?.message || 'Error logging out')
+      // Still logout on error to maintain consistent state
     }
   };
 
   const AuthenticatedDropdown = () => (
     <DropdownMenuContent>
       <DropdownMenuLabel>
-        Welcome, {user?.firstName || 'User'}
+        Welcome, {userData?.firstName || 'User'}
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem>
-        <Link href="/profile" className="w-full">
+        <Link href={`/profile`} className="w-full">
           Profile
         </Link>
       </DropdownMenuItem>
       <DropdownMenuItem>
-        <Link href="/dashboard" className="w-full">
+        <Link href={`/dashboard`} className="w-full">
           Dashboard
         </Link>
       </DropdownMenuItem>
@@ -104,7 +93,7 @@ const Header = () => {
   return (
     <div className="sticky top-0 left-0 right-0 bg-background z-[20] h-[55px] sm:h-[67px] md:h-[83px] border-b border-border shadow-sm">
       <div className="lg:max-w-screen-xl lg:mx-auto flex justify-between items-center px-4 sm:px-6">
-        <Link href="/">
+        <Link href={ "/"}>
           <div className="relative size-12 md:size-20">
             <Image
               className="absolute"
@@ -122,11 +111,8 @@ const Header = () => {
           {isMenuOpen ? <RiCloseLine /> : <RiMenu3Line />}
         </button>
 
-        {/* Mobile Menu */}
         <div
-          className={`lg:hidden fixed inset-0 bg-background z-50 transition-transform duration-300 ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+          className={`lg:hidden fixed inset-0 bg-background z-50 transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
           <div className="p-6 space-y-8">
             <div className="flex justify-end">
@@ -144,10 +130,10 @@ const Header = () => {
               {isAuthenticated ? (
                 <div className="flex flex-col items-center gap-3 w-full">
                   <div className="text-lg font-medium">
-                    Welcome, {user?.firstName ? user.firstName : 'User'}
+                    Welcome, {userData?.firstName || 'User'}
                   </div>
                   <Link
-                    href="/profile"
+                    href={`/profile`}
                     className="w-full text-center py-3 px-4 text-base font-medium border border-primary text-primary rounded-lg hover:bg-primary/10 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -187,7 +173,20 @@ const Header = () => {
                 <Link
                   href={item.path}
                   key={index}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => {
+                    if (item.requiresAuth) {
+                      e.preventDefault();
+                      if (!userData._id) {
+                        toast.error("Please login first to access dashboard");
+                        setTimeout(() => {
+                          router.push('/login');
+                        }, 1000);
+                        return;
+                      }
+                      router.push(item.path);
+                    }
+                    setIsMenuOpen(false);
+                  }}
                 >
                   <li className="text-lg font-medium text-foreground hover:text-primary transition-all duration-300 tracking-tight">
                     {item.title}
@@ -198,11 +197,26 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Desktop Menu */}
         <div className="gap-6 items-center hidden lg:flex">
           <ul className="flex gap-6 text-xl">
             {route.map((item, index) => (
-              <Link href={item.path} key={index}>
+              <Link
+                href={item.path}
+                key={index}
+                onClick={(e) => {
+                  if (item.requiresAuth) {
+                    e.preventDefault();
+                    if (!userData._id) {
+                      toast.error("Please login first to access dashboard");
+                      setTimeout(() => {
+                        router.push('/login');
+                      }, 1000);
+                      return;
+                    }
+                    router.push(item.path);
+                  }
+                }}
+              >
                 <li className="text-foreground hover:text-primary transition-all duration-300 tracking-tight text-lg">
                   {item.title}
                 </li>

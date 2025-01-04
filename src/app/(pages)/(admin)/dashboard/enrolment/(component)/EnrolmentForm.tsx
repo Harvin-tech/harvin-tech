@@ -32,7 +32,8 @@ const EnrolmentForm: React.FC = () => {
           }))
         );
       } catch (error) {
-        toast.error("Something went wrong.");
+        console.error("Error fetching users:", error);
+        // toast.error("Something went wrong.");
       }
     }
     getUsers();
@@ -43,14 +44,16 @@ const EnrolmentForm: React.FC = () => {
       setLoading(true);
       try {
         const response = await getCourses();
+        console.log(response,"inside enrolmentform")
         setCourses(
-          response.data.course.map((item: Course) => ({
+          response.data.courses.map((item: Course) => ({
             value: item._id,
             label: item.title,
           }))
         );
       } catch (error) {
-        toast.error("Failed to load courses.");
+        console.error("Error fetching courses:", error);
+        // toast.error("Failed to load courses.");
       } finally {
         setLoading(false);
       }

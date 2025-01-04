@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { inputStyle } from '@/constants';
 import { authService } from '@/api/services/authService';
 import { toast } from 'sonner';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginSuccess } from '@/app/store/authSlice';
 
 export default function Login() {
@@ -19,11 +19,15 @@ export default function Login() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+
+
+  
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    // Manual form validation
     if (!formData.email.trim()) {
       toast.error('Please enter your email');
       return;
@@ -43,11 +47,11 @@ export default function Login() {
 
     try {
       const res = await authService.login(formData);
-      
+
       dispatch(loginSuccess(res.data));
       toast.dismiss(loadingToast);
       toast.success('Signed in successfully!');
-      window.location.href = '/'; // TODO: User router.push('/') after fixing the issue login state management issue
+      router.push('/dashboard');
     } catch (err: any) {
       const errorMessage =
         err.response?.data?.message || 'Invalid email or password';
@@ -77,7 +81,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center pt-6 pb-16 bg-background text-foreground ">
+    <div className="flex flex-col items-center justify-center pt-6 pb-16 bg-background text-foreground">
       <div className="text-center text-xl md:text-2xl pb-4 font-semibold tracking-tight">
         Sign in to your account
       </div>
@@ -87,7 +91,6 @@ export default function Login() {
             <div className="text-destructive text-sm text-center">{error}</div>
           )}
           <div className="rounded-md space-y-3">
-            {/* Email */}
             <div className="relative">
               <div className="space-y-1">
                 <div className="text-sm text-muted-foreground">Email *</div>
@@ -102,8 +105,6 @@ export default function Login() {
                 />
               </div>
             </div>
-
-            {/* Password */}
             <div className="relative">
               <div className="space-y-1">
                 <div className="text-sm text-muted-foreground">Password *</div>
@@ -127,7 +128,6 @@ export default function Login() {
               </div>
             </div>
           </div>
-
           <button
             type="submit"
             disabled={isLoading}
@@ -135,7 +135,6 @@ export default function Login() {
           >
             {isLoading ? 'Signing in...' : 'Sign in'}
           </button>
-
           <div className="text-sm text-center text-muted-foreground">
             Don&apos;t have an account?{' '}
             <Link

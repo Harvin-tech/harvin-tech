@@ -26,7 +26,7 @@ const HeroSection = () => {
         </div>
         <div className="pt-2">
           <Link
-            href="/"
+            href="/signup"
             className="inline-block tracking-tight text-white py-2.5 sm:py-2 px-4 text-sm  xl:text-lg  bg-primary-dark2 rounded-lg shadow-lg hover:bg-primary-dark2/90 transition-opacity"
           >
             Join for free

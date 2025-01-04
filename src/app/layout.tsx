@@ -6,9 +6,9 @@ import Footer from '@/components/footer/Footer';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { Provider } from 'react-redux';
-import store from '@/app/store';
 import GlobalProvider from './GlobalProvider';
 import {NextUIProvider} from "@nextui-org/react";
+
 
 const poppins = Poppins({
   subsets: ['latin'],

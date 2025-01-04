@@ -10,19 +10,40 @@ import {
 } from "react-icons/fa";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { IoSettingsSharp } from "react-icons/io5";
 import { useState, useEffect } from 'react';
+import { authService } from "@/api";
+import { toast } from "sonner";
 
 const Sidebar = () => {
   const pathname = usePathname();
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const[isAuthenticated, setIsAuthenticated] = useState(false);
+  const[user, setUser] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      localStorage.removeItem('user');
+      setIsAuthenticated(false);
+      setUser(null);
+      toast.success('Logged out successfully');
+      window.location.href = '/login';
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'Error logging out');
+      // Still set authenticated to false and clear user state
+      setIsAuthenticated(false);
+      setUser(null);
+    }
+  };
 
   const sidebarItems = [
     { icon: <FaChartLine />, label: 'Dashboard', href: '/dashboard', active: pathname === '/dashboard' },
@@ -151,7 +172,7 @@ const Sidebar = () => {
         >
           <IoSettingsSharp />  <span>Settings</span>
         </button>
-        <button
+        <button onClick={handleLogout}
           className="flex items-center space-x-2 text-destructive font-medium hover:text-destructive/90 transition-colors text-sm "
         >
           <FaSignOutAlt /> <span>Logout</span>

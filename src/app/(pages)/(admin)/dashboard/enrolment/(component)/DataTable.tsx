@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Table,
   TableBody,
@@ -8,133 +9,136 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { EnrollmentHistoryItem, fetchEnrollments, setCurrentPage, setSearchQuery } from "@/app/store/enrollementSlice";
 
-interface EnrollmentHistoryItem {
-  id: string;
-  name: string;
-  email: string;
-  courseTitle: string;
-  startDate: string;
-  endDate: string;
-}
 
-interface Column<T> {
-  key: keyof T;
-  label: string;
-}
+const DataTable: React.FC = () => {
+  const dispatch = useDispatch<any>();
+  const {
+    filteredItems,
+    loading,
+    error,
+    currentPage,
+    itemsPerPage,
+    searchQuery
+  } = useSelector((state:any) => state.enrollment);
 
-interface DataTableProps<T extends { id: string }> {
-  data: T[];
-  columns: Column<T>[];
-  isLoading?: boolean;
-}
+  useEffect(() => {
+    dispatch(fetchEnrollments());
+  }, [dispatch]);
 
-const columns: Column<EnrollmentHistoryItem>[] = [
-  { key: "name", label: "Name" },
-  { key: "email", label: "Email" },
-  { key: "courseTitle", label: "Course Title" },
-  { key: "startDate", label: "Start Date" },
-  { key: "endDate", label: "End Date" },
-];
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchQuery(e.target.value));
+  };
 
-const DataTable = <T extends { id: string }>({
-  data,
-  columns,
-  isLoading,
-}: DataTableProps<T>) => {
-  const [page, setPage] = React.useState(1);
-  const rowsPerPage = 3;
+  const handlePageChange = (page: number) => {
+    dispatch(setCurrentPage(page));
+  };
 
-  const pages = Math.ceil(data.length / rowsPerPage);
-  const currentData = data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+  const columns = [
+    { key: "name", label: "Name" },
+    { key: "email", label: "Email" },
+    { key: "courseTitle", label: "Course Title" },
+    { key: "startDate", label: "Start Date" },
+    { key: "endDate", label: "End Date" },
+  ];
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
   return (
-    <div className="w-full space-y-4 bg-white p-4 rounded-lg">
-      <div className="rounded-md border">
+    <div className="w-full space-y-2 bg-white p-6 rounded-lg">
+
+      <div className="mb-2 flex items-center space-x-2">
+        <input
+          type="text"
+          placeholder="Search by name or email"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <div className="rounded-md border h-[300px] overflow-y-scroll">
         <Table>
           <TableCaption>A list of enrollment history.</TableCaption>
           <TableHeader>
             <TableRow>
               {columns.map((col) => (
-                <TableHead 
-                  key={String(col.key)}
-                  className="text-left"
-                >
+                <TableHead key={col.key} className="text-left px-4 py-2 font-semibold text-gray-600">
                   {col.label}
                 </TableHead>
               ))}
             </TableRow>
           </TableHeader>
           <TableBody>
-            {isLoading ? (
+            {loading ? (
               <TableRow>
-                {columns.map((col) => (
-                  <TableCell 
-                    key={String(col.key)}
-                    className="h-24 text-center"
-                  >
-                    {col.key === columns[0].key && (
-                      <div className="flex items-center justify-center">
-                        <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-gray-900"></div>
-                        <span className="ml-2">Loading...</span>
-                      </div>
-                    )}
-                  </TableCell>
-                ))}
+                <TableCell colSpan={columns.length} className="text-center py-6">
+                  <div className="flex items-center justify-center">
+                    <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-gray-900"></div>
+                    <span className="ml-2 text-gray-600">Loading...</span>
+                  </div>
+                </TableCell>
               </TableRow>
-            ) : (
-              currentData.map((item) => (
-                <TableRow key={item.id}>
+            ) : currentItems.length > 0 ? (
+              currentItems.map((item:any) => (
+                <TableRow key={`${item.id}-${item.courseTitle}`}>
                   {columns.map((col) => (
-                    <TableCell
-                      key={String(col.key)}
-                    >
-                      {item[col.key] as React.ReactNode}
+                    <TableCell key={col.key} className="px-4 py-2 text-sm text-gray-700">
+                      {item[col.key as keyof EnrollmentHistoryItem]}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="text-center py-6 text-gray-500">
+                  No data available.
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
 
-      {pages > 1 && (
-        <div className="flex items-center justify-between px-2">
-          <div className="text-sm text-gray-500">
-            Page {page} of {pages}
-          </div>
-          <div className="space-x-2">
-            <button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page === 1}
-              className="rounded-md border px-3 py-2 text-sm font-medium disabled:opacity-50"
-            >
-              Previous
-            </button>
-            {Array.from({ length: pages }, (_, i) => i + 1).map((pageNumber) => (
-              <button
-                key={pageNumber}
-                onClick={() => setPage(pageNumber)}
-                className={`rounded-md px-3 py-2 text-sm font-medium ${
-                  page === pageNumber
-                    ? "bg-blue-500 text-white"
-                    : "border text-gray-700 hover:bg-gray-50"
-                }`}
-              >
-                {pageNumber}
-              </button>
-            ))}
-            <button
-              onClick={() => setPage((p) => Math.min(pages, p + 1))}
-              disabled={page === pages}
-              className="rounded-md border px-3 py-2 text-sm font-medium disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
+      <div className="flex justify-between items-center mt-4">
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => handlePageChange(1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300"
+          >
+            First
+          </button>
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300"
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300"
+          >
+            Next
+          </button>
+          <button
+            onClick={() => handlePageChange(totalPages)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300"
+          >
+            Last
+          </button>
         </div>
-      )}
+        <span className="text-gray-600">
+          Page {currentPage} of {totalPages}
+        </span>
+      </div>
     </div>
   );
 };

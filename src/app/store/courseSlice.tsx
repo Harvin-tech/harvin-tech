@@ -1,24 +1,11 @@
 // redux/courseSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface CourseData {
-  id: string;
-  title: string;
-  price: string;
-  desc: string;
-  instructor: string;
-  rating: number;
-  reviewsCount: number;
-  originalPrice?: number;
-}
 
-interface CourseState {
-  courses: CourseData[];
-  loading: boolean;
-}
 
-const initialState: CourseState = {
+const initialState = {
   courses: [],
+  allCourses:[],
   loading: true,
 };
 
@@ -26,8 +13,13 @@ const courseSlice = createSlice({
   name: 'courses',
   initialState,
   reducers: {
-    setCourses: (state, action: PayloadAction<CourseData[]>) => {
-      state.courses = action.payload;
+    setOneCourses:(state,action:any)=>{
+      state.courses=action.payload;
+      state.loading=false;
+
+    },
+    setCourses: (state, action: any) => {
+      state.allCourses = action.payload;
       state.loading = false;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -36,6 +28,6 @@ const courseSlice = createSlice({
   },
 });
 
-export const { setCourses, setLoading } = courseSlice.actions;
+export const { setCourses, setLoading,setOneCourses } = courseSlice.actions;
 
 export default courseSlice.reducer;

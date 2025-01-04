@@ -29,7 +29,7 @@ interface CourseDetailProps {
 }
 
 const CourseDetails = ({ course }:any) => {
-  console.log(course, "course")
+  // console.log(course, "course")
   return (
     <div className="p-4">
       
