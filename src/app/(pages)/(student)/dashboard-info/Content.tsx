@@ -7,14 +7,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Mousewheel } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
-import { StatCard } from "./(component)/StatsCard";
-import { VideoCard } from "./(component)/VideoCard";
-import { LineChart } from "./(component)/LineChart";
+
 import { setCourses, setLoading } from "@/app/store/courseSlice";
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from "sonner";
+import { LineChart } from "../../(admin)/dashboard/(component)/LineChart";
+import { StatCard } from "../../(admin)/dashboard/(component)/StatsCard";
+import { VideoCard } from "../../(admin)/dashboard/(component)/VideoCard";
 
-const Dashboard = () => {
+const StudentDashboard = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   
@@ -76,10 +77,8 @@ const Dashboard = () => {
       <div className="max-w-screen-xl">
         <div className="font-semibold mb-2 text-base md:text-lg">Overview</div>
         <div className="relative bg-white p-3 md:p-4 lg:p-6 border rounded-md shadow-sm">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
-            <StatCard title="Number of Courses" value={allCourses?.length} />
-            <StatCard title="Number of Enrolment" value={1502} />
-            <StatCard title="Number of Students" value={302} />
+          <div className="grid  place-items-center gap-3 mb-4">
+            <StatCard title="Number of Active Courses" value={3} />
           </div>
 
           <div className="w-full h-[200px] md:h-[260px] lg:h-[300px]">
@@ -128,4 +127,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default StudentDashboard;

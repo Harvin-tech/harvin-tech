@@ -16,18 +16,27 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { useState, useEffect } from 'react';
 import { authService } from "@/api";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const pathname = usePathname();
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
-  const[isAuthenticated, setIsAuthenticated] = useState(false);
-  const[user, setUser] = useState<any>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
+  const { user: currentUser } = useSelector((state: any) => state.auth);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // useEffect(() => {
+  //   setMounted(true);
+  //   // Get user from localStorage on component mount
+  //   const storedUser = localStorage.getItem('user');
+  //   if (storedUser) {
+  //     const parsedUser = JSON.parse(storedUser);
+  //     setUser(parsedUser);
+  //     setIsAuthenticated(true);
+  //   }
+  // }, []);
 
   const handleLogout = async () => {
     try {
@@ -39,43 +48,71 @@ const Sidebar = () => {
       window.location.href = '/login';
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Error logging out');
-      // Still set authenticated to false and clear user state
       setIsAuthenticated(false);
       setUser(null);
     }
   };
 
-  const sidebarItems = [
-    { icon: <FaChartLine />, label: 'Dashboard', href: '/dashboard', active: pathname === '/dashboard' },
-    { icon: <FaInbox />, label: 'Inbox', href: '/dashboard/inbox', active: pathname === '/dashboard/inbox' },
-    { icon: <FaUserGraduate />, label: 'Enrolment', href: '/dashboard/enrolment', active: pathname === '/dashboard/enrolment' },
+  const studentSidebarItems = [
+    { 
+      icon: <FaChartLine />, 
+      label: 'Dashboard', 
+      href: '/dashboard-info', 
+      active: pathname === '/dashboard' 
+    },
+    { 
+      icon: <FaUserCog />, 
+      label: 'Profile', 
+      href: '/dashboard-info/profile', 
+      active: pathname === '/dashboard/profile' 
+    },
+    { 
+      icon: <FaBookOpen />, 
+      label: 'All Courses', 
+      href: '/dashboard-info/all-course', 
+      active: pathname === '/dashboard/all-courses' 
+    },
+  ];
+
+  const adminSidebarItems = [
+    { 
+      icon: <FaChartLine />, 
+      label: 'Dashboard', 
+      href: '/dashboard', 
+      active: pathname === '/dashboard' 
+    },
+    { 
+      icon: <FaUserGraduate />, 
+      label: 'Enrolment', 
+      href: '/dashboard/enrolment', 
+      active: pathname === '/dashboard/enrolment' 
+    },
     { 
       icon: <FaBookOpen />, 
       label: 'Manage Course', 
       href: '/dashboard/manage-course', 
       active: pathname === '/dashboard/manage-course',
-      subItems: [
-        { label: 'Add New Courses', href: '/dashboard/manage-course/add-new-course', active: pathname === '/dashboard/manage-course/all' },
-        
-      ]
     },
     { 
       icon: <FaUsers />, 
       label: 'Users', 
       href: '/dashboard/users', 
       active: pathname === '/dashboard/users',
-      subItems: [
-        { label: 'Admins', href: '/dashboard/users/admins', active: pathname === '/dashboard/users/admins' },
-        { label: 'Instructors', href: '/dashboard/users/instructors', active: pathname === '/dashboard/users/instructors' },
-        { label: 'Students', href: '/dashboard/users/students', active: pathname === '/dashboard/users/students' },
-      ]
     },
-    { icon: <FaUserCog />, label: 'Manage Profile', href: '/dashboard/manage-profile', active: pathname === '/dashboard/manage-profile' },
+    { 
+      icon: <FaUserCog />, 
+      label: 'Manage Profile', 
+      href: '/dashboard/manage-profile', 
+      active: pathname === '/dashboard/manage-profile' 
+    },
   ];
+
+  // Determine which sidebar items to show based on user role
+  const sidebarItems = currentUser?.role === 'student' ? adminSidebarItems : studentSidebarItems;
 
   if (!mounted) {
     return (
-      <aside className="sticky top-0 self-start w-1/6 bg-background p-5 flex flex-col justify-between ">
+      <aside className="sticky top-[83px] h-screen w-[210px] xl:w-[250px] bg-card p-4 shadow-lg hidden xl:block overflow-y-auto">
         <div>
           <div className="text-xl font-bold text-foreground flex items-center gap-2 mb-4">
             <div className="relative size-6">
@@ -87,10 +124,10 @@ const Sidebar = () => {
             <ul className="space-y-4">
               {sidebarItems.map((item, index) => (
                 <li key={index}>
-                  <div className={`flex items-center space-x-2 transition-colors
+                  <Link href={item.href} className={`flex items-center space-x-2 transition-colors 
                     ${item.active ? 'text-primary' : 'text-muted-foreground'}`}>
                     {item.icon} <span>{item.label}</span>
-                  </div>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -101,65 +138,25 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="sticky top-[55px] md:top-[83px] h-screen w-[210px] xl:w-[250px] bg-background p-3 flex flex-col justify-between overflow-y-auto">
+    <aside className="sticky top-[83px] h-screen w-[210px] xl:w-[250px] bg-card p-4 shadow-lg hidden xl:block overflow-y-auto">
       <div>
-        <div className="text-xl font-bold  text-foreground flex items-center gap-2 mb-4">
+        <div className="text-xl font-bold text-foreground flex items-center gap-2 mb-4">
           <div className="relative size-6">
-
             <Image src="/Images/dashboard/logo.png" alt="Harvin Logo" fill className="object-contain" />
           </div>
-          <h2 className="text-lg font-bold  text-foreground">HARVIN</h2>
+          <h2 className="text-lg font-bold text-foreground">HARVIN</h2>
         </div>
         <nav>
           <ul className="space-y-4 whitespace-nowrap">
             {sidebarItems.map((item, index) => (
               <li key={index}>
-                {item.subItems ? (
-                  <div>
-                    <div className="flex items-center justify-between w-full">
-                      <Link
-                        href={item.href}
-                        className={`flex items-center space-x-2 transition-colors flex-1 text-sm 
-                          ${item.active ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
-                      >
-                        {item.icon} <span>{item.label}</span>
-                      </Link>
-                      <button
-                        onClick={() => setExpandedMenu(expandedMenu === item.label ? null : item.label)}
-                        className="p-1 text-sm "
-                      >
-                        <MdOutlineKeyboardArrowRight className={`transform transition-transform duration-200 ${
-                          expandedMenu === item.label ? 'rotate-90' : ''
-                        }`} />
-                      </button>
-                    </div>
-                    <div className={`overflow-hidden transition-all duration-200 ease-in-out ${
-                      expandedMenu === item.label ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
-                    }`}>
-                      <ul className="ml-6 mt-2 space-y-2">
-                        {item.subItems.map((subItem, subIndex) => (
-                          <li key={`${index}-${subIndex}`}>
-                            <Link
-                              href={subItem.href}
-                              className={`block transition-colors text-sm 
-                                ${subItem.active ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
-                            >
-                              {subItem.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                ) : (
-                  <Link
-                    href={item.href}
-                    className={`flex items-center space-x-2 transition-colors text-sm 
-                      ${item.active ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
-                  >
-                    {item.icon} <span>{item.label}</span>
-                  </Link>
-                )}
+                <Link
+                  href={item.href}
+                  className={`flex items-center space-x-2 transition-colors text-base 
+                    ${item.active ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
+                >
+                  {item.icon} <span>{item.label}</span>
+                </Link>
               </li>
             ))}
           </ul>
@@ -168,12 +165,13 @@ const Sidebar = () => {
       
       <div className="space-y-4">
         <button
-          className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors text-sm "
+          className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors "
         >
-          <IoSettingsSharp />  <span>Settings</span>
+          <IoSettingsSharp /> <span>Settings</span>
         </button>
-        <button onClick={handleLogout}
-          className="flex items-center space-x-2 text-destructive font-medium hover:text-destructive/90 transition-colors text-sm "
+        <button 
+          onClick={handleLogout}
+          className="flex items-center space-x-2 text-destructive font-medium hover:text-destructive/90 transition-colors text-sm"
         >
           <FaSignOutAlt /> <span>Logout</span>
         </button>

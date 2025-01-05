@@ -109,33 +109,33 @@ const DataTable: React.FC = () => {
           <button
             onClick={() => handlePageChange(1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300"
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300 text-sm"
           >
             First
           </button>
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300"
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300 text-sm"
           >
             Previous
           </button>
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300"
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300 text-sm"
           >
             Next
           </button>
           <button
             onClick={() => handlePageChange(totalPages)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300"
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300 text-sm"
           >
             Last
           </button>
         </div>
-        <span className="text-gray-600">
+        <span className="text-gray-600 text-sm">
           Page {currentPage} of {totalPages}
         </span>
       </div>

@@ -1,9 +1,7 @@
-'use client'
-
 import ProfilePage from '@/app/(pages)/(component)/Profile'
 import React from 'react'
 
-const ManageProfile = () => {
+const page = () => {
   return (
     <div>
       <ProfilePage isCreatingUser={false}/>
@@ -11,4 +9,4 @@ const ManageProfile = () => {
   )
 }
 
-export default ManageProfile
+export default page
