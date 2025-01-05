@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import EnrolmentHistory from "./EnrolmentHistory";
 import { toast } from "sonner";
 import { Combobox } from "@/components/ui/combobox";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
+import ProfilePage from "@/app/(pages)/(component)/Profile";
 
 interface User {
   _id: string;
@@ -20,6 +22,7 @@ const EnrolmentForm: React.FC = () => {
   const [courses, setCourses] = useState<Array<{ value: string; label: string }>>([]);
   const [users, setUsers] = useState<Array<{ value: string; label: string }>>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     async function getUsers() {
@@ -33,7 +36,6 @@ const EnrolmentForm: React.FC = () => {
         );
       } catch (error) {
         console.error("Error fetching users:", error);
-        // toast.error("Something went wrong.");
       }
     }
     getUsers();
@@ -44,7 +46,7 @@ const EnrolmentForm: React.FC = () => {
       setLoading(true);
       try {
         const response = await getCourses();
-        console.log(response,"inside enrolmentform")
+        console.log(response, "inside enrolmentform");
         setCourses(
           response.data.courses.map((item: Course) => ({
             value: item._id,
@@ -53,7 +55,6 @@ const EnrolmentForm: React.FC = () => {
         );
       } catch (error) {
         console.error("Error fetching courses:", error);
-        // toast.error("Failed to load courses.");
       } finally {
         setLoading(false);
       }
@@ -62,12 +63,10 @@ const EnrolmentForm: React.FC = () => {
   }, []);
 
   const handleSubmit = async () => {
-    // console.log(selectedCourse,"id id id")
     if (!selectedUser || !selectedCourse) {
       toast.error("Please select both a user and a course!");
       return;
     }
-    
 
     try {
       setLoading(true);
@@ -115,14 +114,47 @@ const EnrolmentForm: React.FC = () => {
           />
         </div>
 
-        <div className="mt-4">
+        <div className="mt-4 space-x-2">
           <button
             onClick={handleSubmit}
             disabled={!selectedUser || !selectedCourse || loading}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300"
+            className="px-4 py-2 bg-primary/90 hover:bg-primary text-white rounded-md disabled:bg-gray-300 text-sm"
           >
             {loading ? "Submitting..." : "Submit"}
           </button>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <button
+                className="px-4 py-2 bg-primary/90 hover:bg-primary text-white rounded-md text-sm transition-colors duration-300"
+              >
+                Create user
+              </button>
+            </DialogTrigger>
+            <DialogContent className="h-[600px] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle></DialogTitle>
+              </DialogHeader>
+              {/* Form fields for creating a user */}
+              <ProfilePage isCreatingUser={true}/>
+              <DialogFooter>
+                <button
+                  onClick={() => setIsDialogOpen(false)}
+                  className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-700 hover:bg-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    // toast.success("User created successfully!");
+                    setIsDialogOpen(false);
+                  }}
+                  className="px-4 py-2 bg-primary/90 hover:bg-primary text-white rounded-md text-sm"
+                >
+                  Create
+                </button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 

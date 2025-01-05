@@ -73,11 +73,18 @@ const config: Config = {
   				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
-  		spacing: {
-  			navbarHeight: 'var(--navbarHeight)',
-  			bothNavHeight: 'var(--bothNavHeight)',
-  			secondaryNavbarHeight: 'var(--secondaryNavbarHeight)'
-  		},
+		  spacing: {
+			sm: '8px',
+			md: '16px',
+			lg: '24px',
+			xl: '32px',
+		  },
+		  fontSize: {
+			sm: ['12px', '16px'],
+			base: ['14px', '20px'],
+			lg: ['18px', '28px'],
+			xl: ['24px', '36px'],
+		  },
   		borderRadius: {
   			DEFAULT: 'var(--radius)',
   			lg: 'var(--radius)',
