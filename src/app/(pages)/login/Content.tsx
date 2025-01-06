@@ -19,11 +19,6 @@ export default function Login() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-
-
-  
-
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -48,7 +43,7 @@ export default function Login() {
     try {
       const res = await authService.login(formData);
 
-      dispatch(loginSuccess(res.data));
+      dispatch(loginSuccess(res.data.user));
       toast.dismiss(loadingToast);
       toast.success('Signed in successfully!');
       router.push('/dashboard');
