@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
+} from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 interface CourseFiltersProps {
   filters: {
@@ -104,12 +104,14 @@ const CourseFilters: React.FC<CourseFiltersProps> = ({
             </SelectContent>
           </Select>
 
-          <Button variant="default" className="text-white" onClick={applyFilters}>
+          <Button
+            variant="default"
+            className="text-white"
+            onClick={applyFilters}
+          >
             Filter
           </Button>
         </div>
-
-      
       </CardContent>
     </Card>
   );

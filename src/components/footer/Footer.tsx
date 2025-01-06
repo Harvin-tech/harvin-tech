@@ -51,9 +51,7 @@ const Footer = () => {
           {/* Links and Copyright */}
           <div className="space-y-2 text-xs text-muted-foreground">
             <div className="flex flex-wrap justify-center text-center gap-4">
-              <p className="border-r-2 border-border pr-4">
-                Careers
-              </p>
+              <p className="border-r-2 border-border pr-4">Careers</p>
               <p>Privacy Policy</p>
               <p>Term & Condition</p>
             </div>
@@ -63,7 +61,9 @@ const Footer = () => {
           </div>
 
           {/* Language Selector */}
-          <div className="text-center md:text-right text-muted-foreground">English</div>
+          <div className="text-center md:text-right text-muted-foreground">
+            English
+          </div>
         </div>
       </div>
     </div>

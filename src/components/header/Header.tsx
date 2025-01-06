@@ -26,17 +26,23 @@ const Header = () => {
   const searchParams = useSearchParams();
   const courseId = searchParams?.get('course_id');
   const dispatch = useDispatch();
-  
+
   // Get auth state from Redux instead of local state
-  const {isAuthenticated, user: userData,error,loading} = useSelector((state: any) => state.auth);
+  const {
+    isAuthenticated,
+    user: userData,
+    error,
+    loading,
+  } = useSelector((state: any) => state.auth);
 
   const role = userData?.role === 'admin';
-  
 
   const route = [
     { title: 'Home', path: '/' },
     { title: 'Course', path: '/courses' },
-    ...( role ? [{ title: 'Admin', path: '/dashboard', requiresAuth: true }] : []),
+    ...(role
+      ? [{ title: 'Admin', path: '/dashboard', requiresAuth: true }]
+      : []),
   ];
 
   const handleLogout = async () => {
@@ -47,7 +53,7 @@ const Header = () => {
       router.push('/login');
     } catch (error: any) {
       // toast.error(error.response?.data?.message || 'Error logging out');
-      toast.success(error.response?.data?.message || 'Error logging out')
+      toast.success(error.response?.data?.message || 'Error logging out');
       // Still logout on error to maintain consistent state
     }
   };
@@ -93,7 +99,7 @@ const Header = () => {
   return (
     <div className="sticky top-0 left-0 right-0 bg-background z-[20] h-[55px] sm:h-[67px] md:h-[83px] border-b border-border shadow-sm">
       <div className="lg:max-w-screen-xl lg:mx-auto flex justify-between items-center px-4 sm:px-6">
-        <Link href={ "/"}>
+        <Link href={'/'}>
           <div className="relative size-12 md:size-20">
             <Image
               className="absolute"
@@ -177,7 +183,7 @@ const Header = () => {
                     if (item.requiresAuth) {
                       e.preventDefault();
                       if (!userData._id) {
-                        toast.error("Please login first to access dashboard");
+                        toast.error('Please login first to access dashboard');
                         setTimeout(() => {
                           router.push('/login');
                         }, 1000);
@@ -207,7 +213,7 @@ const Header = () => {
                   if (item.requiresAuth) {
                     e.preventDefault();
                     if (!userData._id) {
-                      toast.error("Please login first to access dashboard");
+                      toast.error('Please login first to access dashboard');
                       setTimeout(() => {
                         router.push('/login');
                       }, 1000);

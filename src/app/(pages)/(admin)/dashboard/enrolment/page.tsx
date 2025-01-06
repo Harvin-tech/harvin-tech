@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import React from 'react'
-import CourseEnrolment from './(component)/CourseEnrolment'
+import React from 'react';
+import CourseEnrolment from './(component)/CourseEnrolment';
 
 const Enrolment = () => {
   return (
     <div>
       <CourseEnrolment />
     </div>
-  )
-}
+  );
+};
 
-export default Enrolment
+export default Enrolment;

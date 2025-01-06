@@ -1,19 +1,26 @@
 'use client';
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { getUserCourse, updateCourse } from "@/api";
-import CourseFilters from "./CourseFilters";
-import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, XCircle } from "lucide-react";
-import { toast } from "sonner";
-import StudentProfile from "./StudentProfile";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { getUserCourse, updateCourse } from '@/api';
+import CourseFilters from './CourseFilters';
+import { Input } from '@/components/ui/input';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, XCircle } from 'lucide-react';
+import { toast } from 'sonner';
+import StudentProfile from './StudentProfile';
 
 interface Course {
   id: string;
   title: string;
-  status: "lock" | "unlock";
+  status: 'lock' | 'unlock';
   price?: string;
   desc?: string;
   instructor?: string;
@@ -29,11 +36,11 @@ const StudentDashboard: React.FC = () => {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
 
   const [filters, setFilters] = useState({
-    category: "all",
-    status: "all",
-    instructor: "all",
-    price: "all",
-    search: "",
+    category: 'all',
+    status: 'all',
+    instructor: 'all',
+    price: 'all',
+    search: '',
   });
 
   const router = useRouter();
@@ -45,12 +52,12 @@ const StudentDashboard: React.FC = () => {
         const response = await getUserCourse(userId);
         const userCourses = response.data.courses.map((item: any) => ({
           id: item?.courseId,
-          title: item?.courseDetails?.title || "No Title",
-          category: item?.courseDetails?.category || "No Category",
-          status: item?.courseDetails?.status || "lock",
-          price: item?.courseDetails?.price || "N/A",
-          desc: item?.courseDetails?.description || "No Description",
-          instructor: item?.courseDetails?.instructor || "Unknown Instructor",
+          title: item?.courseDetails?.title || 'No Title',
+          category: item?.courseDetails?.category || 'No Category',
+          status: item?.courseDetails?.status || 'lock',
+          price: item?.courseDetails?.price || 'N/A',
+          desc: item?.courseDetails?.description || 'No Description',
+          instructor: item?.courseDetails?.instructor || 'Unknown Instructor',
           rating: item?.courseDetails?.rating || 0,
           reviewsCount: item?.courseDetails?.reviewsCount || 0,
         }));
@@ -58,26 +65,26 @@ const StudentDashboard: React.FC = () => {
         setCourses(userCourses);
         setFilteredCourses(userCourses);
       } catch (error) {
-        console.error("Error fetching courses:", error);
-        toast.error("Error Loading Courses", {
-          description: "Failed to load courses. Please try again.",
-          className: "destructive",
+        console.error('Error fetching courses:', error);
+        toast.error('Error Loading Courses', {
+          description: 'Failed to load courses. Please try again.',
+          className: 'destructive',
         });
       } finally {
         setLoading(false);
       }
     };
 
-    const userData = localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user") as string)
+    const userData = localStorage.getItem('user')
+      ? JSON.parse(localStorage.getItem('user') as string)
       : null;
 
     if (!userData) {
-      toast.error("Authentication Required", {
-        description: "Please log in to view courses.",
-        className: "destructive",
+      toast.error('Authentication Required', {
+        description: 'Please log in to view courses.',
+        className: 'destructive',
       });
-      router.push("/login");
+      router.push('/login');
     } else {
       fetchCourses(userData._id);
     }
@@ -86,15 +93,16 @@ const StudentDashboard: React.FC = () => {
   const applyFilters = () => {
     const filtered = courses.filter((course) => {
       const matchesCategory =
-        filters.category === "all" || course.category === filters.category;
+        filters.category === 'all' || course.category === filters.category;
       const matchesStatus =
-        filters.status === "all" || course.status === filters.status;
+        filters.status === 'all' || course.status === filters.status;
       const matchesInstructor =
-        filters.instructor === "all" || course.instructor === filters.instructor;
+        filters.instructor === 'all' ||
+        course.instructor === filters.instructor;
       const matchesPrice =
-        filters.price === "all" || course.price === filters.price;
+        filters.price === 'all' || course.price === filters.price;
       const matchesSearch =
-        filters.search === "" ||
+        filters.search === '' ||
         course.title.toLowerCase().includes(filters.search.toLowerCase());
 
       return (
@@ -106,11 +114,10 @@ const StudentDashboard: React.FC = () => {
       );
     });
 
-
     setFilteredCourses(filtered);
-    toast.success("Filters Applied", {
+    toast.success('Filters Applied', {
       description: `Showing ${filtered.length} of ${courses.length} courses`,
-      className: "bg-blue-50 border-blue-200",
+      className: 'bg-blue-50 border-blue-200',
     });
   };
 
@@ -132,38 +139,43 @@ const StudentDashboard: React.FC = () => {
     setFilteredCourses(filtered);
   };
 
-  const handleLockCourse = async (courseId: string, newStatus: string, courseTitle: string, category: string, description: string) => {
+  const handleLockCourse = async (
+    courseId: string,
+    newStatus: string,
+    courseTitle: string,
+    category: string,
+    description: string
+  ) => {
     try {
       const payload = {
-        status: newStatus === "Lock" ? 0 : 1,
+        status: newStatus === 'Lock' ? 0 : 1,
         title: courseTitle,
         category: category,
-        description: description
+        description: description,
       };
 
       const response = await updateCourse(courseId, payload);
 
-
       setCourses((prevCourses) =>
         prevCourses.map((course) =>
           course.id === courseId
-            ? { ...course, status: newStatus === "Lock" ? "lock" : "unlock" }
+            ? { ...course, status: newStatus === 'Lock' ? 'lock' : 'unlock' }
             : course
         )
       );
       window.location.reload();
 
-      toast.success("Course Updated Successfully", {
+      toast.success('Course Updated Successfully', {
         description: `${courseTitle} has been ${newStatus.toLowerCase()}ed`,
-        className: "bg-green-50 border-green-200",
+        className: 'bg-green-50 border-green-200',
       });
 
       setSelectedCourse(null);
     } catch (error) {
-      console.error("Error updating course:", error);
-      toast.error("Update Failed", {
+      console.error('Error updating course:', error);
+      toast.error('Update Failed', {
         description: `Failed to ${newStatus.toLowerCase()} ${courseTitle}`,
-        className: "destructive",
+        className: 'destructive',
       });
     } finally {
       setSelectedCourse(null);
@@ -183,7 +195,9 @@ const StudentDashboard: React.FC = () => {
       <StudentProfile
         name="Harvin"
         email="harvin@gmail.com"
-        activeCourses={courses.filter((course) => Number(course.status) === 1).length}
+        activeCourses={
+          courses.filter((course) => Number(course.status) === 1).length
+        }
       />
       <div className="bg-card rounded-md shadow-sm p-4">
         <CourseFilters
@@ -215,7 +229,10 @@ const StudentDashboard: React.FC = () => {
             </thead>
             <tbody>
               {filteredCourses.map((course, index) => (
-                <tr key={index} className="hover:bg-muted/50 text-center text-sm">
+                <tr
+                  key={index}
+                  className="hover:bg-muted/50 text-center text-sm"
+                >
                   <td className="p-4 text-muted-foreground">{index + 1}</td>
                   <td className="p-4 text-primary tracking-tight cursor-pointer">
                     {course.title}
@@ -235,14 +252,23 @@ const StudentDashboard: React.FC = () => {
                     )}
                   </td>
                   <td className="p-4">
-                    <Dialog open={selectedCourse === course.id} onOpenChange={(open) => !open && setSelectedCourse(null)}>
+                    <Dialog
+                      open={selectedCourse === course.id}
+                      onOpenChange={(open) => !open && setSelectedCourse(null)}
+                    >
                       <DialogTrigger asChild>
                         {Number(course.status) === 1 ? (
-                          <Button onClick={() => setSelectedCourse(course.id)} variant="outline">
+                          <Button
+                            onClick={() => setSelectedCourse(course.id)}
+                            variant="outline"
+                          >
                             Lock
                           </Button>
                         ) : (
-                          <Button onClick={() => setSelectedCourse(course.id)} variant="outline">
+                          <Button
+                            onClick={() => setSelectedCourse(course.id)}
+                            variant="outline"
+                          >
                             Unlock
                           </Button>
                         )}
@@ -251,12 +277,18 @@ const StudentDashboard: React.FC = () => {
                       <DialogContent>
                         <DialogHeader>
                           <DialogTitle>
-                            {Number(course.status) === 1 ? "Lock Course" : "Unlock Course"}
+                            {Number(course.status) === 1
+                              ? 'Lock Course'
+                              : 'Unlock Course'}
                           </DialogTitle>
                           <DialogDescription>
-                            Are you sure you want to{" "}
-                            {Number(course.status) === 1 ? "Lock" : "Unlock"} the{" "}
-                            <span className="font-bold text-foreground">{course.title}</span> course?
+                            Are you sure you want to{' '}
+                            {Number(course.status) === 1 ? 'Lock' : 'Unlock'}{' '}
+                            the{' '}
+                            <span className="font-bold text-foreground">
+                              {course.title}
+                            </span>{' '}
+                            course?
                           </DialogDescription>
                         </DialogHeader>
                         <div className="flex justify-end gap-2">
@@ -268,13 +300,15 @@ const StudentDashboard: React.FC = () => {
                           </Button>
                           <Button
                             className="bg-primary text-white"
-                            onClick={() => handleLockCourse(
-                              course.id,
-                              Number(course.status) === 1 ? "Lock" : "Unlock",
-                              course.title,
-                              course.category || "No Category",
-                              course.desc || "No Description"
-                            )}
+                            onClick={() =>
+                              handleLockCourse(
+                                course.id,
+                                Number(course.status) === 1 ? 'Lock' : 'Unlock',
+                                course.title,
+                                course.category || 'No Category',
+                                course.desc || 'No Description'
+                              )
+                            }
                           >
                             Confirm
                           </Button>

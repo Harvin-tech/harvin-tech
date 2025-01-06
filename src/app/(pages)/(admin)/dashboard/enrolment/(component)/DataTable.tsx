@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Table,
@@ -8,9 +8,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { EnrollmentHistoryItem, fetchEnrollments, setCurrentPage, setSearchQuery } from "@/app/store/enrollementSlice";
-
+} from '@/components/ui/table';
+import {
+  EnrollmentHistoryItem,
+  fetchEnrollments,
+  setCurrentPage,
+  setSearchQuery,
+} from '@/app/store/enrollementSlice';
 
 const DataTable: React.FC = () => {
   const dispatch = useDispatch<any>();
@@ -20,8 +24,8 @@ const DataTable: React.FC = () => {
     error,
     currentPage,
     itemsPerPage,
-    searchQuery
-  } = useSelector((state:any) => state.enrollment);
+    searchQuery,
+  } = useSelector((state: any) => state.enrollment);
 
   useEffect(() => {
     dispatch(fetchEnrollments());
@@ -36,11 +40,11 @@ const DataTable: React.FC = () => {
   };
 
   const columns = [
-    { key: "name", label: "Name" },
-    { key: "email", label: "Email" },
-    { key: "courseTitle", label: "Course Title" },
-    { key: "startDate", label: "Start Date" },
-    { key: "endDate", label: "End Date" },
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+    { key: 'courseTitle', label: 'Course Title' },
+    { key: 'startDate', label: 'Start Date' },
+    { key: 'endDate', label: 'End Date' },
   ];
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -50,7 +54,6 @@ const DataTable: React.FC = () => {
 
   return (
     <div className="w-full space-y-2 bg-white p-6 rounded-lg">
-
       <div className="mb-2 flex items-center space-x-2">
         <input
           type="text"
@@ -67,7 +70,10 @@ const DataTable: React.FC = () => {
           <TableHeader>
             <TableRow>
               {columns.map((col) => (
-                <TableHead key={col.key} className="text-left px-4 py-2 font-semibold text-gray-600">
+                <TableHead
+                  key={col.key}
+                  className="text-left px-4 py-2 font-semibold text-gray-600"
+                >
                   {col.label}
                 </TableHead>
               ))}
@@ -76,7 +82,10 @@ const DataTable: React.FC = () => {
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={columns.length} className="text-center py-6">
+                <TableCell
+                  colSpan={columns.length}
+                  className="text-center py-6"
+                >
                   <div className="flex items-center justify-center">
                     <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-gray-900"></div>
                     <span className="ml-2 text-gray-600">Loading...</span>
@@ -84,10 +93,13 @@ const DataTable: React.FC = () => {
                 </TableCell>
               </TableRow>
             ) : currentItems.length > 0 ? (
-              currentItems.map((item:any) => (
+              currentItems.map((item: any) => (
                 <TableRow key={`${item.id}-${item.courseTitle}`}>
                   {columns.map((col) => (
-                    <TableCell key={col.key} className="px-4 py-2 text-sm text-gray-700">
+                    <TableCell
+                      key={col.key}
+                      className="px-4 py-2 text-sm text-gray-700"
+                    >
                       {item[col.key as keyof EnrollmentHistoryItem]}
                     </TableCell>
                   ))}
@@ -95,7 +107,10 @@ const DataTable: React.FC = () => {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="text-center py-6 text-gray-500">
+                <TableCell
+                  colSpan={columns.length}
+                  className="text-center py-6 text-gray-500"
+                >
                   No data available.
                 </TableCell>
               </TableRow>

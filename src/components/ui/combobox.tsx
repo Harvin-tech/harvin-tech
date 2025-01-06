@@ -1,7 +1,7 @@
-import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import * as React from 'react';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -9,13 +9,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from '@/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-
+} from '@/components/ui/popover';
 
 interface ComboboxProps {
   items: Array<{ value: string; label: string }>;
@@ -50,7 +49,9 @@ export function Combobox({
       </PopoverTrigger>
       <PopoverContent className=" p-0 w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
         <Command>
-          <CommandInput placeholder={`Search ${placeholder.toLowerCase()}...`} />
+          <CommandInput
+            placeholder={`Search ${placeholder.toLowerCase()}...`}
+          />
           <CommandList>
             <CommandEmpty>No {placeholder.toLowerCase()} found.</CommandEmpty>
             <CommandGroup>
@@ -65,8 +66,8 @@ export function Combobox({
                   {item.label}
                   <Check
                     className={cn(
-                      "ml-auto",
-                      selectedValue === item.value ? "opacity-100" : "opacity-0"
+                      'ml-auto',
+                      selectedValue === item.value ? 'opacity-100' : 'opacity-0'
                     )}
                   />
                 </CommandItem>
@@ -78,4 +79,3 @@ export function Combobox({
     </Popover>
   );
 }
-

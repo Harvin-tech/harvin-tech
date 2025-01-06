@@ -24,7 +24,8 @@ export default function Signup() {
     return {
       firstName: names[0] || '',
       middleName: names.length === 3 ? names[1] : '',
-      lastName: names.length === 2 ? names[1] : names.length === 3 ? names[2] : '',
+      lastName:
+        names.length === 2 ? names[1] : names.length === 3 ? names[2] : '',
     };
   };
 
@@ -58,7 +59,7 @@ export default function Signup() {
 
     // Split the name and format the data
     const { firstName, middleName, lastName } = splitName(formData.name);
-    
+
     // Format the data to match API requirements
     const signupData = {
       firstName,
@@ -74,12 +75,13 @@ export default function Signup() {
 
     try {
       const res = await authService.signup(signupData);
-      console.log(res , "signup response");
+      console.log(res, 'signup response');
       toast.dismiss(loadingToast);
       toast.success('Account created successfully!');
       router.push('/login');
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || 'An error occurred during signup';
+      const errorMessage =
+        err.response?.data?.message || 'An error occurred during signup';
       setError(errorMessage);
       toast.dismiss(loadingToast);
       toast.error(errorMessage);
@@ -187,8 +189,6 @@ export default function Signup() {
                 />
               </div>
             </div>
-
-
           </div>
 
           <button
@@ -201,7 +201,10 @@ export default function Signup() {
 
           <div className="text-sm text-center text-muted-foreground">
             Already have an account?{' '}
-            <Link href="/login" className="font-medium text-primary hover:text-primary/90">
+            <Link
+              href="/login"
+              className="font-medium text-primary hover:text-primary/90"
+            >
               Log in
             </Link>
           </div>

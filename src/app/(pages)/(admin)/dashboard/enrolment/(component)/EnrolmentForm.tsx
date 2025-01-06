@@ -1,10 +1,18 @@
-import { enrollCourse, fetchUsers, getCourses } from "@/api";
-import React, { useEffect, useState } from "react";
-import EnrolmentHistory from "./EnrolmentHistory";
-import { toast } from "sonner";
-import { Combobox } from "@/components/ui/combobox";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
-import ProfilePage from "@/app/(pages)/(component)/Profile";
+import { enrollCourse, fetchUsers, getCourses } from '@/api';
+import React, { useEffect, useState } from 'react';
+import EnrolmentHistory from './EnrolmentHistory';
+import { toast } from 'sonner';
+import { Combobox } from '@/components/ui/combobox';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import ProfilePage from '@/app/(pages)/(component)/Profile';
 
 interface User {
   _id: string;
@@ -19,8 +27,12 @@ interface Course {
 const EnrolmentForm: React.FC = () => {
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
-  const [courses, setCourses] = useState<Array<{ value: string; label: string }>>([]);
-  const [users, setUsers] = useState<Array<{ value: string; label: string }>>([]);
+  const [courses, setCourses] = useState<
+    Array<{ value: string; label: string }>
+  >([]);
+  const [users, setUsers] = useState<Array<{ value: string; label: string }>>(
+    []
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
@@ -35,7 +47,7 @@ const EnrolmentForm: React.FC = () => {
           }))
         );
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error('Error fetching users:', error);
       }
     }
     getUsers();
@@ -46,7 +58,7 @@ const EnrolmentForm: React.FC = () => {
       setLoading(true);
       try {
         const response = await getCourses();
-        console.log(response, "inside enrolmentform");
+        console.log(response, 'inside enrolmentform');
         setCourses(
           response.data.courses.map((item: Course) => ({
             value: item._id,
@@ -54,7 +66,7 @@ const EnrolmentForm: React.FC = () => {
           }))
         );
       } catch (error) {
-        console.error("Error fetching courses:", error);
+        console.error('Error fetching courses:', error);
       } finally {
         setLoading(false);
       }
@@ -64,7 +76,7 @@ const EnrolmentForm: React.FC = () => {
 
   const handleSubmit = async () => {
     if (!selectedUser || !selectedCourse) {
-      toast.error("Please select both a user and a course!");
+      toast.error('Please select both a user and a course!');
       return;
     }
 
@@ -72,14 +84,14 @@ const EnrolmentForm: React.FC = () => {
       setLoading(true);
       const response = await enrollCourse(selectedCourse, selectedUser);
       if (response.success) {
-        toast.success("Enrollment successful!");
+        toast.success('Enrollment successful!');
         setSelectedUser(null);
         setSelectedCourse(null);
       } else {
-        toast.error("Enrollment failed! Please try again.");
+        toast.error('Enrollment failed! Please try again.');
       }
     } catch (error) {
-      toast.error("Enrollment failed! Please try again.");
+      toast.error('Enrollment failed! Please try again.');
     } finally {
       setLoading(false);
     }
@@ -91,7 +103,10 @@ const EnrolmentForm: React.FC = () => {
         <h2 className="text-sm font-medium mb-2">Enrolment Form</h2>
 
         <div className="mb-3">
-          <label htmlFor="users" className="block text-gray-700 font-medium mb-1 text-sm">
+          <label
+            htmlFor="users"
+            className="block text-gray-700 font-medium mb-1 text-sm"
+          >
             Users*
           </label>
           <Combobox
@@ -103,7 +118,10 @@ const EnrolmentForm: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="course" className="block text-gray-700 font-medium mb-1 text-sm">
+          <label
+            htmlFor="course"
+            className="block text-gray-700 font-medium mb-1 text-sm"
+          >
             Course to Enroll*
           </label>
           <Combobox
@@ -120,13 +138,11 @@ const EnrolmentForm: React.FC = () => {
             disabled={!selectedUser || !selectedCourse || loading}
             className="px-4 py-2 bg-primary/90 hover:bg-primary text-white rounded-md disabled:bg-gray-300 text-sm"
           >
-            {loading ? "Submitting..." : "Submit"}
+            {loading ? 'Submitting...' : 'Submit'}
           </button>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <button
-                className="px-4 py-2 bg-primary/90 hover:bg-primary text-white rounded-md text-sm transition-colors duration-300"
-              >
+              <button className="px-4 py-2 bg-primary/90 hover:bg-primary text-white rounded-md text-sm transition-colors duration-300">
                 Create user
               </button>
             </DialogTrigger>
@@ -135,7 +151,7 @@ const EnrolmentForm: React.FC = () => {
                 <DialogTitle></DialogTitle>
               </DialogHeader>
               {/* Form fields for creating a user */}
-              <ProfilePage isCreatingUser={true}/>
+              <ProfilePage isCreatingUser={true} />
               <DialogFooter>
                 <button
                   onClick={() => setIsDialogOpen(false)}

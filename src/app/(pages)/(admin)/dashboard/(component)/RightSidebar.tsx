@@ -1,28 +1,30 @@
-import Image from 'next/image'
-import React from 'react'
-import { PiDotsThreeOutlineVertical } from 'react-icons/pi'
+import Image from 'next/image';
+import React from 'react';
+import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
 
 const RightSidebar = () => {
   // You can replace these with actual user data from your authentication system
   const user = {
     name: 'Shiva',
     profileImage: '/harvinlogo.jpg', // Replace with actual image path
-  }
+  };
 
   // Function to get greeting based on time of day
   const getGreeting = () => {
-    const hour = new Date().getHours()
-    if (hour < 12) return 'Good Morning'
-    if (hour < 18) return 'Good Afternoon'
-    return 'Good Evening'
-  }
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good Morning';
+    if (hour < 18) return 'Good Afternoon';
+    return 'Good Evening';
+  };
 
   return (
     <div className="sticky top-[83px] h-screen w-[210px] xl:w-[250px] bg-card p-4 shadow-lg hidden xl:block overflow-y-auto">
       <div className="flex justify-between items-center mb-4">
-        <span className="text-sm font-medium text-muted-foreground">Your Profile</span>
+        <span className="text-sm font-medium text-muted-foreground">
+          Your Profile
+        </span>
         <button className="text-muted-foreground hover:text-foreground transition-colors">
-          <PiDotsThreeOutlineVertical  size={16} />
+          <PiDotsThreeOutlineVertical size={16} />
         </button>
       </div>
       <div className="flex flex-col items-center space-y-4">
@@ -37,9 +39,7 @@ const RightSidebar = () => {
         </div>
 
         {/* User Name */}
-        <h2 className="text-xl font-semibold text-foreground">
-          {user.name}
-        </h2>
+        <h2 className="text-xl font-semibold text-foreground">{user.name}</h2>
 
         {/* Greeting */}
         <div className="text-center">
@@ -57,7 +57,7 @@ const RightSidebar = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RightSidebar
+export default RightSidebar;
