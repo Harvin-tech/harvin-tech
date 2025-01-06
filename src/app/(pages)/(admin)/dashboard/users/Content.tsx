@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -6,33 +6,33 @@ import {
   TableHeader,
   TableRow,
   TableHead,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useForm } from "react-hook-form";
-import { Badge } from "@/components/ui/badge";
-import { Pencil, Trash2, UserCog } from "lucide-react";
+} from '@/components/ui/select';
+import { useForm } from 'react-hook-form';
+import { Badge } from '@/components/ui/badge';
+import { Pencil, Trash2, UserCog } from 'lucide-react';
 
 interface User {
   id: number;
@@ -40,7 +40,7 @@ interface User {
   email: string;
   address: string;
   phone: string;
-  status: "active" | "inactive";
+  status: 'active' | 'inactive';
   isAdmin: boolean;
 }
 
@@ -56,11 +56,11 @@ const Users: React.FC<UserManagementTableProps> = ({ users: initialUsers }) => {
 
   const form = useForm<User>({
     defaultValues: {
-      name: "",
-      email: "",
-      address: "",
-      phone: "",
-      status: "active",
+      name: '',
+      email: '',
+      address: '',
+      phone: '',
+      status: 'active',
       isAdmin: false,
     },
   });
@@ -78,35 +78,40 @@ const Users: React.FC<UserManagementTableProps> = ({ users: initialUsers }) => {
 
   const confirmDelete = () => {
     if (selectedUser) {
-      setUsers(users.filter(user => user.id !== selectedUser.id));
+      setUsers(users.filter((user) => user.id !== selectedUser.id));
       setIsDeleteDialogOpen(false);
       setSelectedUser(null);
     }
   };
 
   const toggleAdminStatus = (userId: number) => {
-    setUsers(users.map(user =>
-      user.id === userId
-        ? { ...user, isAdmin: !user.isAdmin }
-        : user
-    ));
+    setUsers(
+      users.map((user) =>
+        user.id === userId ? { ...user, isAdmin: !user.isAdmin } : user
+      )
+    );
   };
 
   const toggleUserStatus = (userId: number) => {
-    setUsers(users.map(user =>
-      user.id === userId
-        ? { ...user, status: user.status === "active" ? "inactive" : "active" }
-        : user
-    ));
+    setUsers(
+      users.map((user) =>
+        user.id === userId
+          ? {
+              ...user,
+              status: user.status === 'active' ? 'inactive' : 'active',
+            }
+          : user
+      )
+    );
   };
 
   const onSubmit = (data: User) => {
     if (selectedUser) {
-      setUsers(users.map(user =>
-        user.id === selectedUser.id
-          ? { ...data, id: user.id }
-          : user
-      ));
+      setUsers(
+        users.map((user) =>
+          user.id === selectedUser.id ? { ...data, id: user.id } : user
+        )
+      );
       setIsEditDialogOpen(false);
       setSelectedUser(null);
     }
@@ -136,21 +141,31 @@ const Users: React.FC<UserManagementTableProps> = ({ users: initialUsers }) => {
                 <TableCell>{user.phone}</TableCell>
                 <TableCell>
                   <Badge
-                    variant={user.status === "active" ? "default" : "secondary"}
+                    variant={user.status === 'active' ? 'default' : 'secondary'}
                     className="cursor-pointer"
                     onClick={() => toggleUserStatus(user.id)}
                   >
-                    <span className={`${user.status === "active" ? "text-white" : ""}`}>{user.status}</span>
+                    <span
+                      className={`${user.status === 'active' ? 'text-white' : ''}`}
+                    >
+                      {user.status}
+                    </span>
                   </Badge>
                 </TableCell>
                 <TableCell>
                   <Button
-                    variant={user.isAdmin ? "default" : "outline"}
+                    variant={user.isAdmin ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => toggleAdminStatus(user.id)}
                   >
-                    <UserCog className={`h-4 w-4 mr-1 ${user.isAdmin ? "text-white" : ""}`} />
-                    {user.isAdmin ? <span className="text-white">Admin</span> : "User"}
+                    <UserCog
+                      className={`h-4 w-4 mr-1 ${user.isAdmin ? 'text-white' : ''}`}
+                    />
+                    {user.isAdmin ? (
+                      <span className="text-white">Admin</span>
+                    ) : (
+                      'User'
+                    )}
                   </Button>
                 </TableCell>
                 <TableCell>
@@ -264,7 +279,9 @@ const Users: React.FC<UserManagementTableProps> = ({ users: initialUsers }) => {
                 >
                   Cancel
                 </Button>
-                <Button type="submit" className="text-white">Save changes</Button>
+                <Button type="submit" className="text-white">
+                  Save changes
+                </Button>
               </DialogFooter>
             </form>
           </Form>
@@ -277,9 +294,7 @@ const Users: React.FC<UserManagementTableProps> = ({ users: initialUsers }) => {
           <DialogHeader>
             <DialogTitle>Delete User</DialogTitle>
           </DialogHeader>
-          <div className="py-4">
-            Are you sure you want to delete this user?
-          </div>
+          <div className="py-4">Are you sure you want to delete this user?</div>
           <DialogFooter className="sm:justify-end">
             <div className="flex gap-2 justify-end">
               <Button
@@ -288,10 +303,7 @@ const Users: React.FC<UserManagementTableProps> = ({ users: initialUsers }) => {
               >
                 Cancel
               </Button>
-              <Button
-                variant="destructive"
-                onClick={confirmDelete}
-              >
+              <Button variant="destructive" onClick={confirmDelete}>
                 Delete
               </Button>
             </div>

@@ -7,8 +7,7 @@ import { Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { Provider } from 'react-redux';
 import GlobalProvider from './GlobalProvider';
-import {NextUIProvider} from "@nextui-org/react";
-
+import { NextUIProvider } from '@nextui-org/react';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -33,15 +32,13 @@ export default function RootLayout({
         <GlobalProvider>
           <AppProviders>
             <NextUIProvider>
-            <Header />
-            {children}
-            <Footer />
-            <Toaster position="top-center" richColors />
-
+              <Header />
+              {children}
+              <Footer />
+              <Toaster position="top-center" richColors />
             </NextUIProvider>
           </AppProviders>
         </GlobalProvider>
-       
       </body>
     </html>
   );

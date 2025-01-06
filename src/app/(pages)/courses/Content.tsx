@@ -6,8 +6,8 @@ import CoursePayment from './component/CoursePayment';
 import Cta from './component/Cta';
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import CourseDetails  from './component/CourseDetails';
-import { getEnrolledCourse} from '@/api';
+import CourseDetails from './component/CourseDetails';
+import { getEnrolledCourse } from '@/api';
 import Image from 'next/image';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
@@ -29,27 +29,29 @@ export default function CoursesPage() {
         setLoading(true);
         const response = await getEnrolledCourse(courseId);
         if (response && response.data) {
-          setEnrolledCourses(response.data.chapters.map((item: any) => ({
-            title: item?.title,
-            chapterId: item?._id,
-          })));
-          
+          setEnrolledCourses(
+            response.data.chapters.map((item: any) => ({
+              title: item?.title,
+              chapterId: item?._id,
+            }))
+          );
+
           const courseDetails = response.data;
           const courseData = {
             id: uuidv4(),
-            title: courseDetails?.title || "No Title",
-            description: courseDetails?.description || "No Description",
-            instructor: courseDetails?.instructor || "Unknown Instructor",
+            title: courseDetails?.title || 'No Title',
+            description: courseDetails?.description || 'No Description',
+            instructor: courseDetails?.instructor || 'Unknown Instructor',
             rating: courseDetails?.rating || 0,
             reviewsCount: courseDetails?.reviewsCount || 0,
             price: courseDetails?.price || 0,
-            instructorDesc: courseDetails?.instructorDesc || "No Description"
+            instructorDesc: courseDetails?.instructorDesc || 'No Description',
           };
           setCourses(courseData);
           setLoading(false);
         }
       } catch (error) {
-        console.error("Error fetching enrolled courses:", error);
+        console.error('Error fetching enrolled courses:', error);
         setLoading(false);
       }
     }
@@ -69,18 +71,19 @@ export default function CoursesPage() {
     if (courses && !preview) {
       return {
         title: courses.title,
-        description: courses.description
+        description: courses.description,
       };
     }
     if (preview && dummyData) {
       return {
         title: dummyData.title,
-        description: dummyData.description
+        description: dummyData.description,
       };
     }
     return {
-      title: "Fundamentals Programs html,css,java",
-      description: "(Fundamentals Programs) is a rapidly evolving field and has changed from an unimaginable sci-fi dream to a very realistic future."
+      title: 'Fundamentals Programs html,css,java',
+      description:
+        '(Fundamentals Programs) is a rapidly evolving field and has changed from an unimaginable sci-fi dream to a very realistic future.',
     };
   };
 
@@ -93,10 +96,14 @@ export default function CoursesPage() {
           <section className="mb-4 md:mb-5">
             <div className="max-w-2xl space-y-2">
               <div className="flex gap-2">
-                <span className="bg-primary text-white px-3 py-1 rounded-full text-xs">Courses</span>
-                <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-xs">Skills</span>
+                <span className="bg-primary text-white px-3 py-1 rounded-full text-xs">
+                  Courses
+                </span>
+                <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-xs">
+                  Skills
+                </span>
               </div>
-              <div className='space-y-1'>
+              <div className="space-y-1">
                 <h1 className="font-semibold text-2xl xl:text-3xl tracking-tight">
                   {content.title}
                 </h1>
@@ -113,13 +120,25 @@ export default function CoursesPage() {
           {/* Hero Section */}
           <section className="flex flex-col md:flex-row gap-3 mb-4 md:mb-5">
             <div className="w-full md:w-[70%] flex flex-col gap-3">
-              <video className="w-full max-w-2xl rounded-lg shadow-lg min-h-[350px]" controls autoPlay muted loop>
+              <video
+                className="w-full max-w-2xl rounded-lg shadow-lg min-h-[350px]"
+                controls
+                autoPlay
+                muted
+                loop
+              >
                 <source src="/your-video-path.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               <div className="grid grid-cols-2 gap-3 w-full">
-                <IoTCard imageSrc="/Images/home/topcourse2.png" title="IoT Graphs" />
-                <IoTCard imageSrc="/Images/home/topcourse1.png" title="Internet of Things" />
+                <IoTCard
+                  imageSrc="/Images/home/topcourse2.png"
+                  title="IoT Graphs"
+                />
+                <IoTCard
+                  imageSrc="/Images/home/topcourse1.png"
+                  title="Internet of Things"
+                />
               </div>
             </div>
             <div className="w-full md:w-[30%]">
@@ -138,37 +157,58 @@ export default function CoursesPage() {
                 Advance your subject-matter expertise
               </h2>
               <ul className="list-disc list-inside space-y-2 text-foreground/80">
-                <li>Learn in-demand skills from university and industry experts</li>
+                <li>
+                  Learn in-demand skills from university and industry experts
+                </li>
                 <li>Master a subject or tool with hands-on projects</li>
                 <li>Develop a deep understanding of key concepts</li>
-                <li>Earn a career certificate from University of California, Irvine</li>
+                <li>
+                  Earn a career certificate from University of California,
+                  Irvine
+                </li>
               </ul>
             </div>
           </section>
 
           {/* Course Content */}
-          <Suspense fallback={<div className="text-center">Loading Course Content...</div>}>
+          <Suspense
+            fallback={
+              <div className="text-center">Loading Course Content...</div>
+            }
+          >
             <CourseDetails course={enrolledCourses} />
           </Suspense>
 
           <section className="mb-4 md:mb-5">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-2xl font-semibold mb-4 text-card-foreground">About the Author</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-card-foreground">
+                About the Author
+              </h2>
               <div className="flex flex-col gap-3">
                 <div className="relative size-12 overflow-hidden rounded-full">
-                  <Image fill src="/Images/home/topcourse1.png" alt="Author" className="absolute object-cover" />
+                  <Image
+                    fill
+                    src="/Images/home/topcourse1.png"
+                    alt="Author"
+                    className="absolute object-cover"
+                  />
                 </div>
-               {!courseId ? (<div>
-                  <h3 className="font-medium text-lg">Dr. Sarah Johnson</h3>
-                  <p className="text-sm text-foreground/80 max-w-[550px]">
-                    Professor of Computer Science at UC Irvine with over 15 years of experience in IoT and embedded systems.
-                  </p>
-                </div> ):  (<div>
-                  {/* <h3 className="font-medium text-lg">{courses?.instructor}</h3> */}
-                  <p className="text-sm text-foreground/80 max-w-[550px]">
-                    {/* {courses?.instructorDesc} */}
-                  </p>
-                </div>) }
+                {!courseId ? (
+                  <div>
+                    <h3 className="font-medium text-lg">Dr. Sarah Johnson</h3>
+                    <p className="text-sm text-foreground/80 max-w-[550px]">
+                      Professor of Computer Science at UC Irvine with over 15
+                      years of experience in IoT and embedded systems.
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    {/* <h3 className="font-medium text-lg">{courses?.instructor}</h3> */}
+                    <p className="text-sm text-foreground/80 max-w-[550px]">
+                      {/* {courses?.instructorDesc} */}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </section>

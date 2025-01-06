@@ -1,31 +1,39 @@
-'use client'
-import React, { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { addCourse } from "@/api/services/coursesService";
-import { toast } from "sonner";
-import { Toaster } from "@/components/ui/sonner";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectGroup,
+  SelectLabel,
+} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { addCourse } from '@/api/services/coursesService';
+import { toast } from 'sonner';
+import { Toaster } from '@/components/ui/sonner';
 
 type Lesson = {
   title: string;
   type: 'video';
-}
+};
 
 type Chapter = {
   title: string;
   lessons: Lesson[];
-}
+};
 
 type CreateCoursePayload = {
   title: string;
   category: string;
   description: string;
   chapters: Chapter[];
-}
+};
 
 interface CourseFormProps {
   section: string;
@@ -33,18 +41,24 @@ interface CourseFormProps {
   data: any;
 }
 
-export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+export const CourseForm: React.FC<CourseFormProps> = ({
+  section,
+  onUpdate,
+  data,
+}) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     onUpdate(section, {
       ...data,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSelectChange = (name: string, value: string) => {
     onUpdate(section, {
       ...data,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -83,10 +97,16 @@ export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data 
                 <button type="button" className="p-1 hover:bg-gray-100 rounded">
                   <span className="text-lg">B</span>
                 </button>
-                <button type="button" className="p-1 hover:bg-gray-100 rounded italic">
+                <button
+                  type="button"
+                  className="p-1 hover:bg-gray-100 rounded italic"
+                >
                   <span className="text-lg">I</span>
                 </button>
-                <button type="button" className="p-1 hover:bg-gray-100 rounded underline">
+                <button
+                  type="button"
+                  className="p-1 hover:bg-gray-100 rounded underline"
+                >
                   <span className="text-lg">U</span>
                 </button>
                 <span className="w-px h-6 bg-gray-300 mx-1"></span>
@@ -106,7 +126,10 @@ export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data 
 
           <div className="space-y-2">
             <Label htmlFor="category">Select a category</Label>
-            <Select value={data.category || ''} onValueChange={(value) => handleSelectChange('category', value)}>
+            <Select
+              value={data.category || ''}
+              onValueChange={(value) => handleSelectChange('category', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select course category" />
               </SelectTrigger>
@@ -123,7 +146,10 @@ export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data 
 
           <div className="space-y-2">
             <Label htmlFor="level">Level</Label>
-            <Select value={data.level || ''} onValueChange={(value) => handleSelectChange('level', value)}>
+            <Select
+              value={data.level || ''}
+              onValueChange={(value) => handleSelectChange('level', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Beginner" />
               </SelectTrigger>
@@ -139,7 +165,10 @@ export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data 
 
           <div className="space-y-2">
             <Label htmlFor="language">Language</Label>
-            <Select value={data.language || ''} onValueChange={(value) => handleSelectChange('language', value)}>
+            <Select
+              value={data.language || ''}
+              onValueChange={(value) => handleSelectChange('language', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="English" />
               </SelectTrigger>
@@ -158,7 +187,9 @@ export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data 
               <Checkbox
                 id="enableDripContent"
                 checked={data.enableDripContent || false}
-                onCheckedChange={(checked) => handleSelectChange('enableDripContent', checked.toString())}
+                onCheckedChange={(checked) =>
+                  handleSelectChange('enableDripContent', checked.toString())
+                }
                 className="data-[state=checked]:bg-primary data-[state=checked]:text-white"
               />
               <Label htmlFor="enableDripContent">Enable drip content</Label>
@@ -170,7 +201,9 @@ export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data 
               <Checkbox
                 id="isPrivate"
                 checked={data.isPrivate || false}
-                onCheckedChange={(checked) => handleSelectChange('isPrivate', checked.toString())}
+                onCheckedChange={(checked) =>
+                  handleSelectChange('isPrivate', checked.toString())
+                }
                 className="data-[state=checked]:text-primary data-[state=checked]:bg-primary"
               />
               <Label htmlFor="isPrivate">Make it a private course</Label>
@@ -182,10 +215,14 @@ export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data 
               <Checkbox
                 id="freeForMembers"
                 checked={data.freeForMembers || false}
-                onCheckedChange={(checked) => handleSelectChange('freeForMembers', checked.toString())}
+                onCheckedChange={(checked) =>
+                  handleSelectChange('freeForMembers', checked.toString())
+                }
                 className="data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
               />
-              <Label htmlFor="freeForMembers">Check if this course is free for members</Label>
+              <Label htmlFor="freeForMembers">
+                Check if this course is free for members
+              </Label>
             </div>
           </div>
         </div>
@@ -220,7 +257,9 @@ export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data 
             <Checkbox
               id="hasCertificate"
               checked={data.hasCertificate || false}
-              onCheckedChange={(checked) => handleSelectChange('hasCertificate', checked.toString())}
+              onCheckedChange={(checked) =>
+                handleSelectChange('hasCertificate', checked.toString())
+              }
               className="data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
             />
             <Label htmlFor="hasCertificate">Include Certificate</Label>
@@ -252,7 +291,9 @@ export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data 
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="promotionalVideo">Promotional Video (Optional)</Label>
+            <Label htmlFor="promotionalVideo">
+              Promotional Video (Optional)
+            </Label>
             <Input
               id="promotionalVideo"
               name="promotionalVideo"
@@ -307,21 +348,37 @@ export const CourseForm: React.FC<CourseFormProps> = ({ section, onUpdate, data 
           <div className="p-4 bg-gray-50 rounded-lg">
             <h3 className="font-semibold mb-4">Course Summary</h3>
             <div className="space-y-2">
-              <p><strong>Title:</strong> {data.title}</p>
-              <p><strong>Category:</strong> {data.category}</p>
-              <p><strong>Price:</strong> ${data.price}</p>
-              {data.discountPrice && <p><strong>Discount Price:</strong> ${data.discountPrice}</p>}
-              <p><strong>Description:</strong> {data.description}</p>
+              <p>
+                <strong>Title:</strong> {data.title}
+              </p>
+              <p>
+                <strong>Category:</strong> {data.category}
+              </p>
+              <p>
+                <strong>Price:</strong> ${data.price}
+              </p>
+              {data.discountPrice && (
+                <p>
+                  <strong>Discount Price:</strong> ${data.discountPrice}
+                </p>
+              )}
+              <p>
+                <strong>Description:</strong> {data.description}
+              </p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox
               id="termsAccepted"
               checked={data.termsAccepted || false}
-              onCheckedChange={(checked) => handleSelectChange('termsAccepted', checked.toString())}
+              onCheckedChange={(checked) =>
+                handleSelectChange('termsAccepted', checked.toString())
+              }
               className="data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
             />
-            <Label htmlFor="termsAccepted">I confirm that all information is correct</Label>
+            <Label htmlFor="termsAccepted">
+              I confirm that all information is correct
+            </Label>
           </div>
         </div>
       );

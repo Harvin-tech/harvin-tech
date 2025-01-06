@@ -1,6 +1,6 @@
-'use client'
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+'use client';
+import { useEffect, useState } from 'react';
+import { useTheme } from 'next-themes';
 
 export default function ModeToggle() {
   const { theme, setTheme } = useTheme();
@@ -15,7 +15,7 @@ export default function ModeToggle() {
 
   return (
     <button
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
       className="fixed cursor-pointer bottom-8 right-8 m-0 z-[9999] group"
       aria-label="Toggle theme"
     >

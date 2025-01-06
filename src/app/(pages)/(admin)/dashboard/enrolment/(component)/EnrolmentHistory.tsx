@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import DataTable from "./DataTable";
-import { getEnrollDetail } from "@/api";
-import { formatDate } from "@/utils/helpers";
-import { setEnrollData,setLoading,setError } from "@/app/store/enrollSlice";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import DataTable from './DataTable';
+import { getEnrollDetail } from '@/api';
+import { formatDate } from '@/utils/helpers';
+import { setEnrollData, setLoading, setError } from '@/app/store/enrollSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface EnrollmentHistoryItem {
   id: string;
@@ -21,17 +21,14 @@ interface Column<T> {
 }
 
 const EnrolmentHistory: React.FC = () => {
-  
-     
-
   return (
     <div className="">
-      <h2 className="text-sm md:text-base font-semibold mb-2">Enrollment History</h2>
+      <h2 className="text-sm md:text-base font-semibold mb-2">
+        Enrollment History
+      </h2>
       <DataTable />
     </div>
   );
 };
 
 export default EnrolmentHistory;
-
-

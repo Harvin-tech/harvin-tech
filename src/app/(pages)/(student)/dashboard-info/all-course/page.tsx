@@ -1,12 +1,12 @@
-import React from 'react'
-import AllCourse from './Content'
+import React from 'react';
+import AllCourse from './Content';
 
 const page = () => {
   return (
     <div>
-      <AllCourse/>
+      <AllCourse />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

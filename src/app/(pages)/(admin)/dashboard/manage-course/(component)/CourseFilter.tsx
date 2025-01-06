@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 
 interface CourseFilterProps {
   onFilter: () => void;
@@ -56,7 +56,11 @@ const CourseFilter: React.FC<CourseFilterProps> = ({ onFilter }) => {
         </SelectContent>
       </Select>
 
-      <Button onClick={onFilter} variant="default" className="text-white w-full sm:w-auto">
+      <Button
+        onClick={onFilter}
+        variant="default"
+        className="text-white w-full sm:w-auto"
+      >
         Filter
       </Button>
     </div>

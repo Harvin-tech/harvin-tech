@@ -4,9 +4,12 @@ export namespace Helpers {
   }
 }
 
-
 export function formatDate(dateString: string): string {
-  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
 
   // Parse the input string into a Date object
   const date = new Date(dateString);

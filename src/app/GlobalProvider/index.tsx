@@ -1,17 +1,16 @@
-'use client'
-import React from 'react'
-import { Provider } from 'react-redux'
+'use client';
+import React from 'react';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import store, { persistor } from '../store'; 
-const GlobalProvider = ({children}:{children:React.ReactNode}) => {
+import store, { persistor } from '../store';
+const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <Provider store={store}>
-      
       <PersistGate loading={null} persistor={persistor}>
-      {children}
+        {children}
       </PersistGate>
     </Provider>
-  )
-}
+  );
+};
 
-export default GlobalProvider
+export default GlobalProvider;

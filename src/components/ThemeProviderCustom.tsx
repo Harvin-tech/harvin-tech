@@ -1,6 +1,6 @@
-"use client";
-import React from "react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+'use client';
+import React from 'react';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
 const ThemeProviderCustom = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,7 +10,7 @@ const ThemeProviderCustom = ({ children }: { children: React.ReactNode }) => {
         attribute="class"
         enableColorScheme
         defaultTheme="light"
-        themes={["light", "dark"]}
+        themes={['light', 'dark']}
       >
         {children}
       </NextThemesProvider>

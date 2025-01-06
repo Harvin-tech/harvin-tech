@@ -1,34 +1,34 @@
-'use client'
-import React, { useEffect } from "react";
+'use client';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserCourse } from "@/api";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Mousewheel } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/free-mode";
-import { StatCard } from "./(component)/StatsCard";
-import { VideoCard } from "./(component)/VideoCard";
-import { LineChart } from "./(component)/LineChart";
-import { setCourses, setLoading } from "@/app/store/courseSlice";
+import { getUserCourse } from '@/api';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Mousewheel } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import { StatCard } from './(component)/StatsCard';
+import { VideoCard } from './(component)/VideoCard';
+import { LineChart } from './(component)/LineChart';
+import { setCourses, setLoading } from '@/app/store/courseSlice';
 import { v4 as uuidv4 } from 'uuid';
-import { toast } from "sonner";
+import { toast } from 'sonner';
 
 const Dashboard = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  
+
   // Get all required state in one selector
-  const { 
+  const {
     courses: { allCourses, loading: coursesLoading },
-    auth: { user, isAuthenticated, loading: authLoading }
+    auth: { user, isAuthenticated, loading: authLoading },
   } = useSelector((state: any) => state);
   const userId = user?._id;
 
   useEffect(() => {
     // Handle authentication check inside useEffect
     if (!userId) {
-      toast.error("Please login to continue");
+      toast.error('Please login to continue');
       router.push('/login');
       return;
     }
@@ -40,10 +40,10 @@ const Dashboard = () => {
         const userCourses = response.data.courses.map((item: any) => ({
           id: uuidv4(),
           courseId: item?.courseId,
-          title: item?.courseDetails?.title || "No Title",
-          price: item?.courseDetails?.price || "N/A",
-          desc: item?.courseDetails?.description || "No Description",
-          instructor: item?.courseDetails?.instructor || "Unknown Instructor",
+          title: item?.courseDetails?.title || 'No Title',
+          price: item?.courseDetails?.price || 'N/A',
+          desc: item?.courseDetails?.description || 'No Description',
+          instructor: item?.courseDetails?.instructor || 'Unknown Instructor',
           rating: item?.courseDetails?.rating || 0,
           reviewsCount: item?.courseDetails?.reviewsCount || 0,
         }));
@@ -88,12 +88,16 @@ const Dashboard = () => {
         </div>
 
         <div className="mt-2">
-          <h3 className="text-base md:text-lg font-semibold">Continue Watching</h3>
+          <h3 className="text-base md:text-lg font-semibold">
+            Continue Watching
+          </h3>
 
           {coursesLoading ? (
             <div className="text-center text-gray-500">Loading courses...</div>
           ) : !allCourses?.length ? (
-            <div className="text-center text-gray-500">You have no courses available.</div>
+            <div className="text-center text-gray-500">
+              You have no courses available.
+            </div>
           ) : (
             <div>
               <Swiper

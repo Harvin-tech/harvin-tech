@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import LeftSidebar from './(component)/LeftSidebar';
 import RightSidebar from './(component)/RightSidebar';
 
@@ -7,7 +7,6 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  
   return (
     <div className="flex min-h-screen">
       <LeftSidebar />

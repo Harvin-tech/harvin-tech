@@ -1,11 +1,8 @@
-import React from "react";
-import { Star, ArrowRight } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card"; // Import Shadcn UI components
+import React from 'react';
+import { Star, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card'; // Import Shadcn UI components
 
 interface VideoCardProps {
   imageSrc: string;
@@ -43,7 +40,9 @@ export const VideoCard: React.FC<VideoCardProps> = ({
           {/* Content Container */}
           <div className="abolute p-4">
             <div className="flex flex-col justify-start max-w-sm">
-              <h3 className="text-sm md:text-base font-bold text-foreground mb-2 tracking-tight">{title}</h3>
+              <h3 className="text-sm md:text-base font-bold text-foreground mb-2 tracking-tight">
+                {title}
+              </h3>
               <p className="text-foreground/70 text-sm mb-2">{instructor}</p>
 
               {/* Rating Section */}
@@ -52,7 +51,7 @@ export const VideoCard: React.FC<VideoCardProps> = ({
                   <Star
                     key={index}
                     size={14}
-                    fill={index < Math.floor(rating) ? "currentColor" : "none"}
+                    fill={index < Math.floor(rating) ? 'currentColor' : 'none'}
                     strokeWidth={1}
                   />
                 ))}
@@ -63,9 +62,7 @@ export const VideoCard: React.FC<VideoCardProps> = ({
 
               {/* Price Section */}
               <div className="flex items-center space-x-2 mb-4">
-                <span className="text-sm font-bold text-primary">
-                  ₹{price}
-                </span>
+                <span className="text-sm font-bold text-primary">₹{price}</span>
                 <span className="text-xs text-foreground/70 line-through">
                   ₹{originalPrice}
                 </span>

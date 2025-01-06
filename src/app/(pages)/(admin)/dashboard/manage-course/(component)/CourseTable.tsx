@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -6,17 +6,17 @@ import {
   TableHeader,
   TableRow,
   TableHead,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Lock, Unlock, Trash2 } from "lucide-react";
+} from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
+import { Lock, Unlock, Trash2 } from 'lucide-react';
 
 interface Course {
   id: number;
@@ -31,7 +31,9 @@ interface CourseManagementTableProps {
   courses: Course[];
 }
 
-const CourseManagementTable: React.FC<CourseManagementTableProps> = ({ courses: initialCourses }) => {
+const CourseManagementTable: React.FC<CourseManagementTableProps> = ({
+  courses: initialCourses,
+}) => {
   const [courses, setCourses] = useState<Course[]>(initialCourses);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -43,18 +45,20 @@ const CourseManagementTable: React.FC<CourseManagementTableProps> = ({ courses: 
 
   const confirmDelete = () => {
     if (selectedCourse) {
-      setCourses(courses.filter(course => course.id !== selectedCourse.id));
+      setCourses(courses.filter((course) => course.id !== selectedCourse.id));
       setIsDeleteDialogOpen(false);
       setSelectedCourse(null);
     }
   };
 
   const toggleLock = (courseId: number) => {
-    setCourses(courses.map(course => 
-      course.id === courseId 
-        ? { ...course, isLocked: !course.isLocked }
-        : course
-    ));
+    setCourses(
+      courses.map((course) =>
+        course.id === courseId
+          ? { ...course, isLocked: !course.isLocked }
+          : course
+      )
+    );
   };
 
   return (
@@ -77,7 +81,7 @@ const CourseManagementTable: React.FC<CourseManagementTableProps> = ({ courses: 
               <TableCell>{course.title}</TableCell>
               <TableCell>
                 <Button
-                  variant={course.isLocked ? "destructive" : "outline"}
+                  variant={course.isLocked ? 'destructive' : 'outline'}
                   size="sm"
                   onClick={() => toggleLock(course.id)}
                   className="gap-2"
@@ -131,10 +135,7 @@ const CourseManagementTable: React.FC<CourseManagementTableProps> = ({ courses: 
               >
                 Cancel
               </Button>
-              <Button
-                variant="destructive"
-                onClick={confirmDelete}
-              >
+              <Button variant="destructive" onClick={confirmDelete}>
                 Delete
               </Button>
             </div>

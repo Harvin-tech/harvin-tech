@@ -1,5 +1,5 @@
-import React from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React from 'react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface TabNavigationProps {
   activeTab: number;
@@ -20,9 +20,9 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
     >
       <TabsList className="w-full justify-start flex-col md:flex-row min-h-[148px] md:min-h-9 items-start md:items-center">
         {tabs.map((tab, index) => (
-          <TabsTrigger 
-            key={index} 
-            value={index.toString()} 
+          <TabsTrigger
+            key={index}
+            value={index.toString()}
             className="w-full data-[state=active]:bg-primary data-[state=active]:text-white"
           >
             {tab}

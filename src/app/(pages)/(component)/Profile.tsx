@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Camera, Loader2 } from "lucide-react";
+import { Camera, Loader2 } from 'lucide-react';
 import {
   Form,
   FormControl,
@@ -16,14 +16,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
 // Type definitions
@@ -44,9 +44,12 @@ interface User {
 const profileSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
-  mobileNumber: z.string().optional().refine((val) => !val || /^[0-9]{10}$/.test(val), {
-    message: 'Invalid mobile number',
-  }),
+  mobileNumber: z
+    .string()
+    .optional()
+    .refine((val) => !val || /^[0-9]{10}$/.test(val), {
+      message: 'Invalid mobile number',
+    }),
   address: z.string().min(5, 'Address must be at least 5 characters'),
 });
 
@@ -55,14 +58,20 @@ const adminPasswordSchema = z.object({
   newPassword: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
-const userPasswordSchema = z.object({
-  currentPassword: z.string().min(6, 'Password must be at least 6 characters'),
-  newPassword: z.string().min(6, 'Password must be at least 6 characters'),
-  confirmPassword: z.string().min(6, 'Password must be at least 6 characters'),
-}).refine((data) => data.newPassword === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-});
+const userPasswordSchema = z
+  .object({
+    currentPassword: z
+      .string()
+      .min(6, 'Password must be at least 6 characters'),
+    newPassword: z.string().min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z
+      .string()
+      .min(6, 'Password must be at least 6 characters'),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
 
 const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
   const [user, setUser] = useState<User | null>(null);
@@ -83,7 +92,9 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
 
   // Password form setup
   const passwordForm = useForm({
-    resolver: zodResolver(isCreatingUser ? adminPasswordSchema : userPasswordSchema),
+    resolver: zodResolver(
+      isCreatingUser ? adminPasswordSchema : userPasswordSchema
+    ),
     defaultValues: isCreatingUser
       ? { newPassword: '' }
       : { currentPassword: '', newPassword: '', confirmPassword: '' },
@@ -135,7 +146,9 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
   };
 
   // Handle image upload
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -195,7 +208,9 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
   };
 
   return (
-    <div className={`max-w-screen-xl mx-auto ${isCreatingUser ? 'p-0' : 'p-4'}`}>
+    <div
+      className={`max-w-screen-xl mx-auto ${isCreatingUser ? 'p-0' : 'p-4'}`}
+    >
       <div className="space-y-1">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">
@@ -222,7 +237,12 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
               <div className="relative">
                 <div className="relative size-24 rounded-full overflow-hidden bg-muted">
                   {profileImage ? (
-                    <Image src={profileImage} alt="Profile" fill className="object-cover" />
+                    <Image
+                      src={profileImage}
+                      alt="Profile"
+                      fill
+                      className="object-cover"
+                    />
                   ) : (
                     <div className="flex items-center justify-center h-full bg-muted">
                       <Camera className="size-8 text-muted-foreground" />
@@ -243,7 +263,9 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
                   className="max-w-xs"
                   disabled={imageLoading}
                 />
-                <p className="text-xs text-muted-foreground">Recommended: Square JPG, PNG. Max 2MB.</p>
+                <p className="text-xs text-muted-foreground">
+                  Recommended: Square JPG, PNG. Max 2MB.
+                </p>
               </div>
             </div>
           </CardContent>
@@ -254,12 +276,19 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
         {/* Personal Information Section */}
         <Card className="border-none shadow-none">
           <CardHeader>
-            <CardTitle className="text-lg font-medium">Personal Information</CardTitle>
-            <CardDescription>Update your personal details here.</CardDescription>
+            <CardTitle className="text-lg font-medium">
+              Personal Information
+            </CardTitle>
+            <CardDescription>
+              Update your personal details here.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...profileForm}>
-              <form onSubmit={profileForm.handleSubmit(handleProfileSubmit)} className="space-y-4 max-w-md">
+              <form
+                onSubmit={profileForm.handleSubmit(handleProfileSubmit)}
+                className="space-y-4 max-w-md"
+              >
                 <FormField
                   control={profileForm.control}
                   name="name"
@@ -295,7 +324,10 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
                         <FormItem>
                           <FormLabel>Mobile Number</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="Enter your mobile number" />
+                            <Input
+                              {...field}
+                              placeholder="Enter your mobile number"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -308,7 +340,10 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
                         <FormItem>
                           <FormLabel>Address</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="Enter your address" />
+                            <Input
+                              {...field}
+                              placeholder="Enter your address"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -317,8 +352,14 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
                   </>
                 )}
                 <div className="pt-4">
-                  <Button type="submit" disabled={isLoading} className="text-white">
-                    {isLoading && <Loader2 className="mr-2 size-4 animate-spin" />}
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="text-white"
+                  >
+                    {isLoading && (
+                      <Loader2 className="mr-2 size-4 animate-spin" />
+                    )}
                     Save Changes
                   </Button>
                 </div>
@@ -332,7 +373,9 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
         {/* Password Section */}
         <Card className="border-none shadow-none">
           <CardHeader>
-            <CardTitle className="text-lg font-medium">{isCreatingUser ? 'Set Password' : 'Update Password'}</CardTitle>
+            <CardTitle className="text-lg font-medium">
+              {isCreatingUser ? 'Set Password' : 'Update Password'}
+            </CardTitle>
             <CardDescription>
               {isCreatingUser
                 ? 'Set a password for your new account.'
@@ -341,7 +384,10 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
           </CardHeader>
           <CardContent>
             <Form {...passwordForm}>
-              <form onSubmit={passwordForm.handleSubmit(handlePasswordSubmit)} className="space-y-4 max-w-md">
+              <form
+                onSubmit={passwordForm.handleSubmit(handlePasswordSubmit)}
+                className="space-y-4 max-w-md"
+              >
                 {!isCreatingUser && (
                   <FormField
                     control={passwordForm.control}
@@ -350,7 +396,11 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
                       <FormItem>
                         <FormLabel>Current Password</FormLabel>
                         <FormControl>
-                          <Input type="password" {...field} placeholder="Enter your current password" />
+                          <Input
+                            type="password"
+                            {...field}
+                            placeholder="Enter your current password"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -364,7 +414,11 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
                     <FormItem>
                       <FormLabel>New Password</FormLabel>
                       <FormControl>
-                        <Input type="password" {...field} placeholder="Enter your new password" />
+                        <Input
+                          type="password"
+                          {...field}
+                          placeholder="Enter your new password"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -378,7 +432,11 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
                       <FormItem>
                         <FormLabel>Confirm Password</FormLabel>
                         <FormControl>
-                          <Input type="password" {...field} placeholder="Confirm your new password" />
+                          <Input
+                            type="password"
+                            {...field}
+                            placeholder="Confirm your new password"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -386,8 +444,14 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
                   />
                 )}
                 <div className="pt-4">
-                  <Button type="submit" disabled={isLoading} className="text-white">
-                    {isLoading && <Loader2 className="mr-2 size-4 animate-spin" />}
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="text-white"
+                  >
+                    {isLoading && (
+                      <Loader2 className="mr-2 size-4 animate-spin" />
+                    )}
                     Save Password
                   </Button>
                 </div>
