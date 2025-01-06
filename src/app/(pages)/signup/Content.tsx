@@ -80,6 +80,7 @@ export default function Signup() {
       toast.success('Account created successfully!');
       router.push('/login');
     } catch (err: any) {
+      console.log(err);
       const errorMessage =
         err.response?.data?.message || 'An error occurred during signup';
       setError(errorMessage);

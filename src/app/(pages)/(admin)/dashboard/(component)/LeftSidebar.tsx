@@ -47,6 +47,7 @@ const Sidebar = () => {
       toast.success('Logged out successfully');
       window.location.href = '/login';
     } catch (error: any) {
+      console.log(error);
       toast.error(error.response?.data?.message || 'Error logging out');
       setIsAuthenticated(false);
       setUser(null);

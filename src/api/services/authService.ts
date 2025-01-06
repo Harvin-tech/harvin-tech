@@ -39,6 +39,7 @@ export const authService = {
       Cookies.remove('token');
       return response.data;
     } catch (error) {
+      console.log(error);
       localStorage.removeItem('user');
       Cookies.remove('token');
       throw error;

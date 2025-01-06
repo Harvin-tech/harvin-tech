@@ -38,8 +38,9 @@ export const fetchEnrollments = createAsyncThunk(
         startDate: formatDate(item.enrolledAt),
         endDate: formatDate(item.expiredAt ?? new Date().toISOString()),
       }));
-    } catch (error) {
-      return rejectWithValue('Failed to fetch enrollment data');
+    } catch (error: any) {
+      console.error('Error fetching enrollment data:', error);
+      return rejectWithValue(error.response.data.message ||'Failed to fetch enrollment data');
     }
   }
 );

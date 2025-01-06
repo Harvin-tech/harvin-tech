@@ -49,8 +49,9 @@ const StudentDashboard = () => {
           reviewsCount: item?.courseDetails?.reviewsCount || 0,
         }));
         dispatch(setCourses(userCourses));
-      } catch (error) {
-        // toast.error("Failed to fetch courses");
+      } catch (error: any) {
+        console.error('Error fetching courses:', error);
+        toast.error(error.response.data.message || 'Failed to fetch courses');
       } finally {
         dispatch(setLoading(false));
       }
