@@ -43,7 +43,7 @@ export default function Login() {
     try {
       const res = await authService.login(formData);
 
-      dispatch(loginSuccess(res.data));
+      dispatch(loginSuccess(res.data.user));
       toast.dismiss(loadingToast);
       toast.success('Signed in successfully!');
       router.push('/dashboard');

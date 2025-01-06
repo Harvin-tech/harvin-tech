@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from '../endpoints.ts';
 import apiClient from './apiClient';
+import Cookies from 'js-cookie';
 
 interface SignupData {
   email: string;
@@ -23,20 +24,23 @@ export const authService = {
     return response.data;
   },
 
-  login: async (data: LoginData) => {
-    const response = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, data);
-    console.log(response);
-    localStorage.setItem('user', JSON.stringify(response.data.data));
-    return response.data;
+  login: async (value: LoginData) => {
+    const { data } = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, value);
+    console.log(data);
+    localStorage.setItem('user', JSON.stringify(data.data.user));
+    Cookies.set('token', data.data.token);
+    return data;
   },
 
   logout: async () => {
     try {
       const response = await apiClient.post(API_ENDPOINTS.AUTH.LOGOUT);
       localStorage.removeItem('user');
+      Cookies.remove('token');
       return response.data;
     } catch (error) {
       localStorage.removeItem('user');
+      Cookies.remove('token');
       throw error;
     }
   },

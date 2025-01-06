@@ -109,7 +109,7 @@ const Sidebar = () => {
 
   // Determine which sidebar items to show based on user role
   const sidebarItems =
-    currentUser?.role === 'student' ? adminSidebarItems : studentSidebarItems;
+    currentUser?.role === 'admin' ? adminSidebarItems : studentSidebarItems;
 
   if (!mounted) {
     return (
