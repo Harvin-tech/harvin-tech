@@ -52,6 +52,7 @@ const Header = () => {
       toast.success('Logged out successfully');
       router.push('/login');
     } catch (error: any) {
+      console.log(error);
       // toast.error(error.response?.data?.message || 'Error logging out');
       toast.success(error.response?.data?.message || 'Error logging out');
       // Still logout on error to maintain consistent state

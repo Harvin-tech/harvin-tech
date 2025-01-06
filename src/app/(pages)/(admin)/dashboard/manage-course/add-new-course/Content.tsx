@@ -215,7 +215,7 @@ export default function AddCourse() {
     } catch (error: any) {
       console.error('Error creating course:', error);
       toast.error(
-        error.message || 'Failed to create course. Please try again.'
+        error.response.data.message || 'Failed to create course. Please try again.'
       );
     }
   };

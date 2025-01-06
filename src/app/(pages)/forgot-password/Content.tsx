@@ -29,8 +29,12 @@ export default function ForgotPassword() {
         const data = await response.json();
         setError(data.message || 'Something went wrong');
       }
-    } catch (err) {
-      setError('An error occurred while processing your request');
+    } catch (error: any) {
+      console.log(error);
+      setError(
+        error.response.data.message ||
+          'An error occurred while processing your request'
+      );
     }
   };
 

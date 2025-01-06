@@ -64,9 +64,9 @@ const StudentDashboard: React.FC = () => {
 
         setCourses(userCourses);
         setFilteredCourses(userCourses);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching courses:', error);
-        toast.error('Error Loading Courses', {
+        toast.error(error.response.data.message || 'Error Loading Courses', {
           description: 'Failed to load courses. Please try again.',
           className: 'destructive',
         });
@@ -171,9 +171,9 @@ const StudentDashboard: React.FC = () => {
       });
 
       setSelectedCourse(null);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating course:', error);
-      toast.error('Update Failed', {
+      toast.error(error.response.data.message || 'Update Failed', {
         description: `Failed to ${newStatus.toLowerCase()} ${courseTitle}`,
         className: 'destructive',
       });

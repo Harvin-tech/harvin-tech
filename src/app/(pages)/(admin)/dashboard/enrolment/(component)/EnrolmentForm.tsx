@@ -90,8 +90,11 @@ const EnrolmentForm: React.FC = () => {
       } else {
         toast.error('Enrollment failed! Please try again.');
       }
-    } catch (error) {
-      toast.error('Enrollment failed! Please try again.');
+    } catch (error: any) {
+      console.log(error);
+      toast.error(
+        error.response.data.message || 'Enrollment failed! Please try again.'
+      );
     } finally {
       setLoading(false);
     }

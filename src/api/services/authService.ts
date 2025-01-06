@@ -28,7 +28,7 @@ export const authService = {
     const { data } = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, value);
     console.log(data);
     localStorage.setItem('user', JSON.stringify(data.data.user));
-    Cookies.set('token', data.data.token);
+    Cookies.set('token', data.data.token, { expires: 7 });
     return data;
   },
 
@@ -39,6 +39,7 @@ export const authService = {
       Cookies.remove('token');
       return response.data;
     } catch (error) {
+      console.log(error);
       localStorage.removeItem('user');
       Cookies.remove('token');
       throw error;

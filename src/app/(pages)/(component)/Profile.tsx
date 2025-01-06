@@ -139,7 +139,8 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
       localStorage.setItem('user', JSON.stringify(updatedUser));
       toast.success('Profile updated successfully');
     } catch (error: any) {
-      toast.error(error.message || 'Error updating profile');
+      console.log(error);
+      toast.error(error.response.data.message || 'Error updating profile');
     } finally {
       setIsLoading(false);
     }
@@ -175,7 +176,8 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
 
       toast.success('Profile image updated successfully');
     } catch (error: any) {
-      toast.error(error.message || 'Error uploading image');
+      console.log(error);
+      toast.error(error.response.data.message || 'Error uploading image');
     } finally {
       setImageLoading(false);
     }
@@ -201,7 +203,8 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
       passwordForm.reset();
       toast.success('Password updated successfully');
     } catch (error: any) {
-      toast.error(error.message || 'Error updating password');
+      console.log(error);
+      toast.error(error.response.data.message || 'Error updating password');
     } finally {
       setIsLoading(false);
     }
