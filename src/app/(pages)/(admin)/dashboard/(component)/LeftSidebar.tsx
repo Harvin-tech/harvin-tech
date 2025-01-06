@@ -95,19 +95,23 @@ const Sidebar = () => {
 
   const sidebarItems = currentUser?.role === 'admin' ? adminSidebarItems : studentSidebarItems;
 
+  //fixed issue with hydration error
+
+  
+
   return (
     <>
       {/* Toggle Button for mobile */}
       <button
         onClick={toggleSidebar}
-        className="fixed top-[60px] md:top-[85px] left-[-2px]  z-50 xl:z-0  lg:hidden"
+        className="fixed top-[62px] md:top-[85px] left-[-2px]  z-[60]   lg:hidden"
       >
         <TfiArrowCircleRight size={15} className={`text-gray-900 ${isOpen ? 'rotate-180 ml-[245px] transition-all duration-300' : ''}`}  />
       </button>
 
       {/* Sidebar */}
       <aside
-        className={`fixed min-h-screen w-[250px] bg-white p-4 shadow-lg overflow-y-auto transition-transform duration-300 z-0
+        className={`fixed min-h-screen w-[250px] bg-white p-4 shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out z-[50]
           ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
           lg:translate-x-0 lg:sticky`}
       >

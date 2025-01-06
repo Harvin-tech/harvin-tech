@@ -60,7 +60,7 @@ const Header = () => {
   };
 
   const AuthenticatedDropdown = () => (
-    <DropdownMenuContent>
+    <DropdownMenuContent className='z-[9999]'>
       <DropdownMenuLabel>
         Welcome, {userData?.firstName || 'User'}
       </DropdownMenuLabel>
@@ -81,7 +81,7 @@ const Header = () => {
   );
 
   const UnauthenticatedDropdown = () => (
-    <DropdownMenuContent>
+    <DropdownMenuContent className='z-[9999]'>
       <DropdownMenuLabel>Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem>
@@ -98,7 +98,7 @@ const Header = () => {
   );
 
   return (
-    <div className="sticky top-0 left-0 right-0 bg-background z-[20] h-[55px] sm:h-[67px] md:h-[83px] border-b border-border shadow-sm">
+    <div className="sticky top-0 left-0 right-0 bg-background z-[999] h-[55px] sm:h-[67px] md:h-[83px] border-b border-border shadow-sm">
       <div className="lg:max-w-screen-xl lg:mx-auto flex justify-between items-center px-4 sm:px-6">
         <Link href={'/'}>
           <div className="relative size-12 md:size-20">
@@ -230,7 +230,7 @@ const Header = () => {
               </Link>
             ))}
           </ul>
-          <div className="flex items-center gap-4 bg-primary rounded-full">
+          <div className="flex items-center gap-4 bg-primary rounded-full ">
             <DropdownMenu>
               <DropdownMenuTrigger className="p-2 flex justify-center items-center outline-none">
                 <RiAccountCircleLine className="text-2xl text-white" />
