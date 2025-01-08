@@ -69,7 +69,7 @@ const dummyCourses = [
 
 const Courses = () => {
   const searchParams = useSearchParams();
-  const userId = searchParams.get('user_id');
+  const userId = searchParams.get('getUser_Id');
   const [localCourses, localSetCourses] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();

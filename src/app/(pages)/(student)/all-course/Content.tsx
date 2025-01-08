@@ -22,7 +22,7 @@ const AllCourse = () => {
     // Handle authentication check inside useEffect
     if (!userId) {
       // toast.error('Please login to continue');
-      window.location.href='/login';
+      window.location.href = '/login';
       return;
     }
 

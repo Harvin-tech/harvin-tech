@@ -40,7 +40,9 @@ export const fetchEnrollments = createAsyncThunk(
       }));
     } catch (error: any) {
       console.error('Error fetching enrollment data:', error);
-      return rejectWithValue(error.response.data.message ||'Failed to fetch enrollment data');
+      return rejectWithValue(
+        error.response.data.message || 'Failed to fetch enrollment data'
+      );
     }
   }
 );

@@ -1,11 +1,10 @@
-'use client'
+'use client';
 import Image from 'next/image';
 import React from 'react';
 import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 
 const RightSidebar = () => {
-  
   // Get auth state from Redux instead of local state
   const {
     isAuthenticated,
@@ -49,7 +48,9 @@ const RightSidebar = () => {
         </div>
 
         {/* User Name */}
-        <h2 className="text-xl font-semibold text-foreground/90 tracking-tighter">{user.name}</h2>
+        <h2 className="text-xl font-semibold text-foreground/90 tracking-tighter">
+          {user.name}
+        </h2>
 
         {/* Greeting */}
         <div className="text-center">

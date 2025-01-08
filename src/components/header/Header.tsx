@@ -60,7 +60,7 @@ const Header = () => {
   };
 
   const AuthenticatedDropdown = () => (
-    <DropdownMenuContent className='z-[9999]'>
+    <DropdownMenuContent className="z-[9999]">
       <DropdownMenuLabel>
         Welcome, {userData?.firstName || 'User'}
       </DropdownMenuLabel>
@@ -81,7 +81,7 @@ const Header = () => {
   );
 
   const UnauthenticatedDropdown = () => (
-    <DropdownMenuContent className='z-[9999]'>
+    <DropdownMenuContent className="z-[9999]">
       <DropdownMenuLabel>Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem>

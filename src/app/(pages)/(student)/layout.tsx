@@ -2,7 +2,6 @@ import React from 'react';
 import RightSidebar from '../(admin)/dashboard/(component)/RightSidebar';
 import LeftSidebar from '../(admin)/dashboard/(component)/LeftSidebar';
 
-
 export default function DashboardLayout({
   children,
 }: {

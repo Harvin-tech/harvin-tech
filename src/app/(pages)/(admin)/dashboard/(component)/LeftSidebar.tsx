@@ -8,7 +8,7 @@ import {
   FaUserCog,
   FaSignOutAlt,
 } from 'react-icons/fa';
-import { TfiArrowCircleRight } from "react-icons/tfi";
+import { TfiArrowCircleRight } from 'react-icons/tfi';
 import { IoSettingsSharp } from 'react-icons/io5';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -95,12 +95,13 @@ const Sidebar = () => {
     },
   ];
 
-  const sidebarItems = currentUser?.role === 'admin' ? adminSidebarItems : studentSidebarItems;
+  const sidebarItems =
+    currentUser?.role === 'admin' ? adminSidebarItems : studentSidebarItems;
 
   return (
     <div className="min-h-[100vh] flex">
       {/* Main sidebar container */}
-      <div 
+      <div
         className={`
           lg:sticky lg:top-[83px] h-[calc(100vh-43px)]
           fixed top-[55px] md:top-[83px] left-0 
