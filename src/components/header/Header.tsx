@@ -151,7 +151,7 @@ const Header = () => {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
-                    className="w-full py-3 px-4 text-base font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                    className="w-full py-3 px-4 text-base font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
                   >
                     Logout
                   </button>

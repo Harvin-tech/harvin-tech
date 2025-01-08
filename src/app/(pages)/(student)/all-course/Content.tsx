@@ -21,8 +21,8 @@ const AllCourse = () => {
   useEffect(() => {
     // Handle authentication check inside useEffect
     if (!userId) {
-      toast.error('Please login to continue');
-      router.push('/login');
+      // toast.error('Please login to continue');
+      window.location.href='/login';
       return;
     }
 
@@ -43,7 +43,7 @@ const AllCourse = () => {
         dispatch(setCourses(userCourses));
       } catch (error: any) {
         console.error('Error fetching courses:', error);
-        toast.error(error.response.data.message || "Failed to fetch courses");
+        // toast.error(error.response.data.message || "Failed to fetch courses");
       } finally {
         dispatch(setLoading(false));
       }

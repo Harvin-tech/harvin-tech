@@ -194,12 +194,12 @@ const Users: React.FC<UserManagementTableProps> = ({ users: initialUsers }) => {
 
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className=" max-w-[300px] sm:max-w-[400px] mt-10 h-[420px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit User Details</DialogTitle>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
               <FormField
                 control={form.control}
                 name="name"
