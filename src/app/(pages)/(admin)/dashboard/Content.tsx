@@ -28,7 +28,7 @@ const Dashboard = () => {
   useEffect(() => {
     // Handle authentication check inside useEffect
     if (!userId) {
-      toast.error('Please login to continue');
+      // toast.error('Please login to continue');
       router.push('/login');
       return;
     }

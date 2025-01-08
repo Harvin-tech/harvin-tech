@@ -149,7 +149,7 @@ const EnrolmentForm: React.FC = () => {
                 Create user
               </button>
             </DialogTrigger>
-            <DialogContent className="h-[600px] overflow-y-auto">
+            <DialogContent className=" max-w-[400px] h-[400px] md:h-[540px] lg:h-[800px] xl:h-[540px] mt-8  overflow-y-auto">
               <DialogHeader>
                 <DialogTitle></DialogTitle>
               </DialogHeader>
@@ -158,7 +158,7 @@ const EnrolmentForm: React.FC = () => {
               <DialogFooter>
                 <button
                   onClick={() => setIsDialogOpen(false)}
-                  className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-700 hover:bg-gray-300"
+                  className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-700 hover:bg-gray-300 mt-2 md:mt-0"
                 >
                   Cancel
                 </button>

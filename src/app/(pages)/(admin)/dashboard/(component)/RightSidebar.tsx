@@ -1,11 +1,21 @@
+'use client'
 import Image from 'next/image';
 import React from 'react';
 import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
+import { useSelector } from 'react-redux';
 
 const RightSidebar = () => {
+  
+  // Get auth state from Redux instead of local state
+  const {
+    isAuthenticated,
+    user: userData,
+    error,
+    loading,
+  } = useSelector((state: any) => state.auth);
   // You can replace these with actual user data from your authentication system
   const user = {
-    name: 'Shiva',
+    name: userData?.firstName || 'Harvin',
     profileImage: '/harvinlogo.jpg', // Replace with actual image path
   };
 
@@ -27,7 +37,7 @@ const RightSidebar = () => {
           <PiDotsThreeOutlineVertical size={16} />
         </button>
       </div>
-      <div className="flex flex-col items-center space-y-4">
+      <div className="flex flex-col items-center ">
         {/* Profile Image */}
         <div className="relative w-20 h-20 rounded-full p-4 border-2 border-border">
           <Image
@@ -39,14 +49,14 @@ const RightSidebar = () => {
         </div>
 
         {/* User Name */}
-        <h2 className="text-xl font-semibold text-foreground">{user.name}</h2>
+        <h2 className="text-xl font-semibold text-foreground/90 tracking-tighter">{user.name}</h2>
 
         {/* Greeting */}
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground">
+          <h1 className="text-2xl font-bold text-foreground/80 leading-tight tracking-tight">
             {getGreeting()} {user.name}
           </h1>
-          <p className="mt-2 text-muted-foreground">
+          <p className="mt-2 text-muted-foreground text-sm">
             Continue your journey and achieve Your Target
           </p>
         </div>
