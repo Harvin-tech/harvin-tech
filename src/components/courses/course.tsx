@@ -120,8 +120,8 @@ export default function CoursesPage() {
 
           {/* Hero Section */}
           <section className="flex flex-col md:flex-row gap-3 mb-4 md:mb-5">
-            <div className="w-full md:w-[70%] flex flex-col gap-3">
-              <video
+            <div className="w-full md:w-[70%] flex flex-col gap-3 ">
+              {/* <video
                 className="w-full max-w-2xl rounded-lg shadow-lg min-h-[350px]"
                 controls
                 autoPlay
@@ -130,7 +130,18 @@ export default function CoursesPage() {
               >
                 <source src="/your-video-path.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
-              </video>
+              </video> */}
+              <iframe
+                width="560"
+                height="315"
+                className="w-full max-w-2xl rounded-lg shadow-lg min-h-[350px] bg-black"
+                src="https://www.youtube.com/embed/S1DvEdR0iUo?si=Pkcq4ViWqH9mEgU7"
+                title="YouTube video player"
+                // frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                // referrerpolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
               <div className="grid grid-cols-2 gap-3 w-full">
                 <IoTCard
                   imageSrc="/Images/home/topcourse2.png"

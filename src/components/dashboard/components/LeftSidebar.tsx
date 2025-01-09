@@ -34,7 +34,7 @@ const LeftSidebar = () => {
       await authService.logout();
       dispatch(logout());
       toast.success('Logged out successfully');
-      window.location.href = '/login';
+      window.location.href = '/';
     } catch (error: any) {
       console.log(error);
       toast.error(error.response?.data?.message || 'Error logging out');
@@ -51,14 +51,14 @@ const LeftSidebar = () => {
     {
       icon: <FaUserCog />,
       label: 'Profile',
-      href: '/profile',
-      active: pathname === '/profile',
+      href: '/dashboard/profile',
+      active: pathname === '/dashboard/profile',
     },
     {
       icon: <FaBookOpen />,
       label: 'All Courses',
-      href: '/course',
-      active: pathname === '/courses',
+      href: '/dashboard/courses',
+      active: pathname === '/dashboard/courses',
     },
   ];
 
@@ -66,14 +66,14 @@ const LeftSidebar = () => {
     {
       icon: <FaChartLine />,
       label: 'Dashboard',
-      href: '/admin/dashboard',
-      active: pathname === '/admin/dashboard',
+      href: '/dashboard',
+      active: pathname === '/dashboard',
     },
     {
       icon: <FaUserGraduate />,
       label: 'Enrolment',
       href: '/admin/enrolment',
-      active: pathname === '/admin//enrolment',
+      active: pathname === '/admin/enrolment',
     },
     {
       icon: <FaBookOpen />,
@@ -90,8 +90,8 @@ const LeftSidebar = () => {
     {
       icon: <FaUserCog />,
       label: 'Manage Profile',
-      href: '/profile',
-      active: pathname === '/profile',
+      href: '/dashboard/profile',
+      active: pathname === '/dashboard/profile',
     },
   ];
 

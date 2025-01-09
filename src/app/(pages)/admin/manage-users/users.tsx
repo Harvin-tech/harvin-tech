@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/select';
 import { useForm } from 'react-hook-form';
 import { Badge } from '@/components/ui/badge';
-import { Pencil, Trash2, UserCog } from 'lucide-react';
+import { Eye, Pencil, Trash2, UserCog } from 'lucide-react';
 import apiClient from '@/services/apiClient';
 import { getUser_I } from '@/types/user.types';
 import { useRouter } from 'next/navigation';
@@ -147,10 +147,7 @@ const Users = () => {
           </TableHeader>
           <TableBody>
             {users.map((user) => (
-              <TableRow
-                onClick={() => router.push(`/admin/manage-users/${user._id}`)}
-                key={user._id}
-              >
+              <TableRow key={user._id}>
                 <TableCell className="font-medium">{`${user.firstName || '-'} ${user.middleName || ''}  ${user.lastName || ''} `}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.address ?? '-'}</TableCell>
@@ -193,6 +190,15 @@ const Users = () => {
                     >
                       <Pencil className="h-4 w-4" />
                     </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() =>
+                        router.push(`/admin/manage-users/${user._id}`)
+                      }
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>O
                     <Button
                       variant="destructive"
                       size="sm"
