@@ -20,7 +20,7 @@ const dummyId = uuidv4();
 
 const TopCourse = () => {
   const searchParams = useSearchParams();
-  const userId = searchParams.get('user_id');
+  const userId = searchParams.get('getUser_Id');
   const courseId = searchParams.get('course_id');
   const [loading, setLoading] = React.useState(false);
   const [localCourses, setLocalCourses] = useState([]);

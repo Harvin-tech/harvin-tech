@@ -51,7 +51,7 @@ const ClassCard = ({
         <Link
           href={
             userId
-              ? `/courses?user_id=${userId}&course_id=${courseId}`
+              ? `/courses?getUser_Id=${userId}&course_id=${courseId}`
               : '/courses?preview=true'
           }
           onClick={() => onClick()}

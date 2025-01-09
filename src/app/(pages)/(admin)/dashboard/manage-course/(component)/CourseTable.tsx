@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -17,45 +17,54 @@ import {
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Lock, Unlock, Trash2 } from 'lucide-react';
+import apiClient from '@/api/services/apiClient';
+import { API_ENDPOINTS } from '@/api/endpoints.ts';
+import { getCourse_I } from '@/types/course.types';
+import { useRouter } from 'next/navigation';
 
-interface Course {
-  id: number;
-  name: string;
-  emailCoursed: string; // Email associated with the course
-  title: string;
-  email: string;
-  isLocked: boolean;
-}
-
-interface CourseManagementTableProps {
-  courses: Course[];
-}
-
-const CourseManagementTable: React.FC<CourseManagementTableProps> = ({
-  courses: initialCourses,
-}) => {
-  const [courses, setCourses] = useState<Course[]>(initialCourses);
+const CourseManagementTable = () => {
+  const [courses, setCourses] = useState<getCourse_I[]>([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<getCourse_I | null>(
+    null
+  );
 
-  const handleDelete = (course: Course) => {
+  const router = useRouter();
+  const getAllCourses = async () => {
+    try {
+      const { data } = await apiClient.get(API_ENDPOINTS.COURSES.BASE);
+      console.log(data);
+      setCourses(data.data.courses);
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+    }
+  };
+
+  useEffect(() => {
+    getAllCourses();
+  }, []);
+
+  const handleDelete = (course: getCourse_I) => {
     setSelectedCourse(course);
     setIsDeleteDialogOpen(true);
   };
 
   const confirmDelete = () => {
     if (selectedCourse) {
-      setCourses(courses.filter((course) => course.id !== selectedCourse.id));
+      setCourses(courses.filter((course) => course._id !== selectedCourse._id));
       setIsDeleteDialogOpen(false);
       setSelectedCourse(null);
     }
   };
 
-  const toggleLock = (courseId: number) => {
+  const toggleLock = (courseId: string) => {
     setCourses(
       courses.map((course) =>
-        course.id === courseId
-          ? { ...course, isLocked: !course.isLocked }
+        course._id === courseId
+          ? {
+              ...course,
+              status: course.status === 0 ? 1 : course.status === 1 ? 0 : -1,
+            }
           : course
       )
     );
@@ -66,27 +75,37 @@ const CourseManagementTable: React.FC<CourseManagementTableProps> = ({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[200px]">Name</TableHead>
-            <TableHead className="w-[200px]">Email</TableHead>
             <TableHead className="w-[200px]">Course Title</TableHead>
+            <TableHead className="w-[200px]">Category</TableHead>
+            <TableHead className="w-[200px]">Level</TableHead>
+            <TableHead className="w-[200px]">instructor</TableHead>
             <TableHead className="w-[100px]">Status</TableHead>
             <TableHead className="w-[100px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {courses.map((course) => (
-            <TableRow key={course.id}>
-              <TableCell className="font-medium">{course.name}</TableCell>
-              <TableCell>{course.emailCoursed}</TableCell>
+            <TableRow
+              key={course._id}
+              onClick={() =>
+                router.push(`/dashboard/manage-course/${course._id}`)
+              }
+              className="cursor-pointer"
+            >
               <TableCell>{course.title}</TableCell>
+              <TableCell className="font-medium">
+                {course.category ?? '-'}
+              </TableCell>
+              <TableCell>{course.level ?? '-'}</TableCell>
+              <TableCell>{course.instructor?.name ?? '-'}</TableCell>
               <TableCell>
                 <Button
-                  variant={course.isLocked ? 'destructive' : 'outline'}
+                  variant={course.status ? 'destructive' : 'outline'}
                   size="sm"
-                  onClick={() => toggleLock(course.id)}
+                  onClick={() => toggleLock(course._id)}
                   className="gap-2"
                 >
-                  {course.isLocked ? (
+                  {course.status ? (
                     <>
                       <Lock className="h-4 w-4" />
                       Locked

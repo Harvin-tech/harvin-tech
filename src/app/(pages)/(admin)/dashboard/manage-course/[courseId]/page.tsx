@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import {
   Table,
@@ -35,15 +36,17 @@ import { Badge } from '@/components/ui/badge';
 import { Pencil, Trash2, UserCog } from 'lucide-react';
 import apiClient from '@/api/services/apiClient';
 import { getUser_I } from '@/types/user.types';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 const Users = () => {
-  const [users, setUsers] = useState<getUser_I[]>([]);
+  const [courseUser, setCourseUser] = useState<any[]>([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<getUser_I | null>(null);
 
   const router = useRouter();
+
+  const pathname = useParams();
 
   const form = useForm<getUser_I>({
     defaultValues: {
@@ -68,55 +71,55 @@ const Users = () => {
   };
 
   const confirmDelete = () => {
-    if (selectedUser) {
-      setUsers(users.filter((user) => user._id !== selectedUser._id));
-      setIsDeleteDialogOpen(false);
-      setSelectedUser(null);
-    }
+    //   if (selectedUser) {
+    //     setUsers(users.filter((user) => user._id !== selectedUser._id));
+    //     setIsDeleteDialogOpen(false);
+    //     setSelectedUser(null);
+    //   }
   };
 
   const toggleAdminStatus = (userId: string) => {
-    setUsers(
-      users.map((user) =>
-        user._id === userId
-          ? { ...user, role: user.role === 'admin' ? 'user' : 'admin' }
-          : user
-      )
-    );
+    //   setUsers(
+    //     users.map((user) =>
+    //       user._id === userId
+    //         ? { ...user, role: user.role === 'admin' ? 'user' : 'admin' }
+    //         : user
+    //     )
+    //   );
   };
 
   const toggleUserStatus = (userId: string) => {
-    setUsers(
-      users.map((user) =>
-        user._id === userId
-          ? {
-              ...user,
-              status: user.status === 'active' ? 'inactive' : 'active',
-            }
-          : user
-      )
-    );
+    //   setUsers(
+    //     users.map((user) =>
+    //       user._id === userId
+    //         ? {
+    //             ...user,
+    //             status: user.status === 'active' ? 'inactive' : 'active',
+    //           }
+    //         : user
+    //     )
+    //   );
   };
 
   const onSubmit = (data: getUser_I) => {
     if (selectedUser) {
-      setUsers(
-        users.map((user) =>
-          user._id === selectedUser._id ? { ...data, id: user._id } : user
-        )
-      );
+      // setUsers(
+      //   users.map((user) =>
+      //     user._id === selectedUser._id ? { ...data, id: user._id } : user
+      //   )
+      // );
       setIsEditDialogOpen(false);
       setSelectedUser(null);
     }
   };
 
-  const getAllusers = async () => {
+  const getAllUsersOfCourse = async (courseId: string) => {
     try {
       const { data } = await apiClient.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/private/users`
+        `${process.env.NEXT_PUBLIC_API_URL}/private/courses/enroll/${courseId}`
       );
       console.log(data.data);
-      setUsers(data.data.users);
+      setCourseUser(data.data.students);
     } catch (error) {
       console.log(error);
 
@@ -124,14 +127,16 @@ const Users = () => {
     }
   };
 
-  console.log(users);
+  //   console.log('weefef', users);
   useEffect(() => {
-    getAllusers();
+    getAllUsersOfCourse(pathname.courseId as string);
   }, []);
 
-  console.log(users);
   return (
     <div className="w-full bg-white p-4 rounded-lg">
+      <h2 className="text-2xl font-semibold mb-4">
+        Students enroll in {courseUser[0]?.title || 'AI'}
+      </h2>
       <div className="overflow-x-auto">
         <Table className="min-w-full">
           <TableHeader>
@@ -141,67 +146,34 @@ const Users = () => {
               <TableHead className="w-[200px]">Address</TableHead>
               <TableHead className="w-[150px]">Phone</TableHead>
               <TableHead className="w-[100px]">Status</TableHead>
-              <TableHead className="w-[100px]">Admin</TableHead>
+              <TableHead className="w-[100px]">Enrolled at</TableHead>
               <TableHead className="w-[150px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users.map((user) => (
-              <TableRow
-                onClick={() => router.push(`/dashboard/users/${user._id}`)}
-                key={user._id}
-              >
-                <TableCell className="font-medium">{`${user.firstName || '-'} ${user.middleName || ''}  ${user.lastName || ''} `}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.address ?? '-'}</TableCell>
-                <TableCell>{user.mobile ?? '-'}</TableCell>
+            {courseUser?.map((st, i) => (
+              <TableRow key={i}>
+                <TableCell className="font-medium">{`${st.user.firstName || '-'} ${st.user.middleName || ''}  ${st.user.lastName || ''} `}</TableCell>
+                <TableCell>{st.user.email}</TableCell>
+                <TableCell>{st.user.address ?? '-'}</TableCell>
+                <TableCell>{st.user.mobile ?? '-'}</TableCell>
                 <TableCell>
                   <Badge
-                    variant={user.status === 'active' ? 'default' : 'secondary'}
+                    variant={
+                      st.user.status === 'active' ? 'default' : 'secondary'
+                    }
                     className="cursor-pointer"
-                    onClick={() => toggleUserStatus(user._id)}
+                    onClick={() => toggleUserStatus(st.user._id)}
                   >
                     <span
-                      className={`${user.status === 'active' ? 'text-white' : ''}`}
+                      className={`${st.user.status === 'active' ? 'text-white' : ''}`}
                     >
-                      {user.status}
+                      {st.user.status}
                     </span>
                   </Badge>
                 </TableCell>
-                <TableCell>
-                  <Button
-                    variant={user.role === 'admin' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => toggleAdminStatus(user._id)}
-                  >
-                    <UserCog
-                      className={`h-4 w-4 mr-1 ${user.role === 'admin' ? 'text-white' : ''}`}
-                    />
-                    {user.role === 'admin' ? (
-                      <span className="text-white">Admin</span>
-                    ) : (
-                      'User'
-                    )}
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleEdit(user)}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => handleDelete(user)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </TableCell>
+
+                <TableCell>{st.enrolledAt}</TableCell>
               </TableRow>
             ))}
           </TableBody>
