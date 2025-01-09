@@ -1,4 +1,3 @@
-
 import { API_ENDPOINTS } from '@/config/backend-routes';
 import apiClient from './apiClient';
 import Cookies from 'js-cookie';
@@ -30,6 +29,7 @@ export const authService = {
     console.log(data);
     localStorage.setItem('user', JSON.stringify(data.data.user));
     Cookies.set('token', data.data.token, { expires: 7 });
+    Cookies.set('role', data.data.user.role, { expires: 7 });
     return data;
   },
 
@@ -43,6 +43,7 @@ export const authService = {
       console.log(error);
       localStorage.removeItem('user');
       Cookies.remove('token');
+      Cookies.remove('role');
       throw error;
     }
   },

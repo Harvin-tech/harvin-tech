@@ -16,7 +16,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Lock, Unlock, Trash2 } from 'lucide-react';
+import { Lock, Unlock, Trash2, Eye } from 'lucide-react';
 import apiClient from '@/services/apiClient';
 import { API_ENDPOINTS } from '@/config/backend-routes';
 import { getCourse_I } from '@/types/course.types';
@@ -85,11 +85,7 @@ const CourseManagementTable = () => {
         </TableHeader>
         <TableBody>
           {courses.map((course) => (
-            <TableRow
-              key={course._id}
-              onClick={() => router.push(`/admin/manage-course/${course._id}`)}
-              className="cursor-pointer"
-            >
+            <TableRow key={course._id} className="cursor-pointer">
               <TableCell>{course.title}</TableCell>
               <TableCell className="font-medium">
                 {course.category ?? '-'}
@@ -118,11 +114,13 @@ const CourseManagementTable = () => {
               </TableCell>
               <TableCell>
                 <Button
-                  variant="destructive"
+                  variant="outline"
                   size="sm"
-                  onClick={() => handleDelete(course)}
+                  onClick={() =>
+                    router.push(`/admin/manage-course/${course._id}`)
+                  }
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Eye className="h-4 w-4" />
                 </Button>
               </TableCell>
             </TableRow>
