@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getUserCourse, updateCourse } from '@/api';
+import { getUserCourse, updateCourse } from '@/services';
 import { Input } from '@/components/ui/input';
 import {
   Dialog,
@@ -14,8 +14,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
-import StudentProfile from '../students/(component)/StudentProfile';
-import CourseFilters from '../students/(component)/CourseFilters';
+import StudentProfile from '../../../../../../components/users/students/StudentProfile';
+import CourseFilters from '../../../../../../components/users/students/CourseFilters';
 
 interface Course {
   id: string;
@@ -29,7 +29,7 @@ interface Course {
   category?: string;
 }
 
-const StudentDashboard: React.FC = () => {
+const UserIdPage: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
@@ -317,4 +317,4 @@ const StudentDashboard: React.FC = () => {
   );
 };
 
-export default StudentDashboard;
+export default UserIdPage;

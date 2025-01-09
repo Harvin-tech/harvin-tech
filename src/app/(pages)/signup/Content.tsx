@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { MailIcon, UserIcon, LockIcon, PhoneIcon } from 'lucide-react';
 import Link from 'next/link';
 import { inputStyle } from '@/constants';
-import { authService } from '@/api/services/authService';
+import { authService } from '@/services/authService';
 import { toast } from 'sonner';
 
 export default function Signup() {

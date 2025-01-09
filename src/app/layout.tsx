@@ -1,13 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.scss';
-import { AppProviders } from '@/lib/providers';
 import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
-import { Provider } from 'react-redux';
-import GlobalProvider from './GlobalProvider';
 import { NextUIProvider } from '@nextui-org/react';
+import GlobalProvider from '@/lib/global-provider';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -30,14 +28,12 @@ export default function RootLayout({
       <body className={`${poppins.className} bg-[var(--body-bg)]`}>
         {/* Include  all Providers in file '@/lib/providers.tsx' insead of here */}
         <GlobalProvider>
-          <AppProviders>
-            <NextUIProvider>
-              <Header />
-              {children}
-              <Footer />
-              <Toaster position="top-center" richColors />
-            </NextUIProvider>
-          </AppProviders>
+          <NextUIProvider>
+            <Header />
+            {children}
+            <Footer />
+            <Toaster position="top-center" richColors />
+          </NextUIProvider>
         </GlobalProvider>
       </body>
     </html>

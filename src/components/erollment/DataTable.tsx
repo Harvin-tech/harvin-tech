@@ -14,7 +14,7 @@ import {
   fetchEnrollments,
   setCurrentPage,
   setSearchQuery,
-} from '@/app/store/enrollementSlice';
+} from '@/redux/enrollementSlice';
 
 const DataTable: React.FC = () => {
   const dispatch = useDispatch<any>();

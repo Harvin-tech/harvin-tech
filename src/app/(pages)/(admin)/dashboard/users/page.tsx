@@ -1,5 +1,5 @@
 'use client';
-import Users from './Content';
+import Users from './users';
 
 const page = () => {
   return (

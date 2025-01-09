@@ -1,4 +1,4 @@
-import { API_ENDPOINTS } from '../endpoints.ts';
+import { API_ENDPOINTS } from '@/config/backend-routes';
 import apiClient from './apiClient';
 
 interface Course {

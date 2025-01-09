@@ -16,9 +16,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
-import { authService } from '@/api/services/authService';
+import { authService } from '@/services/authService';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '@/app/store/authSlice';
+import { logout } from '@/redux/authSlice';
 
 const Header = () => {
   const router = useRouter();

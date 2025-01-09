@@ -12,7 +12,7 @@ import { useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
-import { setOneCourses } from '@/app/store/courseSlice';
+import { setOneCourses } from '@/redux/courseSlice';
 // Define dummy data with the same structure as API data
 const dummyCourses = [
   {

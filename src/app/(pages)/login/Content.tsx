@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { inputStyle } from '@/constants';
-import { authService } from '@/api/services/authService';
+import { authService } from '@/services/authService';
 import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '@/app/store/authSlice';
+import { loginSuccess } from '@/redux/authSlice';
 
 export default function Login() {
   const router = useRouter();

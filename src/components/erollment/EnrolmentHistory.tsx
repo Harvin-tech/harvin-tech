@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from './DataTable';
-import { getEnrollDetail } from '@/api';
+import { getEnrollDetail } from '@/services';
 import { formatDate } from '@/utils/helpers';
-import { setEnrollData, setLoading, setError } from '@/app/store/enrollSlice';
+import { setEnrollData, setLoading, setError } from '@/redux/enrollSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface EnrollmentHistoryItem {

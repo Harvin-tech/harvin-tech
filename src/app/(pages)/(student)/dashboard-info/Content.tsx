@@ -2,18 +2,18 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserCourse } from '@/api';
+import { getUserCourse } from '@/services';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
-import { setCourses, setLoading } from '@/app/store/courseSlice';
+import { setCourses, setLoading } from '@/redux/courseSlice';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner';
-import { LineChart } from '../../(admin)/dashboard/(component)/LineChart';
-import { StatCard } from '../../(admin)/dashboard/(component)/StatsCard';
-import { VideoCard } from '../../(admin)/dashboard/(component)/VideoCard';
+import { LineChart } from '../../../../components/dashboard-home/LineChart';
+import { StatCard } from '../../../../components/dashboard-home/StatsCard';
+import { VideoCard } from '../../../../components/dashboard-home/VideoCard';
 
 const StudentDashboard = () => {
   const router = useRouter();

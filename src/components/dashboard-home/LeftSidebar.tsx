@@ -14,10 +14,10 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { authService } from '@/api';
+import { authService } from '@/services';
 import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '@/app/store/authSlice';
+import { logout } from '@/redux/authSlice';
 
 const Sidebar = () => {
   const pathname = usePathname();

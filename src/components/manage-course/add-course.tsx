@@ -1,10 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import { StatCard } from './(component)/StatCard';
-import { TabNavigation } from './(component)/TabNavigation';
-import { CourseForm } from './(component)/CourseForm';
+import { StatCard } from './add-new-course/StatCard';
+import { TabNavigation } from './add-new-course/TabNavigation';
+import { CourseForm } from './add-new-course/CourseForm';
 import { toast } from 'sonner';
-import { addCourse } from '@/api/services/coursesService';
+import { addCourse } from '@/services/coursesService';
 
 type FormData = {
   base: {

@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getUserCourse, updateCourse } from '@/api';
+import { getUserCourse, updateCourse } from '@/services';
 import CourseFilters from './CourseFilters';
 import { Input } from '@/components/ui/input';
 import {

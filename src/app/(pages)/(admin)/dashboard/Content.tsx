@@ -2,15 +2,15 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserCourse } from '@/api';
+import { getUserCourse } from '@/services';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
-import { StatCard } from './(component)/StatsCard';
-import { VideoCard } from './(component)/VideoCard';
-import { LineChart } from './(component)/LineChart';
-import { setCourses, setLoading } from '@/app/store/courseSlice';
+import { StatCard } from '../../../../components/dashboard-home/StatsCard';
+import { VideoCard } from '../../../../components/dashboard-home/VideoCard';
+import { LineChart } from '../../../../components/dashboard-home/LineChart';
+import { setCourses, setLoading } from '@/redux/courseSlice';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner';
 
