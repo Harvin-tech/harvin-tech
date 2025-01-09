@@ -14,7 +14,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { addCourse } from '@/api/services/coursesService';
+import { addCourse } from '@/services/coursesService';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
 

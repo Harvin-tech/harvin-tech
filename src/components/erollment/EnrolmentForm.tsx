@@ -1,4 +1,4 @@
-import { enrollCourse, fetchUsers, getCourses } from '@/api';
+import { enrollCourse, fetchUsers, getCourses } from '@/services';
 import React, { useEffect, useState } from 'react';
 import EnrolmentHistory from './EnrolmentHistory';
 import { toast } from 'sonner';
@@ -12,7 +12,7 @@ import {
   DialogDescription,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import ProfilePage from '@/app/(pages)/(component)/Profile';
+import ProfilePage from '@/components/profile/Profile';
 
 interface User {
   _id: string;

@@ -2,8 +2,8 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserCourse } from '@/api';
-import { setCourses, setLoading } from '@/app/store/courseSlice';
+import { getUserCourse } from '@/services';
+import { setCourses, setLoading } from '@/redux/courseSlice';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner';
 
@@ -125,4 +125,16 @@ const Images = [
   '/Images/home/course1.png',
   '/Images/home/course2.png',
   '/Images/home/course3.png',
+];
+
+const frontentRoutes = [
+  ['/', 'courses', '/courses/:courseId', '/profile', 'dashboard'], // users routes and also available for admin
+  [
+    '/admin/dashboard',
+    '/admin/manage-courses',
+    '/admin/manage-courses/:courseId',
+    '/admin/manage-users',
+    '/admin/manage-users/:userId',
+    '/admin/enroll-courses',
+  ], // admin routes [make sure all admin containg routes are not accessible for users]
 ];

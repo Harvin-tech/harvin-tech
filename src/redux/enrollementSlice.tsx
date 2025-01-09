@@ -21,7 +21,7 @@ export interface EnrollmentState {
 
 // actions/enrollmentActions.ts
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getEnrollDetail } from '@/api';
+import { getEnrollDetail } from '@/services';
 import { v4 as uuidv4 } from 'uuid';
 import { formatDate } from '@/utils/helpers';
 

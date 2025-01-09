@@ -17,8 +17,8 @@ import {
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Lock, Unlock, Trash2 } from 'lucide-react';
-import apiClient from '@/api/services/apiClient';
-import { API_ENDPOINTS } from '@/api/endpoints.ts';
+import apiClient from '@/services/apiClient';
+import { API_ENDPOINTS } from '@/config/backend-routes';
 import { getCourse_I } from '@/types/course.types';
 import { useRouter } from 'next/navigation';
 

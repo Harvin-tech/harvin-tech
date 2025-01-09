@@ -1,5 +1,5 @@
 import React from 'react';
-import StudentDashboard from './(component)/StudentDashboard';
+import StudentDashboard from '../../../../../../components/users/students/StudentDashboard';
 
 //[TODO] why this page
 const page = () => {

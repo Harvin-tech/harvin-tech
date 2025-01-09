@@ -1,6 +1,6 @@
 import React from 'react';
-import RightSidebar from '../(admin)/dashboard/(component)/RightSidebar';
-import LeftSidebar from '../(admin)/dashboard/(component)/LeftSidebar';
+import RightSidebar from '../../../components/dashboard-home/RightSidebar';
+import LeftSidebar from '../../../components/dashboard-home/LeftSidebar';
 
 export default function DashboardLayout({
   children,

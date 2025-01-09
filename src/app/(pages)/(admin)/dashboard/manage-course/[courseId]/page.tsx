@@ -34,11 +34,11 @@ import {
 import { useForm } from 'react-hook-form';
 import { Badge } from '@/components/ui/badge';
 import { Pencil, Trash2, UserCog } from 'lucide-react';
-import apiClient from '@/api/services/apiClient';
+import apiClient from '@/services/apiClient';
 import { getUser_I } from '@/types/user.types';
 import { useParams, useRouter } from 'next/navigation';
 
-const Users = () => {
+const CourseIdPage = () => {
   const [courseUser, setCourseUser] = useState<any[]>([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -302,4 +302,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default CourseIdPage;

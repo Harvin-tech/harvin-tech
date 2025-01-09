@@ -7,7 +7,7 @@ import Cta from './component/Cta';
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import CourseDetails from './component/CourseDetails';
-import { getEnrolledCourse } from '@/api';
+import { getEnrolledCourse } from '@/services';
 import Image from 'next/image';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';

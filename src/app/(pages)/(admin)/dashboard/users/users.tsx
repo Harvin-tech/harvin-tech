@@ -33,7 +33,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { Badge } from '@/components/ui/badge';
 import { Pencil, Trash2, UserCog } from 'lucide-react';
-import apiClient from '@/api/services/apiClient';
+import apiClient from '@/services/apiClient';
 import { getUser_I } from '@/types/user.types';
 import { useRouter } from 'next/navigation';
 

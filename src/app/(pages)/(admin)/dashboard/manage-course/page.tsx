@@ -1,5 +1,5 @@
 import React from 'react';
-import ManageCourse from './(component)/ManageCourse';
+import ManageCourse from '../../../../../components/manage-course/ManageCourse';
 
 const page = () => {
   return (

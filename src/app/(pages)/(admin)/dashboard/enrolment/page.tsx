@@ -1,7 +1,7 @@
 'use client';
 
+import CourseEnrolment from '@/components/erollment/CourseEnrolment';
 import React from 'react';
-import CourseEnrolment from './(component)/CourseEnrolment';
 
 const Enrolment = () => {
   return (

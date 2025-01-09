@@ -1,4 +1,4 @@
-import { getCourseChapter } from '@/api';
+import { getCourseChapter } from '@/services';
 import {
   Collapsible,
   CollapsibleContent,
