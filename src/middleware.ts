@@ -13,8 +13,6 @@ export async function middleware(req: NextRequest) {
 
   const token = req.cookies.get('token')?.value;
 
-  console.log(token);
-
   // If the user is authenticated and is trying to access a login or signup route,
   // redirect them to the dashboard
   if (token) {
