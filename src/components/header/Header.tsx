@@ -66,7 +66,7 @@ const Header = () => {
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem>
-        <Link href={`/profile`} className="w-full">
+        <Link href={`/dashboard/profile`} className="w-full">
           Profile
         </Link>
       </DropdownMenuItem>
@@ -140,7 +140,7 @@ const Header = () => {
                     Welcome, {userData?.firstName || 'User'}
                   </div>
                   <Link
-                    href={`/profile`}
+                    href={`/dashboard/profile`}
                     className="w-full text-center py-3 px-4 text-base font-medium border border-primary text-primary rounded-lg hover:bg-primary/10 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
