@@ -1,6 +1,6 @@
+import LeftSidebar from '@/components/dashboard/components/LeftSidebar';
+import RightSidebar from '@/components/dashboard/components/RightSidebar';
 import React from 'react';
-import LeftSidebar from '../../../../components/dashboard-home/LeftSidebar';
-import RightSidebar from '../../../../components/dashboard-home/RightSidebar';
 
 export default function DashboardLayout({
   children,
@@ -13,7 +13,7 @@ export default function DashboardLayout({
       <main className="flex-1 overflow-y-auto max-w-screen-xl mx-auto">
         {children}
       </main>
-      <RightSidebar />
+      {/* <RightSidebar /> */}
     </div>
   );
 }

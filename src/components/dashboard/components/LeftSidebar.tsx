@@ -19,7 +19,7 @@ import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/redux/authSlice';
 
-const Sidebar = () => {
+const LeftSidebar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -45,20 +45,20 @@ const Sidebar = () => {
     {
       icon: <FaChartLine />,
       label: 'Dashboard',
-      href: '/dashboard-info',
+      href: '/dashboard',
       active: pathname === '/dashboard',
     },
     {
       icon: <FaUserCog />,
       label: 'Profile',
       href: '/profile',
-      active: pathname === '/dashboard/profile',
+      active: pathname === '/profile',
     },
     {
       icon: <FaBookOpen />,
       label: 'All Courses',
-      href: '/all-course',
-      active: pathname === '/dashboard/all-courses',
+      href: '/course',
+      active: pathname === '/courses',
     },
   ];
 
@@ -66,32 +66,32 @@ const Sidebar = () => {
     {
       icon: <FaChartLine />,
       label: 'Dashboard',
-      href: '/dashboard',
-      active: pathname === '/dashboard',
+      href: '/admin/dashboard',
+      active: pathname === '/admin/dashboard',
     },
     {
       icon: <FaUserGraduate />,
       label: 'Enrolment',
-      href: '/dashboard/enrolment',
-      active: pathname === '/dashboard/enrolment',
+      href: '/admin/enrolment',
+      active: pathname === '/admin//enrolment',
     },
     {
       icon: <FaBookOpen />,
       label: 'Manage Course',
-      href: '/dashboard/manage-course',
-      active: pathname === '/dashboard/manage-course',
+      href: '/admin/manage-course',
+      active: pathname === '/admin/manage-course',
     },
     {
       icon: <FaUsers />,
-      label: 'Users',
-      href: '/dashboard/users',
-      active: pathname === '/dashboard/users',
+      label: 'Manage Users',
+      href: '/admin/manage-users',
+      active: pathname === '/admin/manage-users',
     },
     {
       icon: <FaUserCog />,
       label: 'Manage Profile',
-      href: '/dashboard/manage-profile',
-      active: pathname === '/dashboard/manage-profile',
+      href: '/profile',
+      active: pathname === '/profile',
     },
   ];
 
@@ -185,4 +185,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default LeftSidebar;

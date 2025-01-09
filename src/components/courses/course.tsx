@@ -1,16 +1,17 @@
 'use client';
 import { appContent } from '@/constants/variants';
-import IoTCard from './component/IoTCard';
-import Courses from '@/components/home/Courses';
-import CoursePayment from './component/CoursePayment';
-import Cta from './component/Cta';
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import CourseDetails from './component/CourseDetails';
+
 import { getEnrolledCourse } from '@/services';
 import Image from 'next/image';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
+import IoTCard from './component/IoTCard';
+import CourseDetails from './component/CourseDetails';
+import CoursePayment from './component/CoursePayment';
+import Cta from './component/Cta';
+import Courses from '../home/Courses';
 
 export default function CoursesPage() {
   const searchParams = useSearchParams();

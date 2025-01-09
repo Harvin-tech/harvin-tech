@@ -148,7 +148,7 @@ const Users = () => {
           <TableBody>
             {users.map((user) => (
               <TableRow
-                onClick={() => router.push(`/dashboard/users/${user._id}`)}
+                onClick={() => router.push(`/admin/manage-users/${user._id}`)}
                 key={user._id}
               >
                 <TableCell className="font-medium">{`${user.firstName || '-'} ${user.middleName || ''}  ${user.lastName || ''} `}</TableCell>

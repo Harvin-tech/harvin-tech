@@ -87,9 +87,7 @@ const CourseManagementTable = () => {
           {courses.map((course) => (
             <TableRow
               key={course._id}
-              onClick={() =>
-                router.push(`/dashboard/manage-course/${course._id}`)
-              }
+              onClick={() => router.push(`/admin/manage-course/${course._id}`)}
               className="cursor-pointer"
             >
               <TableCell>{course.title}</TableCell>

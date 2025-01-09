@@ -1,10 +1,11 @@
+import ManageCourse from '@/components/manage-course/ManageCourse';
 import React from 'react';
-import AllCourse from './Content';
+
 
 const page = () => {
   return (
     <div>
-      <AllCourse />
+      <ManageCourse />
     </div>
   );
 };
