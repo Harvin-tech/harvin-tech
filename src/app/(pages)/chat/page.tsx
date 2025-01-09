@@ -1,7 +1,7 @@
 'use client';
 
+import MessageSection from '@/components/chat/MessageSection';
 import React from 'react';
-import MessageSection from './(component)/MessageSection';
 
 const Inbox = () => {
   return (

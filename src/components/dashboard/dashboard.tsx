@@ -3,11 +3,19 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserCourse } from '@/services';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Mousewheel } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+
 import { setCourses, setLoading } from '@/redux/courseSlice';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner';
+import { StatCard } from '@/components/dashboard/components/StatsCard';
+import { LineChart } from '@/components/dashboard/components/LineChart';
+import { VideoCard } from '@/components/dashboard/components/VideoCard';
 
-const AllCourse = () => {
+const Dashboard = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -43,7 +51,7 @@ const AllCourse = () => {
         dispatch(setCourses(userCourses));
       } catch (error: any) {
         console.error('Error fetching courses:', error);
-        // toast.error(error.response.data.message || "Failed to fetch courses");
+        toast.error(error.response.data.message || 'Failed to fetch courses');
       } finally {
         dispatch(setLoading(false));
       }
@@ -66,10 +74,23 @@ const AllCourse = () => {
   };
 
   return (
-    <div className="px-4 pt-4 space-y-4 w-full">
-      <div className="max-w-screen-xl mx-auto">
-        <div>
-          <h3 className="text-lg font-semibold mb-2">All Courses</h3>
+    <div className="px-3 pt-2 space-y-2 md:space-y-3 w-full mb-4">
+      <div className="max-w-screen-xl">
+        <div className="font-semibold mb-2 text-base md:text-lg">Overview</div>
+        <div className="relative bg-white p-3 md:p-4 lg:p-6 border rounded-md shadow-sm">
+          <div className="grid  place-items-center gap-3 mb-4">
+            <StatCard title="Number of Active Courses" value={3} />
+          </div>
+
+          <div className="w-full h-[200px] md:h-[260px] lg:h-[300px]">
+            <LineChart />
+          </div>
+        </div>
+
+        <div className="mt-2">
+          <h3 className="text-base md:text-lg font-semibold">
+            Continue Watching
+          </h3>
 
           {coursesLoading ? (
             <div className="text-center text-gray-500">Loading courses...</div>
@@ -78,33 +99,31 @@ const AllCourse = () => {
               You have no courses available.
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-3 mb-2">
-              {allCourses.map((course: any, index: number) => (
-                <div
-                  key={course.id}
-                  className="border rounded-lg shadow-sm p-2 hover:shadow-md transition cursor-pointer bg-white"
-                  onClick={() => handleCourseClick(course)}
-                >
-                  <img
-                    src={Images[index]}
-                    alt={course.title}
-                    className="w-full h-50 object-contain rounded-md mb-4"
-                  />
-                  <h4 className="text-lg font-semibold mb-2 truncate">
-                    {course.title}
-                  </h4>
-                  <p className="text-sm text-gray-600 mb-2 truncate">
-                    {course.instructor}
-                  </p>
-                  <div className="flex items-center justify-between text-sm text-gray-500">
-                    <span>Rating: {course.rating}</span>
-                    <span>Reviews: {course.reviewsCount}</span>
-                  </div>
-                  <div className="mt-2 text-base font-semibold text-gray-800">
-                    ${course.price}
-                  </div>
-                </div>
-              ))}
+            <div>
+              <Swiper
+                slidesPerView="auto"
+                spaceBetween={10}
+                freeMode={true}
+                mousewheel={true}
+                modules={[FreeMode, Mousewheel]}
+                className="w-full h-auto mx-12"
+              >
+                {allCourses?.map((video: any) => (
+                  <SwiperSlide key={video.id} className="!w-auto mt-2">
+                    <div onClick={() => handleCourseClick(video)}>
+                      <VideoCard
+                        imageSrc="/harvinlogo.jpg"
+                        title={video.title}
+                        instructor={video.instructor}
+                        rating={video.rating}
+                        reviewsCount={video.reviewsCount}
+                        price={Number(video.price)}
+                        originalPrice={video.originalPrice || 0}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
           )}
         </div>
@@ -113,28 +132,4 @@ const AllCourse = () => {
   );
 };
 
-export default AllCourse;
-
-const Images = [
-  '/Images/home/course1.png',
-  '/Images/home/course2.png',
-  '/Images/home/course3.png',
-  '/Images/home/topcourse1.png',
-  '/Images/home/topcourse2.png',
-  '/Images/home/topcourse3.png',
-  '/Images/home/course1.png',
-  '/Images/home/course2.png',
-  '/Images/home/course3.png',
-];
-
-const frontentRoutes = [
-  ['/', 'courses', '/courses/:courseId', '/profile', 'dashboard'], // users routes and also available for admin
-  [
-    '/admin/dashboard',
-    '/admin/manage-courses',
-    '/admin/manage-courses/:courseId',
-    '/admin/manage-users',
-    '/admin/manage-users/:userId',
-    '/admin/enroll-courses',
-  ], // admin routes [make sure all admin containg routes are not accessible for users]
-];
+export default Dashboard;
