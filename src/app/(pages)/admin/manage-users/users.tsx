@@ -14,6 +14,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '@/components/ui/dialog';
 import {
   Form,
@@ -36,11 +37,13 @@ import { Eye, Pencil, Trash2, UserCog } from 'lucide-react';
 import apiClient from '@/services/apiClient';
 import { getUser_I } from '@/types/user.types';
 import { useRouter } from 'next/navigation';
+import CreateUser from '@/components/users/create-user';
 
 const Users = () => {
   const [users, setUsers] = useState<getUser_I[]>([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<getUser_I | null>(null);
 
   const router = useRouter();
@@ -132,6 +135,23 @@ const Users = () => {
   console.log(users);
   return (
     <div className="w-full bg-white p-4 rounded-lg">
+      <div className="w-full flex justify-end">
+        {/* TODO : Create User and EDIT USER Do in SAME COMPONENT */}
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <button className="px-4 py-2 bg-primary/90 hover:bg-primary text-white rounded-md text-sm transition-colors duration-300">
+              Create user
+            </button>
+          </DialogTrigger>
+          <DialogContent className="max-w-[600px] h-[70vh] mt-8  overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle></DialogTitle>
+            </DialogHeader>
+            {/* Form fields for creating a user */}
+            <CreateUser />
+          </DialogContent>
+        </Dialog>
+      </div>
       <div className="overflow-x-auto">
         <Table className="min-w-full">
           <TableHeader>
@@ -198,7 +218,8 @@ const Users = () => {
                       }
                     >
                       <Eye className="h-4 w-4" />
-                    </Button>O
+                    </Button>
+                    O
                     <Button
                       variant="destructive"
                       size="sm"
