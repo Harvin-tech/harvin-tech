@@ -36,45 +36,43 @@ const EnrolmentForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    async function getUsers() {
-      try {
-        const response = await fetchUsers();
-        setUsers(
-          response.data.users.map((item: User) => ({
-            value: item._id,
-            label: item.email,
-          }))
-        );
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
+  async function getUsers() {
+    try {
+      const response = await fetchUsers();
+      setUsers(
+        response.data.users.map((item: User) => ({
+          value: item._id,
+          label: item.email,
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching users:', error);
     }
-    getUsers();
-  }, []);
+  }
+  async function fetchCourses() {
+    setLoading(true);
+    try {
+      const response = await getCourses();
+      console.log(response, 'inside enrolmentform');
+      setCourses(
+        response.data.courses.map((item: Course) => ({
+          value: item._id,
+          label: item.title,
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    async function fetchCourses() {
-      setLoading(true);
-      try {
-        const response = await getCourses();
-        console.log(response, 'inside enrolmentform');
-        setCourses(
-          response.data.courses.map((item: Course) => ({
-            value: item._id,
-            label: item.title,
-          }))
-        );
-      } catch (error) {
-        console.error('Error fetching courses:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
+    getUsers();
     fetchCourses();
   }, []);
 
-  const handleSubmit = async () => {
+  const handleEnrollSubmit = async () => {
     if (!selectedUser || !selectedCourse) {
       toast.error('Please select both a user and a course!');
       return;
@@ -83,7 +81,7 @@ const EnrolmentForm: React.FC = () => {
     try {
       setLoading(true);
       const response = await enrollCourse(selectedCourse, selectedUser);
-      if (response.success) {
+      if (response.status === 200) {
         toast.success('Enrollment successful!');
         setSelectedUser(null);
         setSelectedCourse(null);
@@ -137,7 +135,7 @@ const EnrolmentForm: React.FC = () => {
 
         <div className="mt-4 space-x-2">
           <button
-            onClick={handleSubmit}
+            onClick={handleEnrollSubmit}
             disabled={!selectedUser || !selectedCourse || loading}
             className="px-4 py-2 bg-primary/90 hover:bg-primary text-white rounded-md disabled:bg-gray-300 text-sm"
           >
@@ -149,13 +147,13 @@ const EnrolmentForm: React.FC = () => {
                 Create user
               </button>
             </DialogTrigger>
-            <DialogContent className=" max-w-[400px] h-[400px] md:h-[540px] lg:h-[800px] xl:h-[540px] mt-8  overflow-y-auto">
+            <DialogContent className="max-w-[600px] h-[80vh] mt-8  overflow-y-auto">
               <DialogHeader>
                 <DialogTitle></DialogTitle>
               </DialogHeader>
               {/* Form fields for creating a user */}
               <ProfilePage isCreatingUser={true} />
-              <DialogFooter>
+              {/* <DialogFooter>
                 <button
                   onClick={() => setIsDialogOpen(false)}
                   className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-700 hover:bg-gray-300 mt-2 md:mt-0"
@@ -171,7 +169,7 @@ const EnrolmentForm: React.FC = () => {
                 >
                   Create
                 </button>
-              </DialogFooter>
+              </DialogFooter> */}
             </DialogContent>
           </Dialog>
         </div>
