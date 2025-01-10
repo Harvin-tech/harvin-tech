@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 type ClassProps = {
@@ -19,35 +18,46 @@ const ClassCard = ({
   title,
   subtitle,
   description,
-  ctaText,
+  ctaText = 'Enroll Course',
   courseId,
   userId,
   onClick,
 }: ClassProps) => {
   return (
-    <div className="bg-card shadow-md rounded-2xl w-full h-full flex flex-col justify-between border border-border mb-2">
-      {/* Card Image */}
-      <div className="relative w-full aspect-[4/3] rounded-t-2xl overflow-hidden">
-        <Image src={image} alt={title} fill className="object-cover" priority />
+    <div className="group relative flex h-full w-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg">
+      {/* Image Container */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
+        <Image 
+          src={image} 
+          alt={title} 
+          fill 
+          priority
+          className="object-cover transition-transform duration-500 group-hover:scale-105" 
+        />
+        {/* Optional overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </div>
 
-      {/* Card Content */}
-      <div className="flex flex-col flex-grow justify-between p-4 md:p-6 space-y-3 border-t border-border">
+      {/* Content Container */}
+      <div className="flex flex-1 flex-col p-4 sm:p-5 space-y-3">
         {/* Title */}
-        <h3 className=" font-semibold text-primary line-clamp-2">{title}</h3>
+        <h3 className="text-lg sm:text-xl font-semibold text-primary line-clamp-2 min-h-[2.5rem] transition-colors duration-200 tracking-tight">
+          {title}
+        </h3>
 
-        {/* Subtitle */}
-        <p className="text-xs md:text-sm text-muted-foreground truncate">
-          {subtitle}
-        </p>
+        {/* Subtitle - if provided */}
+        {subtitle && (
+          <p className="text-sm text-muted-foreground truncate">
+            {subtitle}
+          </p>
+        )}
 
         {/* Description */}
-        <p className="text-xs md:text-sm text-foreground/80 line-clamp-3">
+        <p className="text-sm text-foreground/80 line-clamp-3 flex-grow">
           {description}
         </p>
 
-        {/* Call to Action */}
-
+        {/* CTA Button */}
         <Link
           href={
             userId
@@ -55,9 +65,9 @@ const ClassCard = ({
               : '/courses?preview=true'
           }
           onClick={() => onClick()}
-          className="bg-primary mt-auto py-2 text-xs md:text-sm font-semibold text-white  transition-colors duration-200 cursor-pointer text-center rounded-lg"
+          className="mt-auto inline-flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20 active:scale-98"
         >
-          Enroll Course
+          {ctaText}
         </Link>
       </div>
     </div>

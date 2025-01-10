@@ -21,12 +21,11 @@ const WhyChooseUs = () => {
         </div>
       </div>
       <div className="max-w-xl mx-auto text-center space-y-2 sm:space-y-4">
-        <div className="text-5xl text-foreground font-semibold tracking-tight">
-          Why you <span className="text-primary">Choose Us!</span>
+        <div className="text-5xl text-foreground font-semibold tracking-tighter">
+        Why choose <span className="text-primary">Harvinn </span> technologies
         </div>
         <div className="text-base text-foreground/80">
-          Skilline is one powerful online software suite that combines all the
-          tools needed to run a successful school or office.
+        Harvinn Technologies offers expert-led, flexible, and affordable e-learning with personalized paths, future-ready skills, and a global community.
         </div>
       </div>
       <div className="flex flex-wrap justify-center gap-4">

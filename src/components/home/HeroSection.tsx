@@ -22,12 +22,11 @@ const HeroSection = () => {
           })}
         >
           <div className="space-y-2 md:space-y-4 order-2 lg:order-1 lg:max-w-[470px] text-center lg:text-left">
-            <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold  text-foreground tracking-tight">
-              Studying Online is now much easier
+            <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold  text-foreground tracking-tighter">
+            Step into a world where learning knows no limits
             </div>
             <div className="text-base sm:text-base xl:text-lg text-muted-foreground tracking-tight">
-              Skilline is an interesting platform that will teach you in more an
-              interactive way
+            Learn grow succeed with harvinn technologies
             </div>
             <div className="pt-2">
               <Link

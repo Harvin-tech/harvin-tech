@@ -79,11 +79,11 @@ const TopCourse = () => {
       })}
     >
       <div className="max-w-3xl mx-auto text-center space-y-2 mb-8">
-        <div className="text-4xl md:text-5xl text-primary font-semibold tracking-tight">
-          Top Courses
+        <div className="text-4xl md:text-5xl text-primary font-semibold tracking-tighter">
+        Top Choice Among The Students
         </div>
         <div className="text-base text-foreground/80">
-          Learn how to design, build, and implement Internet of Things..
+        Empowering your future with the Top Courses chosen by students
         </div>
       </div>
 

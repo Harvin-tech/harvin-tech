@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -13,7 +13,8 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import { setOneCourses } from '@/redux/courseSlice';
-// Define dummy data with the same structure as API data
+
+// Move dummy data outside component to prevent recreating on each render
 const dummyCourses = [
   {
     id: uuidv4(),
@@ -70,113 +71,107 @@ const dummyCourses = [
 const Courses = () => {
   const searchParams = useSearchParams();
   const userId = searchParams.get('getUser_Id');
-  const [localCourses, localSetCourses] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  const router = useRouter();
   const dispatch = useDispatch();
 
+  // Improved responsive Swiper options
   const OPTIONS = {
-    spaceBetween: 10,
+    spaceBetween: 24,
     freeMode: true,
     grabCursor: true,
-    loop: true,
-    navigation: true,
+    loop: false,
+    navigation: {
+      enabled: true,
+      hideOnClick: true
+    },
     breakpoints: {
-      320: { slidesPerView: 1 },
-      640: { slidesPerView: 2 },
-      768: { slidesPerView: 3 },
-      1024: { slidesPerView: 4 },
+      320: { 
+        slidesPerView: 1,
+        spaceBetween: 12 
+      },
+      640: { 
+        slidesPerView: 2,
+        spaceBetween: 16 
+      },
+      768: { 
+        slidesPerView: 2,
+        spaceBetween: 20 
+      },
+      1024: { 
+        slidesPerView: 3,
+        spaceBetween: 24 
+      },
+      1280: { 
+        slidesPerView: 4,
+        spaceBetween: 24 
+      }
     },
   };
 
-  // useEffect(() => {
-  //   const fetchData = async (userId: string) => {
-  //     setLoading(true);
-  //     try {
-  //       const response = await getUserCourse(userId);
-  //       const userCourses = response.data.courses.map((item: any) => ({
-  //         id: uuidv4(),
-  //         courseId: item?.courseId,
-  //         title: item?.courseDetails?.title || "No Title",
-  //         description: item?.courseDetails?.description || "No Description",
-  //         instructor: item?.courseDetails?.instructor || "Unknown Instructor",
-  //         rating: item?.courseDetails?.rating || 0,
-  //         reviewsCount: item?.courseDetails?.reviewsCount || 0,
-  //       }));
-  //       localSetCourses(userCourses);
-
-  //     } catch (error) {
-  //       console.error("Error fetching courses:", error);
-  //       localSetCourses([]); // Reset courses on error
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   if (userId) {
-  //     fetchData(userId);
-  //   }
-  // }, [userId]);
-
-  // Determine which courses to display
-  const displayCourses = dummyCourses;
-
   if (loading) {
-    return <div className="text-center py-10">Loading courses...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-lg text-primary">Loading courses...</div>
+      </div>
+    );
   }
 
   return (
-    <div className={appContent({ className: 'space-y-5 mb-12 lg:mb-20' })}>
-      <div className="max-w-3xl mx-auto text-center space-y-2">
-        <div className="text-5xl text-primary font-semibold tracking-tight">
+    <div className={appContent({ className: 'py-8 md:py-12 lg:py-16' })}>
+      {/* Header Section */}
+      <div className="max-w-3xl mx-auto text-center space-y-4 px-4 mb-8 md:mb-12">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl text-primary font-semibold tracking-tight">
           Courses
-        </div>
-        <div className="text-base text-foreground/80">
-          Skilline is a platform that allows educators to create online classes
-          whereby they can store the course materials online; manage
-          assignments, quizzes, and exams; monitor due dates; grade results, and
-          provide students with feedback all in one place.
-        </div>
+        </h2>
+        <p className="text-sm md:text-base text-foreground/80 max-w-2xl mx-auto">
+          At Harvinn Technologies, we offer expert-led, flexible courses designed to help you grow, 
+          innovate, and succeed. Learn at your own pace, gain future-ready skills, and join a global 
+          community of learners. Your journey to success starts here!
+        </p>
       </div>
 
-      <div className="w-full max-w-screen-xl mx-auto relative">
-        <Swiper {...OPTIONS}>
-          {displayCourses.map((course) => (
-            <SwiperSlide
-              key={course.id}
-              className="flex"
-              onClick={() => {
-                dispatch(setOneCourses(course as any));
-              }}
-            >
-              <Link href={'/courses?preview=true'} className="w-full">
-                <Card className="flex flex-col h-full group pb-3">
-                  <CardContent className="flex flex-col justify-between gap-2 min-h-[385px] py-2 px-2">
-                    <div className="w-full h-48 relative">
-                      <Image
-                        src="/Images/home/course1.png"
-                        alt={course.title}
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-lg"
-                      />
-                    </div>
-                    <div className="mt-4 flex flex-col justify-between">
-                      <div className="font-semibold text-primary text-base">
-                        {course.title}
+      {/* Courses Carousel */}
+      <div className="w-full max-w-screen-xl mx-auto px-4 relative">
+        <Swiper {...OPTIONS} className="!pb-8">
+          {dummyCourses.map((course) => (
+            <SwiperSlide key={course.id}>
+              <Link 
+                href="/courses?preview=true"
+                onClick={() => dispatch(setOneCourses(course as any))}
+                className="block h-full"
+              >
+                <Card className="h-full transition-all duration-300 hover:shadow-lg">
+                  <CardContent className="p-0">
+                    <div className="flex flex-col gap-4">
+                      {/* Image Container */}
+                      <div className="relative aspect-video w-full overflow-hidden rounded-t-lg">
+                        <Image
+                          src="/Images/home/course1.png"
+                          alt={course.title}
+                          layout="fill"
+                          objectFit="cover"
+                          className="transition-transform duration-300 hover:scale-105"
+                        />
                       </div>
-                      <div className="text-sm text-muted-foreground">
-                        {course.instructor}
-                      </div>
-                      <p className="text-sm mt-2 text-foreground/80 line-clamp-2">
-                        {course.description}
-                      </p>
-                      <div className="flex items-center justify-between mt-4">
-                        <div className="flex items-center text-primary">
+                      
+                      {/* Content Container */}
+                      <div className="px-4 pb-4 flex flex-col gap-3">
+                        <h3 className="font-semibold text-primary text-lg md:text-xl line-clamp-2 tracking-tight">
+                          {course.title}
+                        </h3>
+                        <p className="text-xs text-muted-foreground py-1 px-2 bg-muted w-fit rounded-full">
+                          {course.instructor}
+                        </p>
+                        <p className="text-sm text-foreground/80 line-clamp-2">
+                          {course.description}
+                        </p>
+                        
+                        {/* Call to Action */}
+                        <div className="mt-auto pt-4 flex items-center text-primary text-sm font-medium">
                           <span>Learn More</span>
-                          <GoArrowRight
-                            className="ml-2 group-hover:translate-x-2 transition-all duration-300"
-                            strokeWidth={1}
+                          <GoArrowRight 
+                            className="ml-2 transition-transform duration-300 group-hover:translate-x-2" 
+                            size={18}
                           />
                         </div>
                       </div>
