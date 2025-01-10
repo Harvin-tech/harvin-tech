@@ -13,6 +13,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import ProfilePage from '@/components/profile/Profile';
+import CreateUser from '../users/create-user';
 
 interface User {
   _id: string;
@@ -147,12 +148,12 @@ const EnrolmentForm: React.FC = () => {
                 Create user
               </button>
             </DialogTrigger>
-            <DialogContent className="max-w-[600px] h-[80vh] mt-8  overflow-y-auto">
+            <DialogContent className="max-w-[600px] h-[70vh] mt-8  overflow-y-auto">
               <DialogHeader>
                 <DialogTitle></DialogTitle>
               </DialogHeader>
               {/* Form fields for creating a user */}
-              <ProfilePage isCreatingUser={true} />
+              <CreateUser />
               {/* <DialogFooter>
                 <button
                   onClick={() => setIsDialogOpen(false)}
