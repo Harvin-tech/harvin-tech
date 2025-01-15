@@ -16,6 +16,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'Harvin',
   description: 'Harvin is a platform for learning and teaching',
+  icons: '/harvinlogo.jpg',
 };
 
 export default function RootLayout({
