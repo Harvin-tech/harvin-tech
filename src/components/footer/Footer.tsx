@@ -44,7 +44,7 @@ const WorldMap = () => {
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border bg-gradient-to-t from-[#11101d] to-[#2c125c]">
+    <footer className="border-t border-border bg-gradient-to-t from-[#11101d] to-[#2c125c] px-4 md:px-0">
       <div className="max-w-screen-xl mx-auto py-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Left Section: Company Info + Contact */}

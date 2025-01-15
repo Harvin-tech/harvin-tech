@@ -5,6 +5,7 @@ import Courses from './Courses';
 import Trusted from './Trusted';
 import Testimonial from './Testimonial';
 import TopCourse from './TopCourse';
+import CtaCard from './CtaCard';
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <HeroSection />
       <WhyChooseUs />
       <Courses />
+      <CtaCard/>
       <TopCourse />
       <Trusted />
       <Testimonial />

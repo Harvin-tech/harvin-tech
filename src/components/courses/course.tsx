@@ -227,7 +227,7 @@ export default function CoursesPage() {
         </div>
         <div className="w-full lg:w-[30%] flex flex-col items-center gap-3 mb-12 md:mb-20">
           <CoursePayment />
-          <Cta />
+          {/* <Cta /> */}
         </div>
       </div>
 

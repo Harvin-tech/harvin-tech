@@ -122,7 +122,9 @@ const Courses = () => {
   }
 
   return (
-    <div className={appContent({ className: 'py-16 md:px-0 max-w-none bg-gray-50' })}>
+    <div className='py-16 md:px-0  bg-gray-50'>
+
+    <div className={appContent({ className: '' })}>
       {/* Header Section */}
       <div className="max-w-3xl mx-auto text-center space-y-4 px-4 mb-8 md:mb-12">
         <h2 className="text-4xl md:text-5xl text-primary font-bold md:tracking-tight">
@@ -215,6 +217,7 @@ const Courses = () => {
           ))}
         </Swiper>
       </div>
+    </div>
     </div>
   );
 };
