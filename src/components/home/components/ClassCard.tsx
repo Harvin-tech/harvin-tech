@@ -41,19 +41,19 @@ const ClassCard = ({
       {/* Content Container */}
       <div className="flex flex-1 flex-col p-4 sm:p-5 space-y-3">
         {/* Title */}
-        <h3 className="text-lg sm:text-xl font-semibold text-primary line-clamp-2 min-h-[2.5rem] transition-colors duration-200 tracking-tight">
+        <h3 className="text-lg sm:text-xl font-semibold text-primary line-clamp-2 min-h-[2.5rem] transition-colors duration-200 ">
           {title}
         </h3>
 
         {/* Subtitle - if provided */}
         {subtitle && (
-          <p className="text-sm text-muted-foreground truncate">
+          <p className="text-sm md:text-base text-muted-foreground truncate">
             {subtitle}
           </p>
         )}
 
         {/* Description */}
-        <p className="text-sm text-foreground/80 line-clamp-3 flex-grow">
+        <p className="text-sm md:text-base text-foreground/80 line-clamp-3 flex-grow">
           {description}
         </p>
 
@@ -65,7 +65,7 @@ const ClassCard = ({
               : '/courses?preview=true'
           }
           onClick={() => onClick()}
-          className="mt-auto inline-flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20 active:scale-98"
+          className="mt-auto inline-flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm md:text-base font-semibold text-white transition-all duration-200 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20 active:scale-98"
         >
           {ctaText}
         </Link>

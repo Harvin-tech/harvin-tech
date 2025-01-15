@@ -40,6 +40,7 @@ const Header = () => {
   const route = [
     { title: 'Home', path: '/' },
     { title: 'Course', path: '/courses' },
+    { title: 'About Us', path: '/about' },
     ...(role
       ? [{ title: 'Admin', path: '/dashboard', requiresAuth: true }]
       : []),
@@ -99,7 +100,7 @@ const Header = () => {
 
   return (
     <div className="sticky top-0 left-0 right-0 bg-background z-[999] h-[55px] sm:h-[67px] md:h-[83px] border-b border-border shadow-sm">
-      <div className="lg:max-w-screen-xl lg:mx-auto flex justify-between items-center px-4 sm:px-6">
+      <div className="lg:max-w-screen-xl lg:mx-auto flex justify-between items-center px-2 md:px-0">
         <Link href={'/'}>
           <div className="relative size-12 md:size-20">
             <Image

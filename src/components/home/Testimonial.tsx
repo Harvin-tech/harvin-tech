@@ -5,12 +5,12 @@ import Marquee from 'react-fast-marquee';
 
 const Testimonial = () => {
   return (
-    <section className=" py-16 bg-background ">
+    <section className="py-16 bg-background ">
       <div className=" mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-4 text-foreground/90">
-          Hear it from our students
+        <h2 className="text-4xl md:text-5xl text-foreground font-bold tracking-tight md:leading-tight text-center">
+          Hear It From Our Students
         </h2>
-        <p className="text-foreground/80 text-base text-center mb-12 max-w-2xl mx-auto">
+        <p className="text-foreground/80 text-sm md:text-lg tracking-tight text-center mb-6 max-w-2xl mx-auto">
           Discover what our students have to say about their learning journey
           with us
         </p>

@@ -7,28 +7,17 @@ import { PiBookOpenText } from 'react-icons/pi';
 
 const WhyChooseUs = () => {
   return (
-    <div className={appContent({ className: 'space-y-16 mb-12 lg:mb-24' })}>
-      <div className="max-w-xl mx-auto text-center space-y-2">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search courses..."
-            className="w-full px-4 py-2 text-sm xl:text-base border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-          />
-          <button className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary">
-            <IoSearchOutline className="h-6 w-6" />
-          </button>
-        </div>
-      </div>
-      <div className="max-w-xl mx-auto text-center space-y-2 sm:space-y-4">
-        <div className="text-5xl text-foreground font-semibold tracking-tighter">
+    <div className={appContent({ className: 'space-y-16 py-16 md:px-0 ' })}>
+
+      <div className="max-w-xl mx-auto text-center space-y-4 sm:space-y-6 mb-4">
+        <div className=" text-4xl md:text-5xl text-foreground font-bold tracking-tight md:leading-tight">
         Why choose <span className="text-primary">Harvinn </span> technologies
         </div>
-        <div className="text-base text-foreground/80">
+        <div className="text-base md:text-lg text-foreground/80">
         Harvinn Technologies offers expert-led, flexible, and affordable e-learning with personalized paths, future-ready skills, and a global community.
         </div>
       </div>
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-wrap justify-center gap-4 md:gap-2 ">
         {WHYCHOOSEDATA.map((item, index) => (
           <div
             key={index}
@@ -44,7 +33,7 @@ const WhyChooseUs = () => {
               <div className="text-xl font-medium pt-10 text-foreground/90">
                 {item.title}
               </div>
-              <div className="max-w-[255px] text-sm leading-tight text-muted-foreground">
+              <div className="max-w-[255px] text-sm md:text-base leading-tight text-muted-foreground">
                 {item.desc}
               </div>
             </div>

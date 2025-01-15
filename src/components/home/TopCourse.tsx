@@ -75,19 +75,19 @@ const TopCourse = () => {
   return (
     <div
       className={appContent({
-        className: 'max-w-screen-lg mx-auto mb-12 md:mb-20',
+        className: 'max-w-screen-lg mx-auto py-16',
       })}
     >
-      <div className="max-w-3xl mx-auto text-center space-y-2 mb-8">
-        <div className="text-4xl md:text-5xl text-primary font-semibold tracking-tighter">
-        Top Choice Among The Students
+      <div className="max-w-3xl mx-auto text-center space-y-2 mb-6">
+        <div className=" text-4xl md:text-5xl text-foreground font-bold tracking-tight md:leading-tight max-w-md mx-auto">
+        <span className='text-primary'>Top</span> Choice Among The Students
         </div>
-        <div className="text-base text-foreground/80">
+        <div className="text-base md:text-lg text-foreground/80">
         Empowering your future with the Top Courses chosen by students
         </div>
       </div>
 
-      <div className="relative px-4 md:px-8">
+      <div className="relative ">
         <Carousel
           opts={{
             align: 'start',
@@ -95,11 +95,11 @@ const TopCourse = () => {
           }}
           className="w-full"
         >
-          <CarouselContent className="-ml-4">
+          <CarouselContent className="ml-[1px]">
             {displayCourse.map((course) => (
               <CarouselItem
                 key={course.id}
-                className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
+                className="pl-2 basis-full sm:basis-1/2 lg:basis-1/3"
               >
                 <Card className="shadow-none border-0 bg-transparent min-h-[385px] h-full">
                   <CardContent className="p-0 h-full">
