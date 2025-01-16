@@ -14,7 +14,7 @@ const RightSidebar = () => {
   } = useSelector((state: any) => state.auth);
   // You can replace these with actual user data from your authentication system
   const user = {
-    name: userData?.firstName || 'Harvin',
+    name: userData?.firstName || 'Harvinn',
     profileImage: '/harvinlogo.jpg', // Replace with actual image path
   };
 

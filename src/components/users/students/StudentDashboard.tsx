@@ -193,7 +193,7 @@ const StudentDashboard: React.FC = () => {
   return (
     <div className="px-4 pt-2 ">
       <StudentProfile
-        name="Harvin"
+        name="Harvinn"
         email="harvin@gmail.com"
         activeCourses={
           courses.filter((course) => Number(course.status) === 1).length

@@ -132,12 +132,12 @@ const LeftSidebar = () => {
                 <div className="relative size-6">
                   <Image
                     src="/Images/dashboard/logo.png"
-                    alt="Harvin Logo"
+                    alt="Harvinn Logo"
                     fill
                     className="object-contain"
                   />
                 </div>
-                <h2 className="text-lg font-bold text-foreground">HARVIN</h2>
+                <h2 className="text-lg font-bold text-foreground">HARVINN</h2>
               </div>
 
               <nav className="flex-grow">

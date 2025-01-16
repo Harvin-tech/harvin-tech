@@ -14,8 +14,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'Harvin',
-  description: 'Harvin is a platform for learning and teaching',
+  title: 'Harvinn',
+  description: 'Harvinn is a platform for learning and teaching.',
   icons: '/harvinlogo.jpg',
 };
 

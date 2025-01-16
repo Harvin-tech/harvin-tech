@@ -183,8 +183,8 @@ const UserIdPage: React.FC = () => {
   return (
     <div className="px-4 pt-2 ">
       <StudentProfile
-        name="Harvin"
-        email="harvin@gmail.com"
+        name="Harvinn"
+        email="harvinn@gmail.com"
         activeCourses={
           courses.filter((course) => Number(course.status) === 1).length
         }
