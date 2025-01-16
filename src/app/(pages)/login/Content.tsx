@@ -113,14 +113,14 @@ export default function Login() {
                   onChange={handleChange}
                   disabled={isLoading}
                 />
-                <div className="text-right">
+                {/* <div className="text-right">
                   <Link
                     href="/forgot-password"
                     className="text-sm font-medium text-primary hover:text-primary/90"
                   >
                     Forgot your password?
                   </Link>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
