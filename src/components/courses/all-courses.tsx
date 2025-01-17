@@ -116,13 +116,13 @@ const AllCourse = () => {
 export default AllCourse;
 
 const Images = [
-  '/Images/home/course1.png',
-  '/Images/home/course2.png',
-  '/Images/home/course3.png',
-  '/Images/home/topcourse1.png',
-  '/Images/home/topcourse2.png',
-  '/Images/home/topcourse3.png',
-  '/Images/home/course1.png',
-  '/Images/home/course2.png',
-  '/Images/home/course3.png',
+  '/images/home/course1.png',
+  '/images/home/course2.png',
+  '/images/home/course3.png',
+  '/images/home/topcourse1.png',
+  '/images/home/topcourse2.png',
+  '/images/home/topcourse3.png',
+  '/images/home/course1.png',
+  '/images/home/course2.png',
+  '/images/home/course3.png',
 ];

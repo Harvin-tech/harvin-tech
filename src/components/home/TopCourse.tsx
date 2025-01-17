@@ -38,7 +38,7 @@ const TopCourse = () => {
   //         subtitle: `Professor ${item?.courseDetails?.instructor || "Unknown"}`,
   //         description: item?.courseDetails?.description || "No Description",
   //         ctaText: 'Enroll the classes',
-  //         image: '/Images/home/topcourse1.png', // Default image since API doesn't provide images
+  //         image: '/images/home/topcourse1.png', // Default image since API doesn't provide images
   //       }));
   //       setLocalCourses(userCourses);
   //     } catch (error) {
@@ -80,10 +80,10 @@ const TopCourse = () => {
     >
       <div className="max-w-3xl mx-auto text-center space-y-2 mb-6">
         <div className=" text-4xl md:text-5xl text-foreground font-bold tracking-tight md:leading-tight max-w-md mx-auto">
-        <span className='text-primary'>Top</span> Choice Among The Students
+          <span className="text-primary">Top</span> Choice Among The Students
         </div>
         <div className="text-base md:text-lg text-foreground/80">
-        Empowering your future with the Top Courses chosen by students
+          Empowering your future with the Top Courses chosen by students
         </div>
       </div>
 
@@ -104,7 +104,7 @@ const TopCourse = () => {
                 <Card className="shadow-none border-0 bg-transparent min-h-[385px] h-full">
                   <CardContent className="p-0 h-full">
                     <ClassCard
-                      image={'/Images/home/course2.png'}
+                      image={course.image}
                       title={course.title}
                       // subtitle={course?.subtitle || ""}
                       description={course.description}
@@ -136,6 +136,7 @@ const dummyCourses = [
     id: uuidv4(),
     courseId: '1',
     title: 'Introduction to Web Development',
+    image: '/images/home/web-dev.png',
     instructor: 'Jane Doe',
     description:
       'Learn the basics of HTML, CSS, and JavaScript to create your first website.',
@@ -147,6 +148,7 @@ const dummyCourses = [
     courseId: '2',
     title: 'Advanced React Techniques',
     instructor: 'John Smith',
+    image: '/images/home/ai.png',
     description:
       'Dive deep into advanced concepts like hooks, context API, and performance optimization.',
     rating: 4.8,
@@ -156,6 +158,7 @@ const dummyCourses = [
     id: uuidv4(),
     courseId: '3',
     title: 'Mastering Python for Data Science',
+    image: '/images/home/data-science.png',
     instructor: 'Emily Brown',
     description:
       'Discover how to use Python for data analysis, visualization, and machine learning.',
@@ -166,6 +169,7 @@ const dummyCourses = [
     id: uuidv4(),
     courseId: '4',
     title: 'Cloud Computing Fundamentals',
+    image: '/images/home/iot.png',
     instructor: 'Michael Johnson',
     description:
       'Understand the principles of cloud computing and how to deploy applications on the cloud.',
@@ -176,6 +180,7 @@ const dummyCourses = [
     id: uuidv4(),
     courseId: '5',
     title: 'Digital Marketing Essentials',
+    image: '/images/home/dm.png',
     instructor: 'Sarah Davis',
     description:
       'Learn strategies for SEO, social media marketing, and content creation.',

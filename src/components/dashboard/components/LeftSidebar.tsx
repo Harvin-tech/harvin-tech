@@ -131,7 +131,7 @@ const LeftSidebar = () => {
               <div className="text-xl font-bold text-foreground flex items-center gap-2 mb-4">
                 <div className="relative size-6">
                   <Image
-                    src="/Images/dashboard/logo.png"
+                    src="/images/dashboard/logo.png"
                     alt="Harvinn Logo"
                     fill
                     className="object-contain"

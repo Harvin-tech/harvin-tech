@@ -144,20 +144,20 @@ export default function CoursesPage() {
               ></iframe>
               <div className="grid grid-cols-2 gap-3 w-full">
                 <IoTCard
-                  imageSrc="/Images/home/topcourse2.png"
+                  imageSrc="/images/home/topcourse2.png"
                   title="IoT Graphs"
                 />
                 <IoTCard
-                  imageSrc="/Images/home/topcourse1.png"
+                  imageSrc="/images/home/topcourse1.png"
                   title="Internet of Things"
                 />
               </div>
             </div>
             <div className="w-full md:w-[30%]">
               <div className="grid grid-cols-2 md:grid-cols-1 gap-3 h-full">
-                <IoTCard imageSrc="/Images/home/course1.png" title="Devices" />
-                <IoTCard imageSrc="/Images/home/course2.png" title="Network" />
-                <IoTCard imageSrc="/Images/home/course3.png" title="LoRaWAN" />
+                <IoTCard imageSrc="/images/home/course1.png" title="Devices" />
+                <IoTCard imageSrc="/images/home/course2.png" title="Network" />
+                <IoTCard imageSrc="/images/home/course3.png" title="LoRaWAN" />
               </div>
             </div>
           </section>
@@ -200,7 +200,7 @@ export default function CoursesPage() {
                 <div className="relative size-12 overflow-hidden rounded-full">
                   <Image
                     fill
-                    src="/Images/home/topcourse1.png"
+                    src="/images/home/topcourse1.png"
                     alt="Author"
                     className="absolute object-cover"
                   />
