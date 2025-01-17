@@ -6,8 +6,16 @@ import { appContent } from '@/constants/variants';
 
 const HeroSection = () => {
   const stats = [
-    { icon: <Users className="w-4 h-4" />, label: 'Active Users', value: '10K+' },
-    { icon: <LucideVideo className="w-4 h-4" />, label: 'Video', value: '300+' },
+    {
+      icon: <Users className="w-4 h-4" />,
+      label: 'Active Users',
+      value: '10K+',
+    },
+    {
+      icon: <LucideVideo className="w-4 h-4" />,
+      label: 'Video',
+      value: '300+',
+    },
   ];
 
   return (
@@ -15,7 +23,7 @@ const HeroSection = () => {
       {/* Background with enhanced overlay */}
       <div className="absolute  w-full h-full ">
         <Image
-          src="/Images/home/herobg.png"
+          src="/images/home/herobg.png"
           className="object-cover"
           alt="Background"
           fill
@@ -26,9 +34,11 @@ const HeroSection = () => {
       </div>
 
       {/* Main Content */}
-      <div className={appContent({
-        className: 'relative z-10 container mx-auto py-12 md:py-16 lg:py-20'
-      })}>
+      <div
+        className={appContent({
+          className: 'relative z-10 container mx-auto py-12 md:py-16 lg:py-20',
+        })}
+      >
         <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-16">
           {/* Left Content */}
           <div className="w-full lg:w-1/2 space-y-4 lg:space-y-6 text-center lg:text-left">
@@ -46,10 +56,11 @@ const HeroSection = () => {
               <br />
               where learning knows no limits
             </h1>
-            
+
             {/* Description */}
             <p className="text-base sm:text-lg text-foreground/60 max-w-xl mx-auto lg:mx-0">
-              Learn, grow, and succeed with Harvinn Technologies. Join our community of learners and unlock your potential today.
+              Learn, grow, and succeed with Harvinn Technologies. Join our
+              community of learners and unlock your potential today.
             </p>
 
             {/* CTA Section */}
@@ -72,8 +83,12 @@ const HeroSection = () => {
                       {stat.icon}
                     </div>
                     <div>
-                      <div className="font-bold text-foreground">{stat.value}</div>
-                      <div className="text-xs text-foreground/60">{stat.label}</div>
+                      <div className="font-bold text-foreground">
+                        {stat.value}
+                      </div>
+                      <div className="text-xs text-foreground/60">
+                        {stat.label}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -83,12 +98,14 @@ const HeroSection = () => {
 
           {/* Right Image */}
           <div className="w-full lg:w-[40%]">
-            <div className="relative aspect-[4/3] lg:aspect-square w-full max-w-[640px] mx-auto 
-                          transform hover:scale-[1.02] transition-transform duration-500">
+            <div
+              className="relative aspect-[4/3] lg:aspect-square w-full max-w-[640px] mx-auto 
+                          transform hover:scale-[1.02] transition-transform duration-500"
+            >
               <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent rounded-3xl -z-10" />
               <Image
                 className="object-contain drop-shadow-xl"
-                src="/Images/home/herosection.png"
+                src="/images/home/herosection.png"
                 alt="Hero illustration"
                 fill
                 priority

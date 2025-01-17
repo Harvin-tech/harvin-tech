@@ -6,14 +6,14 @@ import Image from 'next/image';
 
 const Trusted = () => {
   const TRUSTED = [
-    '/Images/home/coursera.svg',
-    '/Images/home/udemy.svg',
-    '/Images/home/edx.svg',
-    '/Images/home/byjus.svg',
+    '/images/home/coursera.svg',
+    '/images/home/udemy.svg',
+    '/images/home/edx.svg',
+    '/images/home/byjus.svg',
   ];
 
   return (
-    <Card className="bg-foreground/5 border-none shadow-sm rounded-none py-16 " >
+    <Card className="bg-foreground/5 border-none shadow-sm rounded-none py-16 ">
       <CardContent className="p-0  ">
         {/* Header Section */}
         <div className="flex flex-col items-center space-y-4">
@@ -32,10 +32,10 @@ const Trusted = () => {
         <div className="relative pt-8">
           {/* Left Gradient */}
           {/* <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-primary/[16%] via-primary/[%] to-transparent z-10" /> */}
-          
+
           {/* Right Gradient */}
           {/* <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white via-white/80 to-transparent z-10" /> */}
-          
+
           {/* Marquee */}
           <Marquee
             speed={40}
@@ -45,20 +45,19 @@ const Trusted = () => {
             autoFill
           >
             {TRUSTED.map((logo, index) => (
-               <div key={index} className=''>
-               <div className="relative w-[280px] aspect-[2] mx-1 border border-border rounded-lg shadow-md bg-white ">
-                 <Image
-                   fill
-                   className="absolute object-contain dark:invert border border-primary/40 rounded-lg p-1"
-                   src={logo}
-                   alt={`Trusted logo ${index + 1}`}
-                 />
-               </div>
-             </div>
+              <div key={index} className="">
+                <div className="relative w-[280px] aspect-[2] mx-1 border border-border rounded-lg shadow-md bg-white ">
+                  <Image
+                    fill
+                    className="absolute object-contain dark:invert border border-primary/40 rounded-lg p-1"
+                    src={logo}
+                    alt={`Trusted logo ${index + 1}`}
+                  />
+                </div>
+              </div>
             ))}
           </Marquee>
         </div>
-
       </CardContent>
     </Card>
   );
