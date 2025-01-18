@@ -30,9 +30,7 @@ export default function RootLayout({
         {/* Include  all Providers in file '@/lib/providers.tsx' insead of here */}
         <GlobalProvider>
           <NextUIProvider>
-            <Header />
             {children}
-            <Footer />
             <Toaster position="top-center" richColors />
           </NextUIProvider>
         </GlobalProvider>

@@ -23,4 +23,7 @@ export const API_ENDPOINTS = {
     GET_USER_COURSE: (userId: string) =>
       `${BASE_URL}/private/courses/user/${userId}`,
   },
+  QUIZ_SURVEY: {
+    GET_QUIZ_SURVEY: `${BASE_URL}/public/quiz-survey`,
+  },
 };
