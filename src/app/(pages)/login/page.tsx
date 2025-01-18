@@ -1,11 +1,15 @@
 import React from 'react';
 import Login from './Content';
+import Footer from '@/components/footer/Footer';
+import Header from '@/components/header/Header';
 
 const page = () => {
   return (
-    <div>
+    <>
+      <Header />
       <Login />
-    </div>
+      <Footer />
+    </>
   );
 };
 

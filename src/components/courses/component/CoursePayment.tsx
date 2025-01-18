@@ -6,7 +6,7 @@ const CoursePayment = () => {
       <div className=" w-full bg-white shadow-lg rounded-lg p-6">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-800">
-            2999 <span className="line-through text-gray-500">4999</span>
+            5000 <span className="line-through text-gray-500">14999</span>
           </h1>
           <p className="mt-2 text-sm text-gray-600">
             Get this course plus top-rated picks in tech skills and other
@@ -16,7 +16,7 @@ const CoursePayment = () => {
             Get started
           </button>
           <p className="mt-2 text-xs text-gray-500">
-            Discount on 4999 get in 2999
+            Discount on 14999 get in 5000
           </p>
         </div>
 

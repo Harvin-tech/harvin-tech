@@ -70,6 +70,12 @@ const LeftSidebar = () => {
       active: pathname === '/dashboard',
     },
     {
+      icon: <FaUserCog />,
+      label: 'Quiz Dashboard',
+      href: '/admin/dashboard/quiz',
+      active: pathname === '/admin/dashboard/quiz',
+    },
+    {
       icon: <FaUserGraduate />,
       label: 'Enrolment',
       href: '/admin/enrolment',

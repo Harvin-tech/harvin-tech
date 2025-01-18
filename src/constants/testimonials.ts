@@ -8,7 +8,7 @@ export const TESTIMONIALS_DATA = [
       'Harvinn Technologies’ AI & ML course is well-structured and beginner-friendly, covering key concepts like neural networks, Python, TensorFlow, and real-world projects. The hands-on approach and flexible learning schedule made the experience both practical and convenient. I now feel confident tackling AI & ML challenges and highly recommend this course for anyone starting in the field',
   },
   {
-    image: '/images/home/female-1.png',
+    image: '/images/home/review1.png',
     name: 'Priya Sharma',
     role: 'Data Science Student',
     rating: 5,
