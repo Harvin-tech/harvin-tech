@@ -118,7 +118,7 @@ const CourseIdPage = () => {
       const { data } = await apiClient.get(
         `${process.env.NEXT_PUBLIC_API_URL}/private/courses/enroll/${courseId}`
       );
-      console.log(data.data);
+
       setCourseUser(data.data.students);
     } catch (error) {
       console.log(error);
@@ -127,7 +127,6 @@ const CourseIdPage = () => {
     }
   };
 
-  //   console.log('weefef', users);
   useEffect(() => {
     getAllUsersOfCourse(pathname.courseId as string);
   }, []);

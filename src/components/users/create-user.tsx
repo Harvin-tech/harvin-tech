@@ -75,7 +75,7 @@ export default function CreateUser() {
 
     try {
       const res = await authService.signup(signupData);
-      console.log(res, 'signup response');
+
       toast.dismiss(loadingToast);
       toast.success('User created successfully!');
     } catch (err: any) {

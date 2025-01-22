@@ -54,7 +54,7 @@ const EnrolmentForm: React.FC = () => {
     setLoading(true);
     try {
       const response = await getCourses();
-      console.log(response, 'inside enrolmentform');
+
       setCourses(
         response.data.courses.map((item: Course) => ({
           value: item._id,

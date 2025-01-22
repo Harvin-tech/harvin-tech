@@ -4,6 +4,7 @@ import React, { memo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import Link from 'next/link';
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -156,16 +157,25 @@ const Footer = () => {
                 />
               </div>
             </div>
-            <nav className="flex gap-6 text-sm text-white/70">
-              <a href="#" className="hover:text-white transition-colors">
-                Home
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                About
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                Contact us
-              </a>
+            <nav className="flex gap-4 text-sm text-white/70">
+              <Link
+                href="/terms-and-conditions"
+                className="hover:text-white transition-colors"
+              >
+                Terms & Conditions
+              </Link>
+              <Link
+                href="/refund-policy"
+                className="hover:text-white transition-colors"
+              >
+                Refund Policy
+              </Link>
+              <Link
+                href="/contact"
+                className="hover:text-white transition-colors"
+              >
+                Contact Us
+              </Link>
             </nav>
             <p className="text-sm text-white/60">
               @Copyrights 2024 harvinn technologies.

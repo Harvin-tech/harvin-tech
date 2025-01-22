@@ -1,9 +1,3 @@
-export namespace Helpers {
-  export function helloWorld() {
-    console.log('Hello World');
-  }
-}
-
 export function formatDate(dateString: string): string {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
