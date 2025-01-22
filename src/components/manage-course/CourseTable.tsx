@@ -33,7 +33,7 @@ const CourseManagementTable = () => {
   const getAllCourses = async () => {
     try {
       const { data } = await apiClient.get(API_ENDPOINTS.COURSES.BASE);
-      console.log(data);
+
       setCourses(data.data.courses);
     } catch (error) {
       console.error('Error fetching courses:', error);

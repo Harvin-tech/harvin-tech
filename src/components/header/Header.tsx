@@ -40,7 +40,7 @@ const Header = () => {
   const route = [
     { title: 'Home', path: '/' },
     { title: 'Course', path: '/courses' },
-    { title: 'About Us', path: '/about' },
+    { title: 'Contact Us', path: '/contact' },
     ...(role
       ? [{ title: 'Admin', path: '/dashboard', requiresAuth: true }]
       : []),
@@ -161,7 +161,7 @@ const Header = () => {
                 <div className="flex flex-col items-center gap-3 w-full">
                   <Link
                     href="/login"
-                    className="w-full text-center py-3 px-4 text-base font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                    className="w-full text-center py-3 px-4 text-base font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Log in

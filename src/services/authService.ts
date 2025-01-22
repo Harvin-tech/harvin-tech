@@ -26,7 +26,7 @@ export const authService = {
 
   login: async (value: LoginData) => {
     const { data } = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, value);
-    console.log(data);
+
     localStorage.setItem('user', JSON.stringify(data.data.user));
     Cookies.set('token', data.data.token, { expires: 7 });
     Cookies.set('role', data.data.user.role, { expires: 7 });

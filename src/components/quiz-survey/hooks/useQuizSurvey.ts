@@ -102,8 +102,6 @@ const useQuizSurvey = () => {
         });
         router.push('/');
       }
-      console.log(response, 'response');
-      console.log('Form submitted:', formData);
     } catch (error: any) {
       console.error('Error submitting form:', error);
       toast.error(error.response.data.message || 'Error Loading Courses', {

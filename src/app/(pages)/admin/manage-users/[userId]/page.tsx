@@ -36,8 +36,6 @@ const UserIdPage: React.FC = () => {
 
   const pathname = useParams();
 
-  console.log(pathname.userId);
-
   const [filters, setFilters] = useState({
     category: 'all',
     status: 'all',

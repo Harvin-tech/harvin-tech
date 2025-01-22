@@ -118,7 +118,7 @@ const Users = () => {
       const { data } = await apiClient.get(
         `${process.env.NEXT_PUBLIC_API_URL}/private/users`
       );
-      console.log(data.data);
+
       setUsers(data.data.users);
     } catch (error) {
       console.log(error);
@@ -127,12 +127,10 @@ const Users = () => {
     }
   };
 
-  console.log(users);
   useEffect(() => {
     getAllusers();
   }, []);
 
-  console.log(users);
   return (
     <div className="w-full bg-white p-4 rounded-lg">
       <div className="w-full flex justify-end">
