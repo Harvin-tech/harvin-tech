@@ -61,8 +61,8 @@ const AllCourseList = () => {
 
         {/* Courses Carousel with Navigation and Gradients */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {courses.map((course: any) => (
-            <CourseCard course={course} />
+          {courses.map((course: any, index: number) => (
+            <CourseCard course={course} key={(course._id ?? '') + index} />
           ))}
         </div>
       </div>
