@@ -39,7 +39,7 @@ const Header = () => {
 
   const route = [
     { title: 'Home', path: '/' },
-    { title: 'Course', path: '/courses' },
+    { title: 'Course', path: '/all-course' },
     { title: 'Contact Us', path: '/contact' },
     ...(role
       ? [{ title: 'Admin', path: '/dashboard', requiresAuth: true }]

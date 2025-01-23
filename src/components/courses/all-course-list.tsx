@@ -1,25 +1,15 @@
 'use client';
-import React, {  useEffect, useState } from 'react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/free-mode';
+import React, { useEffect, useState } from 'react';
 import { appContent } from '@/constants/variants';
 import { useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import './swiper.css';
 import apiClient from '@/services/apiClient';
 import { API_ENDPOINTS } from '@/config/backend-routes';
 import CourseCard from '../common/CourseCard';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '../ui/carousel';
 
-const Courses = () => {
+const AllCourseList = () => {
   const searchParams = useSearchParams();
+  const userId = searchParams.get('getUser_Id');
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
   const [courses, setCourses] = useState<any>([]);
@@ -30,7 +20,7 @@ const Courses = () => {
         setLoading(true);
         const url = API_ENDPOINTS.PUBLIC_COURSES.BASE;
         const { data } = await apiClient.get(url);
-
+        console.log('response', data);
         if (data && data.data.courses) {
           console.log('courses', data.data.courses);
           setCourses(data.data.courses);
@@ -59,7 +49,7 @@ const Courses = () => {
         {/* Header Section */}
         <div className="max-w-3xl mx-auto text-center space-y-4 px-4 mb-8 md:mb-12">
           <h2 className="text-4xl md:text-5xl text-primary font-bold md:tracking-tight">
-            Courses
+            All Courses
           </h2>
           <p className="text-base md:text-lg text-foreground/80 max-w-3xl mx-auto tracking-tight">
             At Harvinn Technologies, we offer expert-led, flexible courses
@@ -70,31 +60,14 @@ const Courses = () => {
         </div>
 
         {/* Courses Carousel with Navigation and Gradients */}
-        <div className="relative ">
-          <Carousel
-            opts={{
-              align: 'start',
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent className="ml-[1px]">
-              {courses.map((course: any) => (
-                <CarouselItem
-                  key={course.id}
-                  className="pl-2 basis-full sm:basis-1/2 lg:basis-1/3"
-                >
-                  <CourseCard course={course} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className=" w-10 h-10 md:w-12 md:h-12 -left-2 lg:-left-6 border border-black/20" />
-            <CarouselNext className="w-10 h-10 md:w-12 md:h-12 -right-2 lg:-right-6 border border-black/20" />
-          </Carousel>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {courses.map((course: any) => (
+            <CourseCard course={course} />
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default Courses;
+export default AllCourseList;
