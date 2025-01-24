@@ -16,7 +16,6 @@ import { TopChoiceData_C } from '@/constants/courses/topChoice';
 const dummyId = uuidv4();
 
 const TopCourse = () => {
-
   const handleEnrollClick = (courseId: string) => {
     // Handle enrollment logic here
     console.log(`Enrolling in course: ${courseId}`);
@@ -51,14 +50,14 @@ const TopCourse = () => {
             {displayCourse.map((course, index) => (
               <CarouselItem
                 key={course.title + index}
-                className="pl-2 basis-full sm:basis-1/2 lg:basis-1/3"
+                className="pl-2 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
                 <CourseCard course={course} />
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex w-10 h-10 md:w-12 md:h-12 -left-2 lg:-left-6 border border-black/20" />
-          <CarouselNext className="hidden md:flex w-10 h-10 md:w-12 md:h-12 -right-2 lg:-right-6 border border-black/20" />
+          <CarouselPrevious className=" flex w-10 h-10 md:w-12 md:h-12 -left-2 lg:-left-6 border border-black/20" />
+          <CarouselNext className="flex w-10 h-10 md:w-12 md:h-12 -right-2 lg:-right-6 border border-black/20" />
         </Carousel>
       </div>
     </div>

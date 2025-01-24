@@ -147,8 +147,8 @@ const CourseDetails = () => {
                   key={index}
                   className={`border-2 transition-all ${
                     expandedChapter === index
-                      ? 'border-blue-500 shadow-lg'
-                      : 'hover:border-blue-300'
+                      ? 'border-primary shadow-lg'
+                      : 'hover:border-primary'
                   }`}
                 >
                   <CardContent className="p-0">
@@ -161,7 +161,7 @@ const CourseDetails = () => {
                       }
                     >
                       <div className="flex items-start gap-4">
-                        <div className="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
                           {index + 1}
                         </div>
                         <div className="text-left">
