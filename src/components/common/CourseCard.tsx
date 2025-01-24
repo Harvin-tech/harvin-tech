@@ -20,7 +20,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
     <div
       className="border border-gray-200 rounded-2xl sm:rounded-3xl shadow-sm
       hover:shadow-md transition-all duration-300 ease-in-out
-      min-h-[280px] sm:min-h-[300px] flex flex-col gap-3 sm:gap-3 pb-4 md:pb-1"
+       flex flex-col gap-3 sm:gap-3 pb-4 md:pb-1"
     >
       <div className="relative w-full aspect-[5/4]">
         <Image
@@ -34,9 +34,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
       </div>
 
       <div className="px-3 sm:px-4 pb-3 sm:pb-4 tracking-tight flex flex-col justify-between h-full gap-2">
-        <h3 className="text-lg sm:text-xl font-semibold mb-1">
-          {course.title}
-        </h3>
+        <h3 className="text-lg font-semibold mb-1">{course.title}</h3>
         <p className="text-gray-600 line-clamp-2">
           {course.description.replace(/<[^>]*>?/gm, '').slice(0, 100) + '...'}
         </p>
