@@ -18,9 +18,9 @@ interface CourseCardProps {
 const CourseCard = ({ course }: CourseCardProps) => {
   return (
     <div
-      className="border border-gray-200 rounded-2xl sm:rounded-3xl shadow-sm
+      className="border border-primary/20 rounded-2xl sm:rounded-3xl shadow-sm
       hover:shadow-md transition-all duration-300 ease-in-out
-       flex flex-col gap-3 sm:gap-3 pb-4 md:pb-1"
+       flex flex-col gap-3 sm:gap-3 pb-4 md:pb-1 hover:scale-[1.01] transform"
     >
       <div className="relative w-full aspect-[5/4]">
         <Image

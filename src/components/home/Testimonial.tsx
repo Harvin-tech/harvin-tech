@@ -23,6 +23,7 @@ const Testimonial = () => {
             gradientWidth={100}
             direction="left"
             autoFill
+            pauseOnHover={true}
           >
             {TESTIMONIALS_DATA.slice(
               TESTIMONIALS_DATA.length / 2,
@@ -38,6 +39,7 @@ const Testimonial = () => {
             gradientWidth={100}
             direction="right"
             autoFill
+            pauseOnHover={true}
           >
             {TESTIMONIALS_DATA.slice(0, TESTIMONIALS_DATA.length / 2).map(
               (testimonial, index) => (
