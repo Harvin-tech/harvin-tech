@@ -4,13 +4,42 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Users } from 'lucide-react';
 import Image from 'next/image';
 
+const imagesPath = '/images/trustedby/';
+interface TrustedCompany {
+  name: string;
+  Logo: string;
+}
+
+export const TRUSTEDBYCOMPANY: TrustedCompany[] = [
+  { name: 'NVIDIA', Logo: `${imagesPath}nvidia.png}` },
+  { name: 'Microsoft', Logo: `${imagesPath}microsoft.avif` },
+  { name: 'Amazon', Logo: `${imagesPath}amazon.webp` },
+  { name: 'Reliance', Logo: `${imagesPath}reliance.png` },
+  { name: 'TCS', Logo: `${imagesPath}tcs.jpeg` },
+  { name: 'Bharti Airtel', Logo: `${imagesPath}airtel.webp` },
+  { name: 'Infosys', Logo: `${imagesPath}infosys.png` },
+  { name: 'HCL Technologies', Logo: `${imagesPath}hcl.jpg` },
+  { name: 'Larsen & Toubro', Logo: `${imagesPath}larsen.png` },
+  { name: 'Wipro', Logo: `${imagesPath}wipro.jpg` },
+  { name: 'Mahindra & Mahindra', Logo: `${imagesPath}mahindra.png` },
+  { name: 'Sun Pharmaceutical', Logo: `${imagesPath}sunpharma.png` },
+  { name: 'NTPC', Logo: `${imagesPath}ntpc.png` },
+  { name: 'Tech Mahindra', Logo: `${imagesPath}techmahindra.png` },
+  { name: 'Tata Motors', Logo: `${imagesPath}tatamotors.png` },
+  { name: 'Oracle', Logo: `${imagesPath}oracle.jpg` },
+  { name: 'IBM', Logo: `${imagesPath}ibm.webp` },
+  { name: 'Salesforce', Logo: `${imagesPath}saleforce.png` },
+  { name: 'VMware', Logo: `${imagesPath}vmware.png` },
+  { name: 'Autodesk', Logo: `${imagesPath}autodesk.png` },
+];
+
 const Trusted = () => {
-  const TRUSTED = [
-    '/images/home/coursera.svg',
-    '/images/home/udemy.svg',
-    '/images/home/edx.svg',
-    '/images/home/byjus.svg',
-  ];
+  // const TRUSTED = [
+  //   '/images/home/coursera.svg',
+  //   '/images/home/udemy.svg',
+  //   '/images/home/edx.svg',
+  //   '/images/home/byjus.svg',
+  // ];
 
   return (
     <Card className="bg-foreground/5 border-none shadow-sm rounded-none py-16 ">
@@ -44,13 +73,13 @@ const Trusted = () => {
             className="py-4"
             autoFill
           >
-            {TRUSTED.map((logo, index) => (
-              <div key={index} className="">
+            {TRUSTEDBYCOMPANY.map((t, index) => (
+              <div key={`${t.name}-${index}`} className="">
                 <div className="relative w-[280px] aspect-[2] mx-1 border border-border rounded-lg shadow-md bg-white ">
                   <Image
                     fill
                     className="absolute object-contain dark:invert border border-primary/40 rounded-lg p-1"
-                    src={logo}
+                    src={t.Logo}
                     alt={`Trusted logo ${index + 1}`}
                   />
                 </div>
