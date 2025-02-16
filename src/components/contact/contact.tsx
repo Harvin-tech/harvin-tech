@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import Link from 'next/link';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -112,15 +113,19 @@ const ContactPage = () => {
           <div className="flex flex-col gap-8 ">
             {/* Contact Cards */}
             <Card className="p-4 text-center hover:shadow-lg transition-shadow bg-transparent">
-              <Mail className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">Email Us</h3>
-              <p className="text-gray-600">info@harvinntechnologies.in</p>
+              <Link href="mailto:info@harvinntechnologies.in">
+                <Mail className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+                <h3 className="font-semibold mb-2">Email Us</h3>
+                <p className="text-gray-600">info@harvinntechnologies.in</p>
+              </Link>
             </Card>
 
             <Card className="p-4 text-center hover:shadow-lg transition-shadow bg-transparent">
-              <Phone className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">Call Us</h3>
-              <p className="text-gray-600">+91 9849541178</p>
+              <Link href="tel:+919849541178">
+                <Phone className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+                <h3 className="font-semibold mb-2">Call Us</h3>
+                <p className="text-gray-600">+91 9849541178</p>
+              </Link>
             </Card>
           </div>
         </div>
