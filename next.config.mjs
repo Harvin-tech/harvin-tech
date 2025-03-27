@@ -8,6 +8,22 @@ const nextConfig = {
       },
     ],
   },
+  // Required for AWS Amplify deployment
+  output: 'standalone',
+
+  // Essential for serverless functions
+  experimental: {
+    serverComponentsExternalPackages: [
+      'mongoose',
+      'aws-sdk',
+      'sharp',
+      'bcryptjs',
+    ],
+    serverActions: true,
+  },
+
+  // Enable proper source maps for debugging
+  productionBrowserSourceMaps: true,
 };
 
 export default nextConfig;
