@@ -13,7 +13,13 @@ async function dbConnect(): Promise<void> {
   }
 
   try {
-    const db = await mongoose.connect(process.env.MONGO_URI || '');
+    const mongoUri = process.env.MONGO_URI;
+
+    if (!mongoUri) {
+      console.log('MONGO_URI is not defined');
+      throw new Error('MONGO_URI is not defined');
+    }
+    const db = await mongoose.connect(mongoUri);
     connection.isConnected = db.connections[0].readyState;
     console.log('Mongodb connected successfully');
   } catch (error) {
