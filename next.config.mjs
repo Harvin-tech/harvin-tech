@@ -8,6 +8,7 @@ const nextConfig = {
       },
     ],
   },
+  // Required for Amplify serverless functions
   output: 'standalone',
   experimental: {
     serverComponentsExternalPackages: [
@@ -15,10 +16,11 @@ const nextConfig = {
       'aws-sdk',
       'sharp',
       'bcryptjs',
-      'jsonwebtoken' // Add this
+      'jsonwebtoken',
     ],
     serverActions: true,
   },
+  // Amplify-specific optimization
+  compress: false, // Amplify handles compression
 };
-
 export default nextConfig;
