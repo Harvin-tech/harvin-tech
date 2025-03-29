@@ -8,19 +8,6 @@ const nextConfig = {
       },
     ],
   },
-  // Required for Amplify serverless functions
-  output: 'standalone',
-  experimental: {
-    serverComponentsExternalPackages: [
-      'mongoose',
-      'aws-sdk',
-      'sharp',
-      'bcryptjs',
-      'jsonwebtoken',
-    ],
-    serverActions: true,
-  },
-  // Amplify-specific optimization
-  compress: false, // Amplify handles compression
 };
+
 export default nextConfig;
