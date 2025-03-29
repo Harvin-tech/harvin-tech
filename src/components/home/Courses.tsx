@@ -7,7 +7,7 @@ import { appContent } from '@/constants/variants';
 import { useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import './swiper.css';
-import apiClient from '@/services/apiClient';
+import { nextApiClient } from '@/services/apiClient';
 import { API_ENDPOINTS } from '@/config/backend-routes';
 import CourseCard from '../common/CourseCard';
 import {
@@ -29,7 +29,7 @@ const Courses = () => {
       try {
         setLoading(true);
         const url = API_ENDPOINTS.PUBLIC_COURSES.BASE;
-        const { data } = await apiClient.get(url);
+        const { data } = await nextApiClient.get(url);
 
         if (data && data.data.courses) {
           console.log('courses', data.data.courses);
