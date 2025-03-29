@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { appContent } from '@/constants/variants';
 import { useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import apiClient from '@/services/apiClient';
+import { nextApiClient } from '@/services/apiClient';
 import { API_ENDPOINTS } from '@/config/backend-routes';
 import CourseCard from '../common/CourseCard';
 
@@ -19,7 +19,7 @@ const AllCourseList = () => {
       try {
         setLoading(true);
         const url = API_ENDPOINTS.PUBLIC_COURSES.BASE;
-        const { data } = await apiClient.get(url);
+        const { data } = await nextApiClient.get(url);
         console.log('response', data);
         if (data && data.data.courses) {
           console.log('courses', data.data.courses);

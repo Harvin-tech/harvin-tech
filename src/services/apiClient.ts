@@ -17,4 +17,11 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
+export const nextApiClient = axios.create({
+  withCredentials: true, // This ensures cookies are included in requests
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 export default apiClient;

@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import {
-  CalendarDays,
   Users,
   BookOpen,
   Check,
@@ -10,16 +9,11 @@ import {
   Clock,
   Award,
   BookOpen as Book,
-  ChevronDown,
-  ChevronUp,
-  PlayCircle,
-  FileText,
-  Code,
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { API_ENDPOINTS } from '@/config/backend-routes';
 import { useParams } from 'next/navigation';
-import apiClient from '@/services/apiClient';
+import { nextApiClient } from '@/services/apiClient';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import NotFound from '@/app/not-found';
@@ -36,7 +30,7 @@ const CourseDetails = () => {
       try {
         setLoading(true);
         const url = API_ENDPOINTS.PUBLIC_COURSES.BASE + '/' + slug;
-        const { data } = await apiClient.get(url);
+        const { data } = await nextApiClient.get(url);
         console.log('response', data);
         if (data && data.data) {
           console.log('courses', data.data);
@@ -55,7 +49,7 @@ const CourseDetails = () => {
   const pricingPlans = [
     {
       title: 'Self Paced',
-      price: '₹ 6,999',
+      price: '₹ 9,999',
       highlight: 'Best for independent learners',
       features: [
         { text: 'Certificate for Course Completion', included: true },
@@ -68,16 +62,16 @@ const CourseDetails = () => {
     },
     {
       title: 'Mentor Led',
-      price: '₹ 9,999',
+      price: '₹ 14,999',
       highlight: 'Recommended for best results',
       features: [
-        { text: 'Certificate for Course Completion', included: true },
-        { text: '1 Minor and 1 Major project', included: true },
+        { text: '4 Certificate After Course Completion', included: true },
+        { text: '2 Minor and 2 Major project', included: true },
         { text: 'Co - Branded Course Certificate', included: true },
-        { text: '25+ hours of Video Content Access', included: true },
-        { text: '6 Months LMS Access', included: true },
+        { text: '40+ hours of Video Content Access', included: true },
+        { text: 'Lifetime LMS Access', included: true },
         {
-          text: '16+ hours mentor training & project assistance',
+          text: 'Mentor training & job assistance',
           included: true,
         },
       ],
@@ -250,6 +244,44 @@ const CourseDetails = () => {
           </Card>
         </div>
       </div>
+
+      {/* Certificates Section */}
+      <div className="bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-4">Certificates</h2>
+          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            With the building blocks of your career set, you will have laid the
+            foundation for your future. We will add the golden bricks for you
+            with certificates from Partnered Companies.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-2">
+              <div className="transform hover:scale-[1.02] transition-transform">
+                <img
+                  src="/images/certificate/exce.jpeg"
+                  alt="Certificate Sample 1"
+                  className="w-full rounded-xl shadow-lg"
+                />
+              </div>
+              <div className="transform hover:scale-[1.02] transition-transform">
+                <img
+                  src="/images/certificate/comp.jpeg"
+                  alt="Certificate Sample 3"
+                  className="w-full rounded-xl shadow-lg"
+                />
+              </div>
+            </div>
+            <div className="transform hover:scale-[1.02] transition-transform">
+              <img
+                src="/images/certificate/intern.jpeg"
+                alt="Certificate Sample 2"
+                className="w-full rounded-xl shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Pricing Plans */}
       <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-6">
@@ -295,36 +327,6 @@ const CourseDetails = () => {
           </div>
         </div>
       </div>
-
-      {/* Certificates Section */}
-      {/* <div className="py-16 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-4">
-            Co-Branded Certificates
-          </h2>
-          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            With the building blocks of your career set, you will have laid the
-            foundation for your future. We will add the golden bricks for you
-            with certificates from Partnered Companies.
-          </p>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="transform hover:scale-105 transition-transform">
-              <img
-                src="/api/placeholder/600/400"
-                alt="Certificate Sample 1"
-                className="w-full rounded-xl shadow-lg"
-              />
-            </div>
-            <div className="transform hover:scale-105 transition-transform">
-              <img
-                src="/api/placeholder/600/400"
-                alt="Certificate Sample 2"
-                className="w-full rounded-xl shadow-lg"
-              />
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

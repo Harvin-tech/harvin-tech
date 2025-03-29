@@ -24,7 +24,7 @@ export const API_ENDPOINTS = {
       `${BASE_URL}/private/courses/user/${userId}`,
   },
   PUBLIC_COURSES: {
-    BASE: `${BASE_URL}/public/courses`,
+    BASE: `/api/public/courses`, // Next Apis
   },
   QUIZ_SURVEY: {
     GET_QUIZ_SURVEY: `${BASE_URL}/public/quiz-survey`,
