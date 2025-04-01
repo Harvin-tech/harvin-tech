@@ -6,6 +6,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'harvinn-tech.s3.ap-south-1.amazonaws.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.istockphoto.com',
+      },
     ],
   },
 };

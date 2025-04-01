@@ -2,7 +2,9 @@ import { API_ENDPOINTS } from '@/config/backend-routes';
 import apiClient from './apiClient';
 
 export const fetchUsers = async () => {
-  const response = await apiClient.get(`${API_ENDPOINTS.USERS}?page=1&limit=100`);
+  const response = await apiClient.get(
+    `${API_ENDPOINTS.USERS}?page=1&limit=100`
+  );
   return response.data;
 };
 
