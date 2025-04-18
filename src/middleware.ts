@@ -42,3 +42,8 @@ export async function middleware(req: NextRequest) {
   // If no redirects are necessary, proceed with the request
   return NextResponse.next();
 }
+
+// Define the paths that should be checked by the middleware
+export const config = {
+  matcher: ['/dashboard/:path*', '/admin/:path*', '/login', '/signup'],
+};
