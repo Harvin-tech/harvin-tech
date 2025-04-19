@@ -56,9 +56,9 @@ const LeftSidebar = () => {
     },
     {
       icon: <FaBookOpen />,
-      label: 'All Courses',
-      href: '/dashboard/courses',
-      active: pathname === '/dashboard/courses',
+      label: 'Nanoscience',
+      href: '/dashboard/nanoscience',
+      active: pathname === '/dashboard/nanoscience',
     },
   ];
 
