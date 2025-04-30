@@ -1,10 +1,10 @@
-import ManageCourse from '@/components/manage-course/ManageCourse';
+import CertificateGenerator from '@/components/dashboard/certificate';
 import React from 'react';
 
 const page = () => {
   return (
     <div>
-      <ManageCourse />
+      <CertificateGenerator />
     </div>
   );
 };

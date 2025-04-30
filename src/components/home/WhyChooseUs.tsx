@@ -8,13 +8,14 @@ import { PiBookOpenText } from 'react-icons/pi';
 const WhyChooseUs = () => {
   return (
     <div className={appContent({ className: 'space-y-16 py-16 md:px-0 ' })}>
-
       <div className="max-w-xl mx-auto text-center space-y-4 sm:space-y-6 mb-4">
         <div className=" text-4xl md:text-5xl text-foreground font-bold tracking-tight md:leading-tight">
-        Why choose <span className="text-primary">Harvinn </span> technologies
+          Why choose <span className="text-primary">Harvinn </span> technologies
         </div>
         <div className="text-base md:text-lg text-foreground/80">
-        Harvinn Technologies offers expert-led, flexible, and affordable e-learning with personalized paths, future-ready skills, and a global community.
+          Harvinn Technologies offers expert-led, flexible, and affordable
+          e-learning with personalized paths, future-ready skills, and a
+          global community.
         </div>
       </div>
       <div className="flex flex-wrap justify-center gap-4 md:gap-2 ">

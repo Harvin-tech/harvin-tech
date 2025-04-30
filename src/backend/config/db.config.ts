@@ -13,7 +13,7 @@ async function dbConnect(): Promise<void> {
   }
 
   try {
-    const mongoUri = process.env.MONGO_URI;   
+    const mongoUri = process.env.MONGO_URI;
 
     if (!mongoUri) {
       console.log('MONGO_URI is not defined');

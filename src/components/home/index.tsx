@@ -13,7 +13,7 @@ const Home = () => {
       <HeroSection />
       <WhyChooseUs />
       <Courses />
-      <CtaCard/>
+      <CtaCard />
       <TopCourse />
       <Trusted />
       <Testimonial />
