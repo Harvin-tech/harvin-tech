@@ -27,12 +27,12 @@ const ClassCard = ({
     <div className="group relative flex h-full w-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg">
       {/* Image Container */}
       <div className="relative aspect-[4/3] w-full overflow-hidden">
-        <Image 
-          src={image} 
-          alt={title} 
-          fill 
+        <Image
+          src={image}
+          alt={title}
+          fill
           priority
-          className="object-cover transition-transform duration-500 group-hover:scale-105" 
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         {/* Optional overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

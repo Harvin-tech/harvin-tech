@@ -21,10 +21,15 @@ export async function POST(request: NextRequest) {
     const { email, password } = validation.data;
     const { user, token } = await AuthService.login(email, password);
 
-    const response = sendResponse('Login successful', true, {
-      user: (({ password, ...rest }) => rest)(user),
-      token,
-    }, 200);
+    const response = sendResponse(
+      'Login successful',
+      true,
+      {
+        user: (({ password, ...rest }) => rest)(user),
+        token,
+      },
+      200
+    );
 
     // Set cookie
     // response.cookies.set({
