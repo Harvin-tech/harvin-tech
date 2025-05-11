@@ -41,6 +41,7 @@ const Header = () => {
     { title: 'Home', path: '/' },
     { title: 'Course', path: '/all-course' },
     { title: 'Contact Us', path: '/contact' },
+    {title:'Dashboard',path:'/dashboard'},
     ...(role
       ? [{ title: 'Admin', path: '/dashboard', requiresAuth: true }]
       : []),
