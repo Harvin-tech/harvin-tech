@@ -60,6 +60,12 @@ const LeftSidebar = () => {
       href: '/dashboard/nanoscience',
       active: pathname === '/dashboard/nanoscience',
     },
+    {
+      icon: <FaBookOpen />,
+      label: 'Certificate',
+      href: '/dashboard/certificates',
+      active: pathname === '/dashboard/certificates',
+    },
   ];
 
   const adminSidebarItems = [

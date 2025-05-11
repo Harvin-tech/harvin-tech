@@ -12,7 +12,9 @@ export default function CertificateGenerator(): JSX.Element {
     const user = localStorage.getItem('user');
     if (user) {
       const parsedUser = JSON.parse(user);
-      setName(parsedUser.name);
+      console.log(parsedUser,'parsedUser')
+    
+      setName(parsedUser?.firstName);
     }
   }, []);
 
@@ -24,7 +26,7 @@ export default function CertificateGenerator(): JSX.Element {
     toPng(ref.current, { cacheBust: true })
       .then((dataUrl) => {
         const link = document.createElement('a');
-        link.download = 'my-image-name.png';
+        link.download = 'certificate.png';
         link.href = dataUrl;
         link.click();
       })
@@ -36,10 +38,10 @@ export default function CertificateGenerator(): JSX.Element {
   return (
     <div
       className="w-full flex flex-col items-center  p-4 max-w-4xl mx-auto"
-      ref={ref}
+    
     >
-      <div className="relative">
-        <div className="absolute top-[47%] md:top-[48%] left-[35%] text-muted-foreground italic font-mono z-[1000] text-lg md:text-xl">
+      <div className="relative"   ref={ref}>
+        <div className="absolute top-[47%] md:top-[48%] flex justify-center items-center w-full text-muted-foreground italic font-mono z-[1000] text-lg md:text-xl">
           {name}
         </div>
         <div className="flex justify-center relative w-[400px] md:w-[600px] aspect-[4/3]">
@@ -55,7 +57,7 @@ export default function CertificateGenerator(): JSX.Element {
       <div className="mt-4">
         <button
           onClick={onButtonClick}
-          className="w-full p-2 px-4 bg-primary text-white rounded hover:bg-blue-700"
+          className="w-full p-2 px-4 bg-primary text-white rounded hover:bg-primary/90"
         >
           Download Certificate
         </button>
