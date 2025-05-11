@@ -39,7 +39,7 @@ export default function CertificateGenerator(): JSX.Element {
       ref={ref}
     >
       <div className="relative">
-        <div className="absolute top-[47%] md:top-[48%] left-[35%] text-muted-foreground italic font-mono z-[1000] text-lg md:text-xl">
+        <div className="absolute top-[47%] md:top-[48%] left-[35%] text-muted-foreground italic font-mono z-10 text-lg md:text-xl">
           {name}
         </div>
         <div className="flex justify-center relative w-[400px] md:w-[600px] aspect-[4/3]">
