@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import Cookies from 'js-cookie';
 
 /**
  * Middleware to handle authentication and authorization for certain routes.
@@ -25,6 +26,7 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard')) {
     // If the user is not authenticated, redirect them to the login page
     if (!token) {
+      Cookies.remove('token');
       return NextResponse.redirect(new URL('/login', req.url));
     }
 
