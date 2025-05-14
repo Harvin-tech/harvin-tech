@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { inputStyle } from '@/constants';
 import { authService } from '@/services/authService';
 import { toast } from 'sonner';
+import { welcomeMessage } from '@/services/welcomeMessage';
 
 export default function Signup() {
   const router = useRouter();
@@ -77,6 +78,7 @@ export default function Signup() {
       const res = await authService.signup(signupData);
       toast.dismiss(loadingToast);
       toast.success('Account created successfully!');
+      await welcomeMessage(formData);
       router.push('/login');
     } catch (err: any) {
       console.log(err);

@@ -29,4 +29,7 @@ export const API_ENDPOINTS = {
   QUIZ_SURVEY: {
     GET_QUIZ_SURVEY: `${BASE_URL}/public/quiz-survey`,
   },
+  WelcomeMessage: {
+    BASE: `${BASE_URL}/private/Welcome-message`,
+  },
 };
