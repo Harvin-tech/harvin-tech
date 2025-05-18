@@ -6,7 +6,7 @@ export interface EnrollmentHistoryItem {
   email: string;
   courseTitle: string;
   startDate: string;
-  endDate: string;
+  // endDate: string;
 }
 
 export interface EnrollmentState {

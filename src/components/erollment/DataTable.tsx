@@ -44,7 +44,7 @@ const DataTable: React.FC = () => {
     { key: 'email', label: 'Email' },
     { key: 'courseTitle', label: 'Course Title' },
     { key: 'startDate', label: 'Start Date' },
-    { key: 'endDate', label: 'End Date' },
+    // { key: 'endDate', label: 'End Date' },
   ];
 
   const indexOfLastItem = currentPage * itemsPerPage;
