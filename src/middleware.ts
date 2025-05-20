@@ -26,7 +26,7 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard')) {
     // If the user is not authenticated, redirect them to the login page
     if (!token) {
-      Cookies.remove('token');
+      // Cookies.remove('token');
       return NextResponse.redirect(new URL('/login', req.url));
     }
 
