@@ -25,12 +25,17 @@ export const authService = {
   },
 
   login: async (value: LoginData) => {
-    const { data } = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, value);
+    try {
+      const { data } = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, value);
 
-    localStorage.setItem('user', JSON.stringify(data.data.user));
-    Cookies.set('token', data.data.token, { expires: 7 });
-    Cookies.set('role', data.data.user.role, { expires: 7 });
-    return data;
+      localStorage.setItem('user', JSON.stringify(data.data.user));
+      Cookies.set('token', data.data.token, { expires: 7 });
+      Cookies.set('role', data.data.user.role, { expires: 7 });
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   },
 
   logout: async () => {

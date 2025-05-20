@@ -46,7 +46,7 @@ export default function Login() {
       dispatch(loginSuccess(res.data.user));
       toast.dismiss(loadingToast);
       toast.success('Signed in successfully!');
-      router.push('/dashboard');
+      window.location.href = '/dashboard';
     } catch (err: any) {
       console.log(err);
       const errorMessage =
