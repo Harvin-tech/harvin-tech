@@ -11,8 +11,18 @@ export const getUserSchema = z.object({
       search: z.string().optional(),
       status: statusEnum.optional(),
       type: z.enum(userRoles).optional(),
-      page: z.number().int().min(1).default(1),
-      limit: z.number().int().min(1).max(100).default(10),
+      page: z
+        .string()
+        .transform(Number)
+        .pipe(z.number().int().min(1))
+        .optional()
+        .default('1'),
+      limit: z
+        .string()
+        .transform(Number)
+        .pipe(z.number().int().min(1))
+        .optional()
+        .default('10'),
     })
     .strict(),
 });

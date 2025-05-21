@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from '@/config/backend-routes';
-import apiClient from './apiClient';
+import { nextApiClient } from './apiClient';
 
 interface Course {
   title: string;
@@ -10,12 +10,12 @@ interface Course {
 }
 
 export const getCourses = async () => {
-  const response = await apiClient.get(API_ENDPOINTS.COURSES.BASE);
+  const response = await nextApiClient.get(API_ENDPOINTS.PUBLIC_COURSES.BASE);
   return response.data;
 };
 
 export const getCourseById = async (courseId: string) => {
-  const response = await apiClient.get(
+  const response = await nextApiClient.get(
     API_ENDPOINTS.COURSES.GET_BY_ID(courseId)
   );
   return response.data;
@@ -23,7 +23,10 @@ export const getCourseById = async (courseId: string) => {
 
 export const addCourse = async (courseData: Course) => {
   console.log(API_ENDPOINTS.COURSES.ADD);
-  const response = await apiClient.post(API_ENDPOINTS.COURSES.ADD, courseData);
+  const response = await nextApiClient.post(
+    API_ENDPOINTS.COURSES.ADD,
+    courseData
+  );
   return response.data;
 };
 
@@ -31,7 +34,7 @@ export const updateCourse = async (
   courseId: string,
   courseData: Partial<Course>
 ) => {
-  const response = await apiClient.patch(
+  const response = await nextApiClient.patch(
     API_ENDPOINTS.COURSES.UPDATE(courseId),
     courseData
   );
@@ -39,14 +42,14 @@ export const updateCourse = async (
 };
 
 export const getChapterById = async (chapterId: string) => {
-  const response = await apiClient.get(
+  const response = await nextApiClient.get(
     API_ENDPOINTS.COURSES.GET_CHAPTER(chapterId)
   );
   return response.data;
 };
 
 export const enrollCourse = async (courseId: string, userId: string) => {
-  const response = await apiClient.post(API_ENDPOINTS.COURSES.ENROLL, {
+  const response = await nextApiClient.post(API_ENDPOINTS.COURSES.ENROLL, {
     courseId,
     userId,
   });
@@ -54,30 +57,33 @@ export const enrollCourse = async (courseId: string, userId: string) => {
 };
 
 export const getEnrollDetail = async () => {
-  const response = await apiClient.get(API_ENDPOINTS.COURSES.GET_ENROLL);
+  const response = await nextApiClient.get(API_ENDPOINTS.COURSES.GET_ENROLL);
   return response.data;
 };
+
 export const getEnrolledCourseByUser = async (userId: string) => {
-  const response = await apiClient.get(
+  const response = await nextApiClient.get(
     API_ENDPOINTS.COURSES.GET_ENROLLED_BY_USER(userId)
   );
   return response.data;
 };
 
 export const getUserCourse = async (userId: string) => {
-  const response = await apiClient.get(
+  const response = await nextApiClient.get(
     API_ENDPOINTS.COURSES.GET_USER_COURSE(userId)
   );
   return response.data;
 };
 
 export const getEnrolledCourse = async (userId: string) => {
-  const response = await apiClient.get(API_ENDPOINTS.COURSES.GET_BY_ID(userId));
+  const response = await nextApiClient.get(
+    API_ENDPOINTS.COURSES.GET_BY_ID(userId)
+  );
   return response.data;
 };
 
 export const getCourseChapter = async (chapterId: string) => {
-  const response = await apiClient.get(
+  const response = await nextApiClient.get(
     API_ENDPOINTS.COURSES.GET_CHAPTER(chapterId)
   );
   return response.data;

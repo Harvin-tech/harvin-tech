@@ -115,9 +115,7 @@ const Users = () => {
 
   const getAllusers = async () => {
     try {
-      const { data } = await apiClient.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/private/users`
-      );
+      const { data } = await apiClient.get(`/api/private/users`);
 
       setUsers(data.data.users);
     } catch (error) {
