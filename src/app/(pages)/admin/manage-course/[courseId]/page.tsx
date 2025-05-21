@@ -34,7 +34,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { Badge } from '@/components/ui/badge';
 import { Pencil, Trash2, UserCog } from 'lucide-react';
-import apiClient from '@/services/apiClient';
+import { nextApiClient } from '@/services/apiClient';
 import { getUser_I } from '@/types/user.types';
 import { useParams, useRouter } from 'next/navigation';
 
@@ -115,8 +115,8 @@ const CourseIdPage = () => {
 
   const getAllUsersOfCourse = async (courseId: string) => {
     try {
-      const { data } = await apiClient.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/private/courses/enroll/${courseId}`
+      const { data } = await nextApiClient.get(
+        `/api/private/courses/enroll/${courseId}`
       );
 
       setCourseUser(data.data.students);

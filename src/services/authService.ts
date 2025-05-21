@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from '@/config/backend-routes';
-import apiClient from './apiClient';
+import { nextApiClient } from './apiClient';
 import Cookies from 'js-cookie';
 
 interface SignupData {
@@ -20,13 +20,19 @@ interface LoginData {
 
 export const authService = {
   signup: async (data: SignupData) => {
-    const response = await apiClient.post(API_ENDPOINTS.AUTH.REGISTER, data);
+    const response = await nextApiClient.post(
+      API_ENDPOINTS.AUTH.REGISTER,
+      data
+    );
     return response.data;
   },
 
   login: async (value: LoginData) => {
     try {
-      const { data } = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, value);
+      const { data } = await nextApiClient.post(
+        API_ENDPOINTS.AUTH.LOGIN,
+        value
+      );
 
       localStorage.setItem('user', JSON.stringify(data.data.user));
       Cookies.set('token', data.data.token, { expires: 7 });
@@ -40,7 +46,7 @@ export const authService = {
 
   logout: async () => {
     try {
-      const response = await apiClient.post(API_ENDPOINTS.AUTH.LOGOUT);
+      const response = await nextApiClient.post(API_ENDPOINTS.AUTH.LOGOUT);
       localStorage.removeItem('user');
       Cookies.remove('token');
       return response.data;

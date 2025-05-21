@@ -128,8 +128,18 @@ export const getEnrolledCourseByUserSchema = z.object({
   query: z
     .object({
       search: z.string().optional(),
-      page: z.number().int().min(1).default(1),
-      limit: z.number().int().min(1).default(10),
+      page: z
+        .string()
+        .transform(Number)
+        .pipe(z.number().int().min(1))
+        .optional()
+        .default('1'),
+      limit: z
+        .string()
+        .transform(Number)
+        .pipe(z.number().int().min(1))
+        .optional()
+        .default('10'),
       status: statusEnum.optional(),
     })
     .strict(),

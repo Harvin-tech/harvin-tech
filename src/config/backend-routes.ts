@@ -1,32 +1,31 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8082';
 
 export const API_ENDPOINTS = {
-  USERS: `${BASE_URL}/private/users`,
-  PRODUCTS: `${BASE_URL}/products`,
+  USERS: `/api/private/users`,
+  PRODUCTS: `/api/products`,
   AUTH: {
-    LOGIN: `${BASE_URL}/auth/login`,
-    REGISTER: `${BASE_URL}/auth/register`,
-    LOGOUT: `${BASE_URL}/auth/logout`,
+    LOGIN: `/api/auth/login`,
+    REGISTER: `/api/auth/register`,
+    LOGOUT: `/api/auth/logout`,
   },
   COURSES: {
-    BASE: `${BASE_URL}/private/courses`,
-    GET_ALL: `${BASE_URL}/private/courses`,
-    GET_ENROLL: `${BASE_URL}/private/courses/enroll/details`,
-    ADD: `${BASE_URL}/private/courses`,
-    UPDATE: (courseId: string) => `${BASE_URL}/private/courses/${courseId}`,
-    GET_BY_ID: (courseId: string) => `${BASE_URL}/private/courses/${courseId}`,
+    BASE: `/api/private/courses`,
+    GET_ALL: `/api/private/courses`,
+    GET_ENROLL: `/api/private/courses/enroll/details`,
+    ADD: `/api/private/courses`,
+    UPDATE: (courseId: string) => `/api/private/courses/${courseId}`,
+    GET_BY_ID: (courseId: string) => `/api/private/courses/${courseId}`,
     GET_CHAPTER: (chapterId: string) =>
-      `${BASE_URL}/private/courses/chapter/${chapterId}`,
-    ENROLL: `${BASE_URL}/private/courses/enroll`,
+      `/api/private/courses/chapter/${chapterId}`,
+    ENROLL: `/api/private/courses/enroll`,
     GET_ENROLLED_BY_USER: (userId: string) =>
-      `${BASE_URL}/private/courses/user/${userId}`,
-    GET_USER_COURSE: (userId: string) =>
-      `${BASE_URL}/private/courses/user/${userId}`,
+      `/api/private/courses/user/${userId}`,
+    GET_USER_COURSE: (userId: string) => `/api/private/courses/user/${userId}`,
   },
   PUBLIC_COURSES: {
     BASE: `/api/public/courses`, // Next Apis
   },
   QUIZ_SURVEY: {
-    GET_QUIZ_SURVEY: `${BASE_URL}/public/quiz-survey`,
+    GET_QUIZ_SURVEY: `/api/public/quiz-survey`,
   },
 };
