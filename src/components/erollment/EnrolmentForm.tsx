@@ -182,3 +182,4 @@ const EnrolmentForm: React.FC = () => {
 };
 
 export default EnrolmentForm;
+
