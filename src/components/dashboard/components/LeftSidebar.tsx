@@ -87,12 +87,12 @@ const LeftSidebar = () => {
       href: '/admin/enrolment',
       active: pathname === '/admin/enrolment',
     },
-    {
-      icon: <FaBookOpen />,
-      label: 'Manage Course',
-      href: '/admin/manage-course',
-      active: pathname === '/admin/manage-course',
-    },
+    // {
+    //   icon: <FaBookOpen />,
+    //   label: 'Manage Course',
+    //   href: '/admin/manage-course',
+    //   active: pathname === '/admin/manage-course',
+    // },
     {
       icon: <FaUsers />,
       label: 'Manage Users',

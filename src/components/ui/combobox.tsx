@@ -19,8 +19,9 @@ import {
 interface ComboboxProps {
   items: Array<{ value: string; label: string }>;
   placeholder: string;
-  selectedValue: string | null; // Expect `value` instead of `{ id, label }`
+  selectedValue: string | null;
   onSelect: (item: { value: string; label: string } | null) => void;
+  onSearch?: (value: string) => void;
 }
 
 export function Combobox({
@@ -28,11 +29,21 @@ export function Combobox({
   placeholder,
   selectedValue,
   onSelect,
+  onSearch,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
+  const [searchValue, setSearchValue] = React.useState('');
 
   // Find the selected item by `value`.
   const selectedItem = items.find((item) => item.value === selectedValue);
+
+  const handleSearch = React.useCallback(
+    (value: string) => {
+      setSearchValue(value);
+      onSearch?.(value);
+    },
+    [onSearch]
+  );
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -47,10 +58,12 @@ export function Combobox({
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className=" p-0 w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
-        <Command>
+      <PopoverContent className="p-0 w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
+        <Command shouldFilter={false}>
           <CommandInput
             placeholder={`Search ${placeholder.toLowerCase()}...`}
+            value={searchValue}
+            onValueChange={handleSearch}
           />
           <CommandList>
             <CommandEmpty>No {placeholder.toLowerCase()} found.</CommandEmpty>
@@ -59,8 +72,9 @@ export function Combobox({
                 <CommandItem
                   key={item.value}
                   onSelect={() => {
-                    onSelect(item); // Pass the selected item
+                    onSelect(item);
                     setOpen(false);
+                    setSearchValue('');
                   }}
                 >
                   {item.label}

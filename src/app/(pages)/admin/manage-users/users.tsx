@@ -14,7 +14,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import {
   Form,
@@ -33,121 +32,133 @@ import {
 } from '@/components/ui/select';
 import { useForm } from 'react-hook-form';
 import { Badge } from '@/components/ui/badge';
-import { Eye, Pencil, Trash2, UserCog } from 'lucide-react';
-import apiClient from '@/services/apiClient';
+import { Pencil } from 'lucide-react';
+import { nextApiClient } from '@/services/apiClient';
 import { getUser_I } from '@/types/user.types';
-import { useRouter } from 'next/navigation';
-import CreateUser from '@/components/users/create-user';
+import { debounce } from 'lodash';
 
 const Users = () => {
   const [users, setUsers] = useState<getUser_I[]>([]);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<getUser_I | null>(null);
-
-  const router = useRouter();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+  const itemsPerPage = 50;
 
   const form = useForm<getUser_I>({
     defaultValues: {
-      name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       address: '',
-      mobile: undefined,
+      mobile: '',
       status: 'active',
-      role: '',
     },
   });
 
   const handleEdit = (user: getUser_I) => {
     setSelectedUser(user);
-    form.reset(user);
+    form.reset({
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      email: user.email || '',
+      address: user.address || '',
+      mobile: user.mobile || '',
+      status: user.status || 'active',
+    });
     setIsEditDialogOpen(true);
   };
 
-  const handleDelete = (user: getUser_I) => {
-    setSelectedUser(user);
-    setIsDeleteDialogOpen(true);
-  };
-
-  const confirmDelete = () => {
-    if (selectedUser) {
-      setUsers(users.filter((user) => user._id !== selectedUser._id));
-      setIsDeleteDialogOpen(false);
-      setSelectedUser(null);
-    }
-  };
-
-  const toggleAdminStatus = (userId: string) => {
-    setUsers(
-      users.map((user) =>
-        user._id === userId
-          ? { ...user, role: user.role === 'admin' ? 'user' : 'admin' }
-          : user
-      )
-    );
-  };
-
-  const toggleUserStatus = (userId: string) => {
-    setUsers(
-      users.map((user) =>
-        user._id === userId
-          ? {
-              ...user,
-              status: user.status === 'active' ? 'inactive' : 'active',
-            }
-          : user
-      )
-    );
-  };
-
-  const onSubmit = (data: getUser_I) => {
-    if (selectedUser) {
-      setUsers(
-        users.map((user) =>
-          user._id === selectedUser._id ? { ...data, id: user._id } : user
-        )
-      );
-      setIsEditDialogOpen(false);
-      setSelectedUser(null);
-    }
-  };
-
-  const getAllusers = async () => {
+  const fetchUsers = async (page: number, search: string = '') => {
     try {
-      const { data } = await apiClient.get(`/api/private/users`);
+      setLoading(true);
+      const { data } = await nextApiClient.get(`/api/private/users`, {
+        params: {
+          page,
+          limit: itemsPerPage,
+          search,
+        },
+      });
 
-      setUsers(data.data.users);
+      if (data.success) {
+        setUsers(data.data.users);
+        setTotalPages(Math.ceil(data.data.totalCount / itemsPerPage));
+      }
     } catch (error) {
-      console.log(error);
-
-      return;
+      console.error('Error fetching users:', error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  // Debounced search function
+  const debouncedSearch = React.useCallback(
+    debounce((query: string) => {
+      setCurrentPage(1); // Reset to first page on new search
+      fetchUsers(1, query);
+    }, 300),
+    []
+  );
 
   useEffect(() => {
-    getAllusers();
-  }, []);
+    fetchUsers(currentPage, searchQuery);
+  }, [currentPage]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    debouncedSearch(value);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const onSubmit = async (data: getUser_I) => {
+    if (selectedUser) {
+      try {
+        const response = await nextApiClient.patch(
+          `/api/private/users/${selectedUser._id}`,
+          {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            address: data.address,
+            mobile: data.mobile,
+            status: data.status,
+          }
+        );
+
+        if (response.data.success) {
+          // Update the users list with the updated user
+          setUsers(
+            users.map((user) =>
+              user._id === selectedUser._id ? response.data.data : user
+            )
+          );
+          setIsEditDialogOpen(false);
+          setSelectedUser(null);
+        }
+      } catch (error) {
+        console.error('Error updating user:', error);
+      }
+    }
+  };
 
   return (
     <div className="w-full bg-white p-4 rounded-lg">
-      <div className="w-full flex justify-end">
-        {/* TODO : Create User and EDIT USER Do in SAME COMPONENT */}
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <button className="px-4 py-2 bg-primary/90 hover:bg-primary text-white rounded-md text-sm transition-colors duration-300">
-              Create user
-            </button>
-          </DialogTrigger>
-          <DialogContent className="max-w-[600px] h-[70vh] mt-8  overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle></DialogTitle>
-            </DialogHeader>
-            {/* Form fields for creating a user */}
-            <CreateUser />
-          </DialogContent>
-        </Dialog>
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search by name or email"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
+
       <div className="overflow-x-auto">
         <Table className="min-w-full">
           <TableHeader>
@@ -157,48 +168,36 @@ const Users = () => {
               <TableHead className="w-[200px]">Address</TableHead>
               <TableHead className="w-[150px]">Phone</TableHead>
               <TableHead className="w-[100px]">Status</TableHead>
-              <TableHead className="w-[100px]">Admin</TableHead>
-              <TableHead className="w-[150px]">Actions</TableHead>
+              <TableHead className="w-[100px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users.map((user) => (
-              <TableRow key={user._id}>
-                <TableCell className="font-medium">{`${user.firstName || '-'} ${user.middleName || ''}  ${user.lastName || ''} `}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.address ?? '-'}</TableCell>
-                <TableCell>{user.mobile ?? '-'}</TableCell>
-                <TableCell>
-                  <Badge
-                    variant={user.status === 'active' ? 'default' : 'secondary'}
-                    className="cursor-pointer"
-                    onClick={() => toggleUserStatus(user._id)}
-                  >
-                    <span
-                      className={`${user.status === 'active' ? 'text-white' : ''}`}
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-6">
+                  <div className="flex items-center justify-center">
+                    <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-gray-900"></div>
+                    <span className="ml-2 text-gray-600">Loading...</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : users.length > 0 ? (
+              users.map((user) => (
+                <TableRow key={user._id}>
+                  <TableCell className="font-medium">{`${user.firstName || '-'} ${user.lastName || ''}`}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.address ?? '-'}</TableCell>
+                  <TableCell>{user.mobile ?? '-'}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        user.status === 'active' ? 'default' : 'secondary'
+                      }
                     >
                       {user.status}
-                    </span>
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant={user.role === 'admin' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => toggleAdminStatus(user._id)}
-                  >
-                    <UserCog
-                      className={`h-4 w-4 mr-1 ${user.role === 'admin' ? 'text-white' : ''}`}
-                    />
-                    {user.role === 'admin' ? (
-                      <span className="text-white">Admin</span>
-                    ) : (
-                      'User'
-                    )}
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-2">
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
                     <Button
                       variant="outline"
                       size="sm"
@@ -206,45 +205,86 @@ const Users = () => {
                     >
                       <Pencil className="h-4 w-4" />
                     </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() =>
-                        router.push(`/admin/manage-users/${user._id}`)
-                      }
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                    O
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => handleDelete(user)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={6}
+                  className="text-center py-6 text-gray-500"
+                >
+                  No users found.
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>
 
+      {/* Pagination */}
+      <div className="flex justify-between items-center mt-4">
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => handlePageChange(1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300 text-sm"
+          >
+            First
+          </button>
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300 text-sm"
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300 text-sm"
+          >
+            Next
+          </button>
+          <button
+            onClick={() => handlePageChange(totalPages)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-primary/90 text-white rounded-md hover:bg-primary disabled:bg-gray-300 text-sm"
+          >
+            Last
+          </button>
+        </div>
+        <span className="text-gray-600 text-sm">
+          Page {currentPage} of {totalPages}
+        </span>
+      </div>
+
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className=" max-w-[300px] sm:max-w-[400px] mt-10 h-[420px] overflow-y-auto">
+        <DialogContent className="max-w-[400px] mt-10">
           <DialogHeader>
             <DialogTitle>Edit User Details</DialogTitle>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="name"
+                name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -324,29 +364,6 @@ const Users = () => {
               </DialogFooter>
             </form>
           </Form>
-        </DialogContent>
-      </Dialog>
-
-      {/* Delete Dialog */}
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete User</DialogTitle>
-          </DialogHeader>
-          <div className="py-4">Are you sure you want to delete this user?</div>
-          <DialogFooter className="sm:justify-end">
-            <div className="flex gap-2 justify-end">
-              <Button
-                variant="outline"
-                onClick={() => setIsDeleteDialogOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button variant="destructive" onClick={confirmDelete}>
-                Delete
-              </Button>
-            </div>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
