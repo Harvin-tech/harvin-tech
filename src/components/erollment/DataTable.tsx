@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Table,
@@ -9,34 +9,78 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import {
-  EnrollmentHistoryItem,
-  fetchEnrollments,
-  setCurrentPage,
-  setSearchQuery,
-} from '@/redux/enrollementSlice';
+import { getEnrollDetail } from '@/services';
+import { debounce } from 'lodash';
+
+interface EnrollmentHistoryItem {
+  id: string;
+  name: string;
+  email: string;
+  courseTitle: string;
+  startDate: string;
+  endDate: string;
+}
 
 const DataTable: React.FC = () => {
-  const dispatch = useDispatch<any>();
-  const {
-    filteredItems,
-    loading,
-    error,
-    currentPage,
-    itemsPerPage,
-    searchQuery,
-  } = useSelector((state: any) => state.enrollment);
+  const [loading, setLoading] = useState(false);
+  const [enrollments, setEnrollments] = useState<EnrollmentHistoryItem[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const itemsPerPage = 50;
+
+  const fetchEnrollments = async (page: number, search: string = '') => {
+    try {
+      setLoading(true);
+      const response = await getEnrollDetail({
+        page,
+        limit: itemsPerPage,
+        search,
+      });
+
+      if (response.data?.data) {
+        setEnrollments(
+          response.data.data.map((item: any) => ({
+            id: item._id,
+            name: `${item.user.firstName || '-'} ${item.user.middleName || ''} ${item.user.lastName || ''}`,
+            email: item.user.email,
+            courseTitle: item.course.title,
+            startDate: new Date(item.enrolledAt).toLocaleDateString(),
+            endDate: item.endDate
+              ? new Date(item.endDate).toLocaleDateString()
+              : '-',
+          }))
+        );
+        setTotalPages(Math.ceil(response.data.total / itemsPerPage));
+      }
+    } catch (error) {
+      console.error('Error fetching enrollments:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Debounced search function
+  const debouncedSearch = React.useCallback(
+    debounce((query: string) => {
+      setCurrentPage(1); // Reset to first page on new search
+      fetchEnrollments(1, query);
+    }, 300),
+    []
+  );
 
   useEffect(() => {
-    dispatch(fetchEnrollments());
-  }, [dispatch]);
+    fetchEnrollments(currentPage, searchQuery);
+  }, [currentPage]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchQuery(e.target.value));
+    const value = e.target.value;
+    setSearchQuery(value);
+    debouncedSearch(value);
   };
 
   const handlePageChange = (page: number) => {
-    dispatch(setCurrentPage(page));
+    setCurrentPage(page);
   };
 
   const columns = [
@@ -47,17 +91,12 @@ const DataTable: React.FC = () => {
     // { key: 'endDate', label: 'End Date' },
   ];
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-
   return (
     <div className="w-full space-y-2 bg-white p-6 rounded-lg">
       <div className="mb-2 flex items-center space-x-2">
         <input
           type="text"
-          placeholder="Search by name or email"
+          placeholder="Search by name, email or course"
           value={searchQuery}
           onChange={handleSearchChange}
           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -66,7 +105,6 @@ const DataTable: React.FC = () => {
 
       <div className="rounded-md border h-[300px] overflow-y-scroll">
         <Table>
-          <TableCaption>A list of enrollment history.</TableCaption>
           <TableHeader>
             <TableRow>
               {columns.map((col) => (
@@ -92,8 +130,8 @@ const DataTable: React.FC = () => {
                   </div>
                 </TableCell>
               </TableRow>
-            ) : currentItems.length > 0 ? (
-              currentItems.map((item: any) => (
+            ) : enrollments.length > 0 ? (
+              enrollments.map((item) => (
                 <TableRow key={`${item.id}-${item.courseTitle}`}>
                   {columns.map((col) => (
                     <TableCell

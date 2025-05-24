@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dialog';
 import ProfilePage from '@/components/profile/Profile';
 import CreateUser from '../users/create-user';
+import { debounce } from 'lodash';
 
 interface User {
   _id: string;
@@ -36,41 +37,91 @@ const EnrolmentForm: React.FC = () => {
   );
   const [loading, setLoading] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [searchLoading, setSearchLoading] = useState<boolean>(false);
 
-  async function getUsers() {
-    try {
-      const response = await fetchUsers();
-      setUsers(
-        response.data.users.map((item: User) => ({
-          value: item._id,
-          label: item.email,
-        }))
-      );
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  }
-  async function fetchCourses() {
-    setLoading(true);
-    try {
-      const response = await getCourses();
+  // Debounced search functions
+  const debouncedUserSearch = React.useCallback(
+    debounce(async (search: string) => {
+      try {
+        setSearchLoading(true);
+        const response = await fetchUsers({ search });
+        if (response.data?.users) {
+          setUsers(
+            response.data.users.map((item: User) => ({
+              value: item._id,
+              label: item.email,
+            }))
+          );
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        toast.error('Failed to fetch users');
+      } finally {
+        setSearchLoading(false);
+      }
+    }, 300),
+    []
+  );
 
-      setCourses(
-        response.data.courses.map((item: Course) => ({
-          value: item._id,
-          label: item.title,
-        }))
-      );
-    } catch (error) {
-      console.error('Error fetching courses:', error);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const debouncedCourseSearch = React.useCallback(
+    debounce(async (search: string) => {
+      try {
+        setSearchLoading(true);
+        const response = await getCourses({ search });
+        if (response.data?.courses) {
+          setCourses(
+            response.data.courses.map((item: Course) => ({
+              value: item._id,
+              label: item.title,
+            }))
+          );
+        }
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+        toast.error('Failed to fetch courses');
+      } finally {
+        setSearchLoading(false);
+      }
+    }, 300),
+    []
+  );
 
+  // Initial data fetch
   useEffect(() => {
-    getUsers();
-    fetchCourses();
+    async function getInitialData() {
+      try {
+        setLoading(true);
+        const [usersResponse, coursesResponse] = await Promise.all([
+          fetchUsers(),
+          getCourses(),
+        ]);
+
+        if (usersResponse.data?.users) {
+          setUsers(
+            usersResponse.data.users.map((item: User) => ({
+              value: item._id,
+              label: item.email,
+            }))
+          );
+        }
+
+        if (coursesResponse.data?.courses) {
+          setCourses(
+            coursesResponse.data.courses.map((item: Course) => ({
+              value: item._id,
+              label: item.title,
+            }))
+          );
+        }
+      } catch (error) {
+        console.error('Error fetching initial data:', error);
+        toast.error('Failed to fetch initial data');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getInitialData();
   }, []);
 
   const handleEnrollSubmit = async () => {
@@ -116,6 +167,7 @@ const EnrolmentForm: React.FC = () => {
             placeholder="Search for a user..."
             selectedValue={selectedUser}
             onSelect={(item) => setSelectedUser(item?.value || null)}
+            onSearch={debouncedUserSearch}
           />
         </div>
 
@@ -131,6 +183,7 @@ const EnrolmentForm: React.FC = () => {
             placeholder="Select a course..."
             selectedValue={selectedCourse}
             onSelect={(item) => setSelectedCourse(item?.value || null)}
+            onSearch={debouncedCourseSearch}
           />
         </div>
 
@@ -152,25 +205,7 @@ const EnrolmentForm: React.FC = () => {
               <DialogHeader>
                 <DialogTitle></DialogTitle>
               </DialogHeader>
-              {/* Form fields for creating a user */}
               <CreateUser />
-              {/* <DialogFooter>
-                <button
-                  onClick={() => setIsDialogOpen(false)}
-                  className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-700 hover:bg-gray-300 mt-2 md:mt-0"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    // toast.success("User created successfully!");
-                    setIsDialogOpen(false);
-                  }}
-                  className="px-4 py-2 bg-primary/90 hover:bg-primary text-white rounded-md text-sm"
-                >
-                  Create
-                </button>
-              </DialogFooter> */}
             </DialogContent>
           </Dialog>
         </div>
@@ -182,4 +217,3 @@ const EnrolmentForm: React.FC = () => {
 };
 
 export default EnrolmentForm;
-

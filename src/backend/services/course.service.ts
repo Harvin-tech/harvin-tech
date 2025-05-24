@@ -520,7 +520,7 @@ export class CourseService {
       level,
     } = query;
 
-    const skip = (page - 1) * limit;
+    const skip = (Number(page) - 1) * Number(limit);
 
     // Build the filter object
     const filter: any = {};
@@ -580,7 +580,7 @@ export class CourseService {
           // Fetch the paginated results
           data: [
             { $skip: skip }, // Skip documents for the current page
-            { $limit: limit }, // Limit the number of documents per page
+            { $limit: Number(limit) }, // Limit the number of documents per page
             {
               $project: {
                 _id: 0, // Exclude enrollment document ID
@@ -590,7 +590,9 @@ export class CourseService {
                 enrolledAt: 1,
                 user: {
                   id: '$userDetails._id',
-                  name: '$userDetails.firstName',
+                  firstName: '$userDetails.firstName',
+                  secondName: '$userDetails.secondName',
+                  lastName: '$userDetails.lastName',
                   email: '$userDetails.email',
                 },
                 course: {

@@ -34,7 +34,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { Badge } from '@/components/ui/badge';
 import { Eye, Pencil, Trash2, UserCog } from 'lucide-react';
-import apiClient from '@/services/apiClient';
+import apiClient, { nextApiClient } from '@/services/apiClient';
 import { getUser_I } from '@/types/user.types';
 import { useRouter } from 'next/navigation';
 import CreateUser from '@/components/users/create-user';
@@ -115,7 +115,7 @@ const Users = () => {
 
   const getAllusers = async () => {
     try {
-      const { data } = await apiClient.get(`/api/private/users`);
+      const { data } = await nextApiClient.get(`/api/private/users`);
 
       setUsers(data.data.users);
     } catch (error) {

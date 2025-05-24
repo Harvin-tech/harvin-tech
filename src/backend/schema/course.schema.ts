@@ -61,8 +61,18 @@ export const getCourseSchema = z.object({
       minPrice: z.number().optional(),
       maxPrice: z.number().optional(),
       level: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
-      page: z.number().int().min(1).default(1),
-      limit: z.number().int().min(1).default(10),
+      page: z
+        .string()
+        .transform(Number)
+        .pipe(z.number().int().min(1))
+        .optional()
+        .default('1'),
+      limit: z
+        .string()
+        .transform(Number)
+        .pipe(z.number().int().min(1))
+        .optional()
+        .default('10'),
     })
     .strict(),
 });
