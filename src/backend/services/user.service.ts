@@ -72,6 +72,7 @@ export const UserService = {
       throw new Error('User not found');
     }
 
+    console.log('dadada', data);
     // Find and update the user
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,

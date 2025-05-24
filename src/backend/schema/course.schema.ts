@@ -53,28 +53,24 @@ export const addCourseSchema = z.object({
 });
 
 export const getCourseSchema = z.object({
-  query: z
-    .object({
-      search: z.string().optional(),
-      status: statusEnum.optional(),
-      category: z.string().optional(),
-      minPrice: z.number().optional(),
-      maxPrice: z.number().optional(),
-      level: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
-      page: z
-        .string()
-        .transform(Number)
-        .pipe(z.number().int().min(1))
-        .optional()
-        .default('1'),
-      limit: z
-        .string()
-        .transform(Number)
-        .pipe(z.number().int().min(1))
-        .optional()
-        .default('10'),
-    })
-    .strict(),
+  search: z.string().optional(),
+  status: statusEnum.optional(),
+  category: z.string().optional(),
+  minPrice: z.number().optional(),
+  maxPrice: z.number().optional(),
+  level: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
+  page: z
+    .string()
+    .transform(Number)
+    .pipe(z.number().int().min(1))
+    .optional()
+    .default('1'),
+  limit: z
+    .string()
+    .transform(Number)
+    .pipe(z.number().int().min(1))
+    .optional()
+    .default('10'),
 });
 
 export const getCourseByIDSchema = z.object({
