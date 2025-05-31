@@ -133,7 +133,7 @@ const EnrolmentForm: React.FC = () => {
     try {
       setLoading(true);
       const response = await enrollCourse(selectedCourse, selectedUser);
-      if (response.status === 200) {
+      if (response.success) {
         toast.success('Enrollment successful!');
         setSelectedUser(null);
         setSelectedCourse(null);
