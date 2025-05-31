@@ -125,6 +125,16 @@ export const enrollCourseSchema = z.object({
     .strict(),
 });
 
+export const updateEnrolledSchema = z.object({
+  //  params: z.object({
+  //   enrolledId: z.string().regex(objectIdRegex),
+  // }),
+
+  body: z.object({
+    status: statusEnum.optional(),
+  }),
+});
+
 export const getEnrolledCourseSchema = getCourseSchema; // Reuse same schema
 
 export const getEnrolledCourseByUserSchema = z.object({

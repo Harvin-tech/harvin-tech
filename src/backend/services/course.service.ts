@@ -583,7 +583,7 @@ export class CourseService {
             { $limit: Number(limit) }, // Limit the number of documents per page
             {
               $project: {
-                _id: 0, // Exclude enrollment document ID
+                _id: 1, // Exclude enrollment document ID
                 userId: 1,
                 courseId: 1,
                 overAllProgress: 1,
@@ -602,6 +602,7 @@ export class CourseService {
                   price: '$courseDetails.price',
                   category: '$courseDetails.category',
                   level: '$courseDetails.level',
+                  status: '$courseDetails.status',
                 },
               },
             },
