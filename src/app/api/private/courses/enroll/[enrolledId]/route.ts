@@ -13,20 +13,20 @@ export async function PATCH(
     await dbConnect();
 
     const body = await request.json();
-    // const validation = updateEnrolledSchema.safeParse({ params,body });
+    const validation = updateEnrolledSchema.safeParse({ params,body });
 
-    // if (!validation.success) {
-    //   return sendResponse(
-    //     'Validation error',
-    //     false,
-    //     validation.error.format(),
-    //     400
-    //   );
-    // }
+    if (!validation.success) {
+      return sendResponse(
+        'Validation error',
+        false,
+        validation.error.format(),
+        400
+      );
+    }
 
     const enrollment = await EnrolledService.updateEnrollementById(
-      params.enrolledId,
-      body
+      validation.data.params.enrolledId,
+      validation.data.body
     );
     return sendResponse('Course enrolled successfully', true, enrollment);
   } catch (error: any) {

@@ -81,7 +81,7 @@ const DataTable: React.FC = () => {
             endDate: item.endDate
               ? new Date(item.endDate).toLocaleDateString()
               : '-',
-            status: item.course.status,
+            status: item.status,
           }))
         );
         setTotalPages(Math.ceil(response.data.total / itemsPerPage));
