@@ -126,7 +126,7 @@ export const enrollCourseSchema = z.object({
 });
 
 export const updateEnrolledSchema = z.object({
-   params: z.object({
+  params: z.object({
     enrolledId: z.string().regex(objectIdRegex),
   }),
 

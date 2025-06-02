@@ -588,7 +588,7 @@ export class CourseService {
                 courseId: 1,
                 overAllProgress: 1,
                 enrolledAt: 1,
-                status:1,
+                status: 1,
                 user: {
                   id: '$userDetails._id',
                   firstName: '$userDetails.firstName',

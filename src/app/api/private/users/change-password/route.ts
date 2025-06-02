@@ -6,6 +6,7 @@ import { sendResponse } from '@/backend/utils/response';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
+  // console.log('post',request.json())
   try {
     await dbConnect();
 

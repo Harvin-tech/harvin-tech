@@ -22,6 +22,7 @@ import {
 } from '../ui/select';
 import useProfile from '@/hooks/useProfile';
 import { nextApiClient } from '@/services/apiClient';
+import { toast } from 'sonner';
 
 interface EnrollmentHistoryItem {
   id: string;
@@ -43,22 +44,6 @@ const DataTable: React.FC = () => {
 
   const [status, setStatus] = useState<string>('');
   const [userId, setUserId] = useState<any>();
-
-  useEffect(() => {
-    const toggleEnrollement = async () => {
-      console.log(status, 'status');
-      const response = await nextApiClient.patch(
-        `/api/private/courses/enroll/${userId}`,
-        {
-          status: status === 'active' ? 1 : 0,
-        }
-      );
-
-      console.log(response, 'response');
-    };
-
-    toggleEnrollement();
-  }, [status]);
 
   const fetchEnrollments = async (page: number, search: string = '') => {
     try {
@@ -104,7 +89,25 @@ const DataTable: React.FC = () => {
 
   useEffect(() => {
     fetchEnrollments(currentPage, searchQuery);
-  }, [currentPage]);
+  }, [status, currentPage]);
+
+  const handleToggleStatus = async (userId: string, currentStatus: string) => {
+    const newStatus = currentStatus === 'active' ? 'active' : 'inactive';
+
+    try {
+      const response = await nextApiClient.patch(
+        `/api/private/courses/enroll/${userId}`,
+        {
+          status: newStatus === 'active' ? 1 : 0,
+        }
+      );
+
+      toast.success('User Course Enrollement Activity Updated');
+      fetchEnrollments(currentPage, searchQuery); // Refresh after toggle
+    } catch (err) {
+      console.error('Something went wrong', err);
+    }
+  };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -179,11 +182,12 @@ const DataTable: React.FC = () => {
                         <Select
                           defaultValue={`${item.status === 1 ? 'active' : 'inactive'}`}
                           onValueChange={(status) => {
-                            setStatus(status);
-                            setUserId(item.id);
+                            handleToggleStatus(item.id, status);
                           }}
                         >
-                          <SelectTrigger className="w-[90px]">
+                          <SelectTrigger
+                            className={`w-[90px] ${item.status === 1 ? 'text-green-700' : 'text-red-700'}`}
+                          >
                             <SelectValue placeholder="Status" />
                           </SelectTrigger>
                           <SelectContent>

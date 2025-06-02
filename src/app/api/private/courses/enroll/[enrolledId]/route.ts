@@ -13,7 +13,7 @@ export async function PATCH(
     await dbConnect();
 
     const body = await request.json();
-    const validation = updateEnrolledSchema.safeParse({ params,body });
+    const validation = updateEnrolledSchema.safeParse({ params, body });
 
     if (!validation.success) {
       return sendResponse(
