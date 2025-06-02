@@ -36,6 +36,7 @@ import { Pencil } from 'lucide-react';
 import { nextApiClient } from '@/services/apiClient';
 import { getUser_I } from '@/types/user.types';
 import { debounce } from 'lodash';
+import UpdatePassword from './UpdatePassword';
 
 const Users = () => {
   const [users, setUsers] = useState<getUser_I[]>([]);
@@ -45,6 +46,8 @@ const Users = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
+  const [updatePassword, setUpdatePassword] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | undefined>('');
   const itemsPerPage = 50;
 
   const form = useForm<getUser_I>({
@@ -168,7 +171,7 @@ const Users = () => {
               <TableHead className="w-[200px]">Address</TableHead>
               <TableHead className="w-[150px]">Phone</TableHead>
               <TableHead className="w-[100px]">Status</TableHead>
-              <TableHead className="w-[100px]">Actions</TableHead>
+              <TableHead className="w-[100px] text-center">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -197,13 +200,23 @@ const Users = () => {
                       {user.status}
                     </Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="flex gap-2">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handleEdit(user)}
                     >
                       <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setUpdatePassword(true);
+                        setUserEmail(user?.email);
+                      }}
+                    >
+                      Update Password
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -366,6 +379,23 @@ const Users = () => {
           </Form>
         </DialogContent>
       </Dialog>
+
+      {updatePassword && (
+        <Dialog open={updatePassword} onOpenChange={setUpdatePassword}>
+          <DialogContent className="max-w-[400px] mt-10 gap-0 rounded-md">
+            <DialogHeader>
+              <DialogTitle className="text-[20px] text-left">
+                Update User Password
+              </DialogTitle>
+            </DialogHeader>
+            <UpdatePassword
+              userEmail={userEmail}
+              updatePassword={updatePassword}
+              setUpdatePassword={setUpdatePassword}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };

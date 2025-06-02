@@ -11,6 +11,18 @@ import {
 } from '@/components/ui/table';
 import { getEnrollDetail } from '@/services';
 import { debounce } from 'lodash';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
+import useProfile from '@/hooks/useProfile';
+import { nextApiClient } from '@/services/apiClient';
+import { toast } from 'sonner';
 
 interface EnrollmentHistoryItem {
   id: string;
@@ -19,6 +31,7 @@ interface EnrollmentHistoryItem {
   courseTitle: string;
   startDate: string;
   endDate: string;
+  status: number;
 }
 
 const DataTable: React.FC = () => {
@@ -28,6 +41,9 @@ const DataTable: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const itemsPerPage = 50;
+
+  const [status, setStatus] = useState<string>('');
+  const [userId, setUserId] = useState<any>();
 
   const fetchEnrollments = async (page: number, search: string = '') => {
     try {
@@ -39,9 +55,10 @@ const DataTable: React.FC = () => {
       });
 
       if (response.data?.data) {
+        console.log(response.data.data[0]._id);
         setEnrollments(
           response.data.data.map((item: any) => ({
-            id: item._id,
+            id: item?._id,
             name: `${item.user.firstName || '-'} ${item.user.middleName || ''} ${item.user.lastName || ''}`,
             email: item.user.email,
             courseTitle: item.course.title,
@@ -49,6 +66,7 @@ const DataTable: React.FC = () => {
             endDate: item.endDate
               ? new Date(item.endDate).toLocaleDateString()
               : '-',
+            status: item.status,
           }))
         );
         setTotalPages(Math.ceil(response.data.total / itemsPerPage));
@@ -71,7 +89,25 @@ const DataTable: React.FC = () => {
 
   useEffect(() => {
     fetchEnrollments(currentPage, searchQuery);
-  }, [currentPage]);
+  }, [status, currentPage]);
+
+  const handleToggleStatus = async (userId: string, currentStatus: string) => {
+    const newStatus = currentStatus === 'active' ? 'active' : 'inactive';
+
+    try {
+      const response = await nextApiClient.patch(
+        `/api/private/courses/enroll/${userId}`,
+        {
+          status: newStatus === 'active' ? 1 : 0,
+        }
+      );
+
+      toast.success('User Course Enrollement Activity Updated');
+      fetchEnrollments(currentPage, searchQuery); // Refresh after toggle
+    } catch (err) {
+      console.error('Something went wrong', err);
+    }
+  };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -83,11 +119,14 @@ const DataTable: React.FC = () => {
     setCurrentPage(page);
   };
 
+  // console.log(enrollments,'enrollements')
+
   const columns = [
     { key: 'name', label: 'Name' },
     { key: 'email', label: 'Email' },
     { key: 'courseTitle', label: 'Course Title' },
     { key: 'startDate', label: 'Start Date' },
+    { key: 'action', label: 'Action' },
     // { key: 'endDate', label: 'End Date' },
   ];
 
@@ -139,6 +178,26 @@ const DataTable: React.FC = () => {
                       className="px-4 py-2 text-sm text-gray-700"
                     >
                       {item[col.key as keyof EnrollmentHistoryItem]}
+                      {col.key === 'action' && (
+                        <Select
+                          defaultValue={`${item.status === 1 ? 'active' : 'inactive'}`}
+                          onValueChange={(status) => {
+                            handleToggleStatus(item.id, status);
+                          }}
+                        >
+                          <SelectTrigger
+                            className={`w-[90px] ${item.status === 1 ? 'text-green-700' : 'text-red-700'}`}
+                          >
+                            <SelectValue placeholder="Status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectItem value="active">Active</SelectItem>
+                              <SelectItem value="inactive">Inactive</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>

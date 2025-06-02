@@ -104,8 +104,11 @@ export const UserService = {
       user.password
     );
 
-    if (!isMatch || isSamePassword) {
-      throw new Error('password does not match');
+    if (!isMatch) {
+      throw new Error('old password is not correct');
+    }
+    if (isSamePassword) {
+      throw new Error('New password should be different with old password');
     }
 
     // Hash the new password

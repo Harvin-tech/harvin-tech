@@ -12,8 +12,8 @@ export default function CertificateGenerator(): JSX.Element {
     const user = localStorage.getItem('user');
     if (user) {
       const parsedUser = JSON.parse(user);
-      console.log(parsedUser,'parsedUser')
-    
+      console.log(parsedUser, 'parsedUser');
+
       setName(parsedUser?.firstName);
     }
   }, []);
@@ -36,10 +36,7 @@ export default function CertificateGenerator(): JSX.Element {
   }, [ref]);
 
   return (
-    <div
-      className="w-full flex flex-col items-center  p-4 max-w-4xl mx-auto"
-    
-    >
+    <div className="w-full flex flex-col items-center  p-4 max-w-4xl mx-auto">
       <div className="relative">
         <div className="absolute top-[47%] md:top-[48%] left-[35%] text-muted-foreground italic font-mono z-10 text-lg md:text-xl">
           {name}
