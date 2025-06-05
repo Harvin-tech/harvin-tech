@@ -19,7 +19,10 @@ async function dbConnect(): Promise<void> {
       console.log('MONGO_URI is not defined');
       throw new Error('MONGO_URI is not defined');
     }
-    const db = await mongoose.connect(mongoUri);
+    const db = await mongoose.connect(mongoUri, {
+      serverSelectionTimeoutMS: 30000,
+      connectTimeoutMS: 30000,
+    });
     connection.isConnected = db.connections[0].readyState;
     console.log('Mongodb connected successfully');
   } catch (error) {
