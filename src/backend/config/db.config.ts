@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+mongoose.set('bufferCommands', false); // Disable Mongoose buffering
+
 type ConnectionObject = {
   isConnected?: number;
 };
