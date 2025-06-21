@@ -18,6 +18,7 @@ import { authService } from '@/services';
 import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/redux/authSlice';
+import { GrCertificate } from 'react-icons/gr';
 
 const LeftSidebar = () => {
   const pathname = usePathname();
@@ -56,12 +57,18 @@ const LeftSidebar = () => {
     },
     {
       icon: <FaBookOpen />,
+      label: 'Python',
+      href: '/dashboard/python',
+      active: pathname === '/dashboard/python',
+    },
+    {
+      icon: <FaBookOpen />,
       label: 'Nanoscience',
       href: '/dashboard/nanoscience',
       active: pathname === '/dashboard/nanoscience',
     },
     {
-      icon: <FaBookOpen />,
+      icon: <GrCertificate />,
       label: 'Certificate',
       href: '/dashboard/certificates',
       active: pathname === '/dashboard/certificates',
