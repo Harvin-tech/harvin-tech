@@ -5,83 +5,83 @@ const python = {
     {
       pdf_name: 'PDF 1',
       pdf_url:
-        'https://drive.google.com/file/d/1p527iCZA1-wf6ChglYydBqn0cKqSvDOc/view?usp=drive_link',
+        'https://docs.google.com/presentation/d/13Mem5AJ-DR6K1cnnu7J6O8Zp6I0h1s08/edit?usp=sharing&ouid=104042567202356532187&rtpof=true&sd=true',
     },
-    {
-      pdf_name: 'PDF 2',
-      pdf_url:
-        'https://drive.google.com/file/d/1p527iCZA1-wf6ChglYydBqn0cKqSvDOc/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 3',
-      pdf_url:
-        'https://drive.google.com/file/d/1J8Fx3r_sM0xSz46szgzoaUTtC5zZVSyn/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 4',
-      pdf_url:
-        'https://drive.google.com/file/d/10w3_91kIqWWDkk35KEfA-TG4wL6_2Ccd/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 5',
-      pdf_url:
-        'https://drive.google.com/file/d/13JiUvjD89BIQrKu_ZNlkGOFJDQvfa-Mv/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 6',
-      pdf_url:
-        'https://drive.google.com/file/d/1BJXubnaaLT81TkduU7sS4smuo88w3MQf/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 7',
-      pdf_url:
-        'https://drive.google.com/file/d/1NlCV7rm-XgG3DatdY10tFWyHKm0B02x7/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 8',
-      pdf_url:
-        'https://drive.google.com/file/d/1xfsAMYMYxMeq7Pzvn0YbiXBxCkOtQ_5z/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 9',
-      pdf_url:
-        'https://drive.google.com/file/d/1L2m5qpdNMOK9HQQv5-lQnNnFfbBUwzQz/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 10',
-      pdf_url:
-        'https://drive.google.com/file/d/1SRAm8wp7Fqsr1wBQrr9sJWlLaK-WkI-x/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 11',
-      pdf_url:
-        'https://drive.google.com/file/d/1mvBf1u5ju8B8l0ijH06W28uUG6HbKNnx/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 12',
-      pdf_url:
-        'https://drive.google.com/file/d/1jD2ToF7uElZU2EXUdunYvBYsTMc2gWUy/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 13',
-      pdf_url:
-        'https://drive.google.com/file/d/1WuzvYXcCdrli3iYHVSE68us-5J8bd2Zr/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 14',
-      pdf_url:
-        'https://drive.google.com/file/d/1HgGK8UiKlRlI7JP0AABVPrbGHrMleEvt/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 15',
-      pdf_url:
-        'https://drive.google.com/file/d/1WEqQzCD_tZKNzimDkpboTI164U1iwyqn/view?usp=drive_link',
-    },
-    {
-      pdf_name: 'PDF 16',
-      pdf_url:
-        'https://drive.google.com/file/d/1jJSThpb3KO_WpUBRo2DOu7NCXXZ4qERg/view?usp=drive_link',
-    },
+    // {
+    //   pdf_name: 'PDF 2',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1p527iCZA1-wf6ChglYydBqn0cKqSvDOc/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 3',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1J8Fx3r_sM0xSz46szgzoaUTtC5zZVSyn/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 4',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/10w3_91kIqWWDkk35KEfA-TG4wL6_2Ccd/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 5',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/13JiUvjD89BIQrKu_ZNlkGOFJDQvfa-Mv/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 6',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1BJXubnaaLT81TkduU7sS4smuo88w3MQf/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 7',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1NlCV7rm-XgG3DatdY10tFWyHKm0B02x7/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 8',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1xfsAMYMYxMeq7Pzvn0YbiXBxCkOtQ_5z/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 9',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1L2m5qpdNMOK9HQQv5-lQnNnFfbBUwzQz/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 10',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1SRAm8wp7Fqsr1wBQrr9sJWlLaK-WkI-x/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 11',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1mvBf1u5ju8B8l0ijH06W28uUG6HbKNnx/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 12',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1jD2ToF7uElZU2EXUdunYvBYsTMc2gWUy/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 13',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1WuzvYXcCdrli3iYHVSE68us-5J8bd2Zr/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 14',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1HgGK8UiKlRlI7JP0AABVPrbGHrMleEvt/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 15',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1WEqQzCD_tZKNzimDkpboTI164U1iwyqn/view?usp=drive_link',
+    // },
+    // {
+    //   pdf_name: 'PDF 16',
+    //   pdf_url:
+    //     'https://drive.google.com/file/d/1jJSThpb3KO_WpUBRo2DOu7NCXXZ4qERg/view?usp=drive_link',
+    // },
   ],
   videos: [
     {
@@ -116,9 +116,8 @@ const python = {
     },
     {
       video_name: 'Python Class 7',
-      video_url:
-        'https://drive.google.com/file/d/1PnPOcMzk4Kaz5CrY5ZTCJv3D79i1XtCL/view?usp=drive_link',
-    },//to update
+      video_url: '',
+    }, //to update
     {
       video_name: 'Python Class 8',
       video_url:

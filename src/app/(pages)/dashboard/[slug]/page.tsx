@@ -3,9 +3,9 @@ import { nanoScienceCourses } from '@/constants/courses/nano-sceience';
 import { CourseViewer } from './CourseViewer';
 import { python } from '@/constants/courses/python';
 
-const courses:any = {
+const courses: any = {
   nanoscience: nanoScienceCourses,
-  python:python
+  python: python,
 };
 
 export default function CoursePage({ params }: { params: { slug: string } }) {

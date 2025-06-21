@@ -34,7 +34,9 @@ export const CourseViewer: React.FC<CourseViewerProps> = ({
 
   const convertToEmbedURL = (url: string): string => {
     const fileIdMatch = url.match(/\/d\/([^/]+)/);
-    return fileIdMatch ? `https://drive.google.com/file/d/${fileIdMatch[1]}/preview` : url;
+    return fileIdMatch
+      ? `https://drive.google.com/file/d/${fileIdMatch[1]}/preview`
+      : url;
   };
 
   return (
@@ -84,20 +86,26 @@ export const CourseViewer: React.FC<CourseViewerProps> = ({
                   </h3>
                   <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
                     {videos.map((video, index) => (
-                      <div
-                        key={index}
-                        onClick={() => setActiveVideo(video.video_url)}
-                        className={`p-3 rounded-md cursor-pointer flex items-center gap-3 hover:bg-muted transition-colors ${
-                          activeVideo === video.video_url ? 'bg-muted' : ''
-                        }`}
-                      >
-                        <div className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
-                          {index + 1}
-                        </div>
-                        <div>
-                          <h4 className="font-medium">{video.video_name}</h4>
-                        </div>
-                      </div>
+                      <>
+                        {video?.video_url && (
+                          <div
+                            key={index}
+                            onClick={() => setActiveVideo(video.video_url)}
+                            className={`p-3 rounded-md cursor-pointer flex items-center gap-3 hover:bg-muted transition-colors ${
+                              activeVideo === video.video_url ? 'bg-muted' : ''
+                            }`}
+                          >
+                            <div className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                              {index + 1}
+                            </div>
+                            <div>
+                              <h4 className="font-medium">
+                                {video.video_name}
+                              </h4>
+                            </div>
+                          </div>
+                        )}
+                      </>
                     ))}
                   </div>
                 </TabsContent>
