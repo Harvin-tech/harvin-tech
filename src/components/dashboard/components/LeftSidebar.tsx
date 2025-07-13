@@ -19,6 +19,8 @@ import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/redux/authSlice';
 import { GrCertificate } from 'react-icons/gr';
+import useProfile from '@/hooks/useProfile';
+import { courseMap } from '@/constants/courses/coursesMap';
 
 const LeftSidebar = () => {
   const pathname = usePathname();
@@ -27,6 +29,7 @@ const LeftSidebar = () => {
   const router = useRouter();
   const { user: currentUser } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
+  const { userCourseId } = useProfile();
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -42,6 +45,7 @@ const LeftSidebar = () => {
     }
   };
 
+  // 1. Build student sidebar
   const studentSidebarItems = [
     {
       icon: <FaChartLine />,
@@ -55,25 +59,35 @@ const LeftSidebar = () => {
       href: '/dashboard/profile',
       active: pathname === '/dashboard/profile',
     },
-    {
-      icon: <FaBookOpen />,
-      label: 'Python',
-      href: '/dashboard/python',
-      active: pathname === '/dashboard/python',
-    },
-    {
-      icon: <FaBookOpen />,
-      label: 'Nanoscience',
-      href: '/dashboard/nanoscience',
-      active: pathname === '/dashboard/nanoscience',
-    },
-    {
-      icon: <GrCertificate />,
-      label: 'Certificate',
-      href: '/dashboard/certificates',
-      active: pathname === '/dashboard/certificates',
-    },
+    // {
+    //   icon: <FaBookOpen />,
+    //   label: 'Python',
+    //   href: '/dashboard/python',
+    //   active: pathname === '/dashboard/python',
+    // },
   ];
+
+  const accessedCourses = (userCourseId || [])
+    .map((courseId) => courseMap[courseId])
+    .filter(Boolean); // removes undefined values
+
+  // Dynamically insert each course into the sidebar (after Python at index 3)
+  accessedCourses.forEach((courseName, idx) => {
+    studentSidebarItems.splice(3 + idx, 0, {
+      icon: <FaBookOpen />,
+      label: courseName.charAt(0).toUpperCase() + courseName.slice(1), // Capitalize label
+      href: `/dashboard/${courseName.toLowerCase()}`,
+      active: pathname === `/dashboard/${courseName.toLowerCase()}`,
+    });
+  });
+
+  // Always add Certificate at the end
+  studentSidebarItems.push({
+    icon: <GrCertificate />,
+    label: 'Certificate',
+    href: '/dashboard/certificates',
+    active: pathname === '/dashboard/certificates',
+  });
 
   const adminSidebarItems = [
     {

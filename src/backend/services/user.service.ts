@@ -1,4 +1,4 @@
-import { User as UserModel } from '../models';
+import { Enrollment, User as UserModel } from '../models';
 import { BAD_REQUEST } from '../types/errors.type';
 import {
   changePassword_I,
@@ -45,6 +45,7 @@ export const UserService = {
   },
 
   getUserById: async (userId: string) => {
+    console.log(userId, 'userId');
     // Ensure the userId is provided
     if (!userId) {
       throw new Error('User ID is required');
@@ -52,12 +53,20 @@ export const UserService = {
 
     // Find the user by ID
     const user = await UserModel.findById(userId).select('-password');
+    console.log(user, 'user');
+    // const courseDetails = await Enrollment.findById(userId);
+    const userCourseId = await Enrollment.find({ userId }).select('courseId');
+
+    console.log(userCourseId, 'userCourseId');
 
     if (!user) {
       throw new Error('User not found');
     }
 
-    return user;
+    return {
+      ...user,
+      userCourseId: userCourseId || null,
+    };
   },
 
   updateUserById: async (userId: string, data: updateUser_I) => {
