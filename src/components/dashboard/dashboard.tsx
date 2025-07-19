@@ -69,8 +69,13 @@ const Dashboard = () => {
     );
   }
 
-  const handleCourseClick = (course: any) => {
-    router.push(`/courses?course_id=${course.courseId}`);
+  const handleCourseClick = (courseVideo: any) => {
+    // console.log(courseVideo , 'courseVideo');
+    if (courseVideo?.title?.split(' ')[0].includes('Nanoscience')) {
+      router.push(`/dashboard/nanoscience`);
+    } else {
+      router.push(`/dashboard/python`);
+    }
   };
 
   return (

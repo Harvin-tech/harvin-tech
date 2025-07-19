@@ -15,22 +15,30 @@ export async function GET(request: NextRequest) {
       return sendResponse('Valid userId is required', false, null, 400);
     }
 
-    const enrollment:any = await Enrollment.findOne({ userId })
+    const enrollment: any = await Enrollment.findOne({ userId })
       .sort({ createdAt: -1 })
       .lean();
 
     if (!enrollment) {
-      return sendResponse('No enrollment found for this userId', false, null, 404);
+      return sendResponse(
+        'No enrollment found for this userId',
+        false,
+        null,
+        404
+      );
     }
 
     const enrolledDate = new Date(enrollment.createdAt); // or enrolledAt
     const currentDate = new Date();
 
-    const diffInDays = (currentDate.getTime() - enrolledDate.getTime()) / (1000 * 3600 * 24);
+    const diffInDays =
+      (currentDate.getTime() - enrolledDate.getTime()) / (1000 * 3600 * 24);
     const eligible = diffInDays >= 7;
 
     return sendResponse(
-      eligible ? '7 days have passed since enrollment' : '7 days have not passed yet',
+      eligible
+        ? '7 days have passed since enrollment'
+        : '7 days have not passed yet',
       true,
       {
         enrolledDate,
@@ -42,4 +50,3 @@ export async function GET(request: NextRequest) {
     return sendResponse(error.message, false, null, 500);
   }
 }
-
