@@ -45,6 +45,7 @@ const Header = () => {
     ...(role
       ? [{ title: 'Admin', path: '/dashboard', requiresAuth: true }]
       : []),
+      {title: 'ExamPanel', path: 'https://exampanel-final-1.onrender.com/' },
   ];
 
   const handleLogout = async () => {
