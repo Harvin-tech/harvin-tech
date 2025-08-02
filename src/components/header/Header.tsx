@@ -45,7 +45,7 @@ const Header = () => {
     ...(role
       ? [{ title: 'Admin', path: '/dashboard', requiresAuth: true }]
       : []),
-      {title: 'ExamPanel', path: 'https://exampanel-final-1.onrender.com/' },
+      {title: 'ExamPanel', path: 'https://exampanel-final-1.onrender.com/' , target: '_blank'},
   ];
 
   const handleLogout = async () => {
@@ -183,6 +183,7 @@ const Header = () => {
                 <Link
                   href={item.path}
                   key={index}
+                  target={item.target || '_self'}
                   onClick={(e) => {
                     if (item.requiresAuth) {
                       e.preventDefault();
@@ -213,6 +214,7 @@ const Header = () => {
               <Link
                 href={item.path}
                 key={index}
+                target={item.target || '_self'}
                 onClick={(e) => {
                   if (item.requiresAuth) {
                     e.preventDefault();
