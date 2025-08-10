@@ -28,6 +28,7 @@ export interface updateUser_I {
 
 export interface changePassword_I {
   email: string;
-  oldPassword: string;
+  oldPassword?: string;
   newPassword: string;
+  isAdmin?: boolean;
 }

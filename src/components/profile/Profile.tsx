@@ -25,6 +25,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import PasswordUpdateForm from '@/components/common/PasswordUpdateForm';
 
 // Type definitions
 interface ProfilePageProps {
@@ -53,26 +54,6 @@ const profileSchema = z.object({
   address: z.string().min(5, 'Address must be at least 5 characters'),
 });
 
-// Validation schema for password form
-const adminPasswordSchema = z.object({
-  newPassword: z.string().min(6, 'Password must be at least 6 characters'),
-});
-
-const userPasswordSchema = z
-  .object({
-    currentPassword: z
-      .string()
-      .min(6, 'Password must be at least 6 characters'),
-    newPassword: z.string().min(6, 'Password must be at least 6 characters'),
-    confirmPassword: z
-      .string()
-      .min(6, 'Password must be at least 6 characters'),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword'],
-  });
-
 const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -88,16 +69,6 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
       mobileNumber: '',
       address: '',
     },
-  });
-
-  // Password form setup
-  const passwordForm = useForm({
-    resolver: zodResolver(
-      isCreatingUser ? adminPasswordSchema : userPasswordSchema
-    ),
-    defaultValues: isCreatingUser
-      ? { newPassword: '' }
-      : { currentPassword: '', newPassword: '', confirmPassword: '' },
   });
 
   // Load user data on mount (if not creating user)
@@ -180,33 +151,6 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
       toast.error(error.response.data.message || 'Error uploading image');
     } finally {
       setImageLoading(false);
-    }
-  };
-
-  // Handle password submit
-  const handlePasswordSubmit = async (data: any) => {
-    try {
-      setIsLoading(true);
-      const response = await fetch('/api/user/password', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...data,
-          isCreatingUser,
-        }),
-      });
-
-      if (!response.ok) throw new Error('Failed to update password');
-
-      passwordForm.reset();
-      toast.success('Password updated successfully');
-    } catch (error: any) {
-      console.log(error);
-      toast.error(error.response.data.message || 'Error updating password');
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -386,80 +330,15 @@ const ProfilePage = ({ isCreatingUser }: ProfilePageProps) => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Form {...passwordForm}>
-              <form
-                onSubmit={passwordForm.handleSubmit(handlePasswordSubmit)}
-                className="space-y-4 max-w-md"
-              >
-                {!isCreatingUser && (
-                  <FormField
-                    control={passwordForm.control}
-                    name="currentPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Current Password</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="password"
-                            {...field}
-                            placeholder="Enter your current password"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
-                <FormField
-                  control={passwordForm.control}
-                  name="newPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>New Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          {...field}
-                          placeholder="Enter your new password"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {!isCreatingUser && (
-                  <FormField
-                    control={passwordForm.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Confirm Password</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="password"
-                            {...field}
-                            placeholder="Confirm your new password"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
-                <div className="pt-4">
-                  <Button
-                    type="submit"
-                    disabled={isLoading}
-                    className="text-white"
-                  >
-                    {isLoading && (
-                      <Loader2 className="mr-2 size-4 animate-spin" />
-                    )}
-                    Save Password
-                  </Button>
-                </div>
-              </form>
-            </Form>
+            {user && (
+              <PasswordUpdateForm
+                userEmail={user.email}
+                isAdmin={isCreatingUser}
+                onSuccess={() => {
+                  toast.success('Password updated successfully');
+                }}
+              />
+            )}
           </CardContent>
         </Card>
       </div>
