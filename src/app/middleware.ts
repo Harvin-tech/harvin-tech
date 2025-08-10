@@ -49,6 +49,7 @@ export async function middleware(request: NextRequest) {
         },
       });
     } catch (error) {
+      console.error('Middleware error:', error);
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
         { status: 401 }
@@ -63,12 +64,11 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
+     * Match all request paths including API routes, except for:
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
 };

@@ -47,8 +47,9 @@ export const updateUserSchema = z.object({
 
 export const changePasswordSchema = z.object({
   email: z.string().email(),
-  oldPassword: z.string().min(6),
+  oldPassword: z.string().min(6).optional(),
   newPassword: z.string().min(6),
+  isAdmin: z.boolean().optional().default(false),
 });
 
 export const getUserByToken = z.object({}).strict();

@@ -1,4 +1,5 @@
 // app/api/auth/login/route.ts
+import dbConnect from '@/backend/config/db.config';
 import { loginSchema } from '@/backend/schema/auth.schema';
 import { AuthService } from '@/backend/services/auth.service';
 import { sendResponse } from '@/backend/utils/response';
@@ -6,6 +7,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // Ensure database connection is established
+    await dbConnect();
+
     const body = await request.json();
     const validation = loginSchema.safeParse(body);
 
@@ -44,6 +48,8 @@ export async function POST(request: NextRequest) {
 
     return response;
   } catch (error: any) {
-    return sendResponse(error.message, false, null, 401);
+    console.error('Login error:', error);
+
+    return sendResponse(error.message || 'Login failed', false, null, 401);
   }
 }

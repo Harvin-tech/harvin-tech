@@ -93,7 +93,7 @@ export const UserService = {
   },
 
   changePassword: async (data: changePassword_I) => {
-    const { email, oldPassword, newPassword } = data;
+    const { email, oldPassword, newPassword, isAdmin = false } = data;
 
     // Find the user by email
     const user = await UserModel.findOne({ email });
@@ -102,22 +102,30 @@ export const UserService = {
       throw new Error('User not found');
     }
 
-    // Check if the old password matches
-    const isMatch = await BcryptHelper.comparePassword(
-      oldPassword,
-      user.password
-    );
+    // If it's not an admin update, verify old password
+    if (!isAdmin) {
+      if (!oldPassword) {
+        throw new Error('Old password is required for user password change');
+      }
+
+      // Check if the old password matches
+      const isMatch = await BcryptHelper.comparePassword(
+        oldPassword,
+        user.password
+      );
+
+      if (!isMatch) {
+        throw new Error('Old password is not correct');
+      }
+    }
 
     const isSamePassword = await BcryptHelper.comparePassword(
       newPassword,
       user.password
     );
 
-    if (!isMatch) {
-      throw new Error('old password is not correct');
-    }
     if (isSamePassword) {
-      throw new Error('New password should be different with old password');
+      throw new Error('New password should be different from old password');
     }
 
     // Hash the new password
