@@ -1,7 +1,7 @@
 export const TopChoiceData_C = [
   {
     title: 'Artificial Intelligence (AI)',
-    slug: 'artificial-intelligence',
+    slug: 'aiml',
     image:
       'https://harvinn-tech.s3.ap-south-1.amazonaws.com/media-gallery/ai.png',
     description: `<p>Artificial Intelligence (AI) is a rapidly advancing field of computer science focused on creating systems that can perform tasks typically requiring human intelligence.</p><p>These tasks include problem-solving, decision-making, learning, language processing, visual perception, and more. AI has applications across a wide range of industries, such as healthcare, finance, automotive, robotics, and entertainment.</p><p>This <strong>Intermediate AI Course</strong> is designed for students who already have some foundational knowledge of programming and algorithms. The course provides a deeper understanding of core AI concepts, methods, and tools, along with practical techniques that are used to implement AI in real-world applications.</p>`,
@@ -28,7 +28,7 @@ export const TopChoiceData_C = [
     title: 'Medical Coding ',
     image:
       'https://harvinn-tech.s3.ap-south-1.amazonaws.com/media-gallery/medical-coding.png',
-    slug: 'medical-coding',
+    slug: 'medicalcoding',
     description:
       '<p>Medical Coding is the process of translating medical diagnoses, procedures, services, and equipment into universal medical codes that are used by insurance companies, healthcare providers, and other organizations to manage healthcare records and facilitate billing and reimbursement. This course equips students with the necessary skills to accurately code medical diagnoses, treatments, and services, and to understand the intricacies of healthcare documentation.</p><p>With the growing need for healthcare data management, medical coding has become a key profession in the healthcare industry. Students will learn about the different coding systems (e.g., ICD-10, CPT, HCPCS), coding conventions, and the essential role of coders in ensuring accurate documentation, billing, and compliance with healthcare regulations.</p>',
   },

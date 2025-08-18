@@ -2,10 +2,19 @@ import { notFound } from 'next/navigation';
 import { nanoScienceCourses } from '@/constants/courses/nano-sceience';
 import { CourseViewer } from './CourseViewer';
 import { python } from '@/constants/courses/python';
+import { aiml } from '@/constants/courses/ai-ml';
+import { MedicalCoding } from '@/constants/courses/medical-coding';
+import { Cdm } from '@/constants/courses/cdm';
+import { Pharmacovogilance } from '@/constants/courses/pharmaco';
 
 const courses: any = {
   nanoscience: nanoScienceCourses,
   python: python,
+  aiml: aiml,
+  medicalcoding:MedicalCoding,
+  certifieddigitalmarketing:Cdm,
+  pharmacovigilance:Pharmacovogilance
+
 };
 
 export default function CoursePage({ params }: { params: { slug: string } }) {
