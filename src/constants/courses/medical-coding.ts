@@ -1,6 +1,6 @@
 const MedicalCoding = {
   course_name: 'Medical Coding',
-  slug: 'medical-coding',
+  slug: 'medicalcoding',
   pdfs: [
     // {
     //   pdf_name: 'PDF 1',

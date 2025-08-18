@@ -1,6 +1,6 @@
 const Cdm = {
   course_name: 'Certificate Digital Marketing',
-  slug: 'certified-digital-marketing',
+  slug: 'certifieddigitalmarketing',
   pdfs: [
     // {
     //   pdf_name: 'PDF 1',
