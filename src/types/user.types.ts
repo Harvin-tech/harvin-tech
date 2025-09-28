@@ -11,5 +11,5 @@ export interface getUser_I {
   address?: string;
   gender?: string;
   role?: string;
-  status?: string; // Change the type of status to string
+  status?: number; // Change the type of status to string
 }

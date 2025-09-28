@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/select';
 import { useForm } from 'react-hook-form';
 import { Badge } from '@/components/ui/badge';
-import { Pencil } from 'lucide-react';
+import { Loader2, Pencil } from 'lucide-react';
 import { nextApiClient } from '@/services/apiClient';
 import { getUser_I } from '@/types/user.types';
 import { debounce } from 'lodash';
@@ -57,7 +57,7 @@ const Users = () => {
       email: '',
       address: '',
       mobile: '',
-      status: 'active',
+      status: 1,
     },
   });
 
@@ -69,32 +69,35 @@ const Users = () => {
       email: user.email || '',
       address: user.address || '',
       mobile: user.mobile || '',
-      status: user.status || 'active',
+      status: user.status,
     });
     setIsEditDialogOpen(true);
   };
 
-  const fetchUsers = async (page: number, search: string = '') => {
-    try {
-      setLoading(true);
-      const { data } = await nextApiClient.get(`/api/private/users`, {
-        params: {
-          page,
-          limit: itemsPerPage,
-          search,
-        },
-      });
+  const fetchUsers = useCallback(
+    async (page: number, search: string = '') => {
+      try {
+        setLoading(true);
+        const { data } = await nextApiClient.get(`/api/private/users`, {
+          params: {
+            page,
+            limit: itemsPerPage,
+            search,
+          },
+        });
 
-      if (data.success) {
-        setUsers(data.data.users);
-        setTotalPages(Math.ceil(data.data.totalCount / itemsPerPage));
+        if (data.success) {
+          setUsers(data.data.users);
+          setTotalPages(Math.ceil(data.data.totalCount / itemsPerPage));
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [itemsPerPage, isEditDialogOpen] // dependencies
+  );
 
   // Debounced search function
   const debouncedSearch = React.useCallback(
@@ -120,6 +123,7 @@ const Users = () => {
   };
 
   const onSubmit = async (data: getUser_I) => {
+    setLoading(true);
     if (selectedUser) {
       try {
         const response = await nextApiClient.patch(
@@ -129,7 +133,7 @@ const Users = () => {
             lastName: data.lastName,
             email: data.email,
             address: data.address,
-            mobile: data.mobile,
+            mobile: data.mobile?.toString(),
             status: data.status,
           }
         );
@@ -142,10 +146,13 @@ const Users = () => {
             )
           );
           setIsEditDialogOpen(false);
+          setLoading(false);
           setSelectedUser(null);
         }
       } catch (error) {
         console.error('Error updating user:', error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -193,11 +200,10 @@ const Users = () => {
                   <TableCell>{user.mobile ?? '-'}</TableCell>
                   <TableCell>
                     <Badge
-                      variant={
-                        user.status === 'active' ? 'default' : 'secondary'
-                      }
+                      variant={user.status === 1 ? 'default' : 'destructive'}
+                      className="text-white"
                     >
-                      {user.status}
+                      {user.status === 1 ? 'Active' : 'Inactive'}
                     </Badge>
                   </TableCell>
                   <TableCell className="flex gap-2">
@@ -274,7 +280,7 @@ const Users = () => {
 
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-[400px] mt-10">
+        <DialogContent className="max-w-[400px] mt-10 max-h-[480px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit User Details</DialogTitle>
           </DialogHeader>
@@ -347,8 +353,8 @@ const Users = () => {
                   <FormItem>
                     <FormLabel>Status</FormLabel>
                     <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={String(field.value)} // convert number → string for the UI
+                      onValueChange={(val) => field.onChange(Number(val))} // convert string → number for RHF
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -356,8 +362,8 @@ const Users = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="active">Active</SelectItem>
-                        <SelectItem value="inactive">Inactive</SelectItem>
+                        <SelectItem value="1">Active</SelectItem>
+                        <SelectItem value="0">Inactive</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormItem>
@@ -371,8 +377,8 @@ const Users = () => {
                 >
                   Cancel
                 </Button>
-                <Button type="submit" className="text-white">
-                  Save changes
+                <Button type="submit" className="text-white" disabled={loading}>
+                  {loading ? 'Saving...' : 'Save changes'}
                 </Button>
               </DialogFooter>
             </form>

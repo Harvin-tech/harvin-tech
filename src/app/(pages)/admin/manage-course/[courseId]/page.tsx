@@ -53,8 +53,8 @@ const CourseIdPage = () => {
       name: '',
       email: '',
       address: '',
-      mobile: undefined,
-      status: 'active',
+      mobile: '',
+      status: 1,
       role: '',
     },
   });
@@ -242,8 +242,8 @@ const CourseIdPage = () => {
                   <FormItem>
                     <FormLabel>Status</FormLabel>
                     <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={String(field.value)} // convert number → string for the UI
+                      onValueChange={(val) => field.onChange(Number(val))} // convert string → number for RHF
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -251,8 +251,8 @@ const CourseIdPage = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="active">Active</SelectItem>
-                        <SelectItem value="inactive">Inactive</SelectItem>
+                        <SelectItem value="1">Active</SelectItem>
+                        <SelectItem value="0">Inactive</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormItem>
