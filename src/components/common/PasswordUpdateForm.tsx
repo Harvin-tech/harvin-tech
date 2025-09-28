@@ -18,7 +18,7 @@ export default function PasswordUpdateForm({
   isAdmin = false,
   onSuccess,
   onCancel,
-  className
+  className,
 }: PasswordUpdateFormProps) {
   const [formData, setFormData] = useState({
     oldPassword: '',
@@ -47,7 +47,7 @@ export default function PasswordUpdateForm({
       toast.error('Please enter new password');
       return;
     }
-    
+
     if (!formData.confirmPassword.trim()) {
       toast.error('Please enter confirm password');
       return;
@@ -75,14 +75,14 @@ export default function PasswordUpdateForm({
 
       if (response.data.success) {
         toast.success(response.data.message || 'Password Updated Successfully');
-        
+
         // Reset form
         setFormData({
           oldPassword: '',
           newPassword: '',
           confirmPassword: '',
         });
-        
+
         // Call success callback
         if (onSuccess) {
           onSuccess();
@@ -93,7 +93,8 @@ export default function PasswordUpdateForm({
     } catch (err: any) {
       console.log(err);
       const errorMessage =
-        err.response?.data?.message || 'An error occurred during password update';
+        err.response?.data?.message ||
+        'An error occurred during password update';
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -110,13 +111,18 @@ export default function PasswordUpdateForm({
   };
 
   return (
-    <div className={cn("flex flex-col items-center justify-center bg-background text-foreground max-w-md", className)}>
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center bg-background text-foreground max-w-md',
+        className
+      )}
+    >
       <div className="w-full">
         <form className="mt-6 space-y-6" onSubmit={handleSubmit} noValidate>
           {error && (
             <div className="text-destructive text-sm text-center">{error}</div>
           )}
-          
+
           <div className="rounded-md space-y-3">
             {/* Email Display */}
             <div className="relative">
