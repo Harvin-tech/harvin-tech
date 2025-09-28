@@ -47,7 +47,7 @@ const Header = () => {
       : []),
     {
       title: 'ExamPanel',
-      path: 'https://exampanel-final-1.onrender.com/',
+      path: 'https://www.exam.harvinntechnologies.com',
       target: '_blank',
     },
   ];

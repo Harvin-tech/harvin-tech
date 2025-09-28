@@ -1,6 +1,6 @@
 const aiml = {
-  course_name: 'Ai Ml',
-  slug: 'artificial-intelligence',
+  course_name: 'Artificial Intelligence and Machine Learning',
+  slug: 'aiml',
   pdfs: [
     // {
     //   pdf_name: 'PDF 1',
