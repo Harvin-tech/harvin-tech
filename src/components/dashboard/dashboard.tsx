@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserCourse } from '@/services';
@@ -14,10 +14,14 @@ import { toast } from 'sonner';
 import { StatCard } from '@/components/dashboard/components/StatsCard';
 import { LineChart } from '@/components/dashboard/components/LineChart';
 import { VideoCard } from '@/components/dashboard/components/VideoCard';
+import { nextApiClient } from '@/services/apiClient';
+import { Loader2 } from 'lucide-react';
 
 const Dashboard = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [userStatus, setUserStatus] = useState();
+  const [statusLoading, setStatusLoading] = useState<boolean>(true);
 
   // Get all required state in one selector
   const {
@@ -25,6 +29,25 @@ const Dashboard = () => {
     auth: { user, isAuthenticated, loading: authLoading },
   } = useSelector((state: any) => state);
   const userId = user?._id;
+  useEffect(() => {
+    try {
+      // console.log("leftsidebar",userId)
+      setStatusLoading(true);
+      const fetchUserData = async () => {
+        const userDataWithCourseId = await nextApiClient.get(
+          `/api/private/users/${userId}`
+        );
+        setUserStatus(userDataWithCourseId?.data?.data?._doc?.status);
+        // console.log("leftsidebar",userDataWithCourseId?.data?.data?._doc?.status)
+      };
+      setStatusLoading(false);
+      fetchUserData();
+    } catch (err) {
+      console.log('something went wrong', err);
+    } finally {
+      setStatusLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     // Handle authentication check inside useEffect
@@ -60,6 +83,14 @@ const Dashboard = () => {
     fetchCourses();
   }, [userId, dispatch, router]);
 
+  if (statusLoading || authLoading) {
+    return (
+      <div className="fixed inset-0 z-[999] flex items-center justify-center backdrop-blur-md">
+        <Loader2 className="size-10 text-black animate-spin" />
+      </div>
+    );
+  }
+
   // Show loading state when either auth or courses are loading
   if (authLoading || !isAuthenticated) {
     return (
@@ -92,46 +123,54 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="mt-2">
-          <h3 className="text-base md:text-lg font-semibold">
-            Continue Watching
-          </h3>
+        {Boolean(userStatus) ? (
+          <div className="mt-2">
+            <h3 className="text-base md:text-lg font-semibold">
+              Continue Watching
+            </h3>
 
-          {coursesLoading ? (
-            <div className="text-center text-gray-500">Loading courses...</div>
-          ) : !allCourses?.length ? (
-            <div className="text-center text-gray-500">
-              You have no courses available.
-            </div>
-          ) : (
-            <div>
-              <Swiper
-                slidesPerView="auto"
-                spaceBetween={10}
-                freeMode={true}
-                mousewheel={true}
-                modules={[FreeMode, Mousewheel]}
-                className="w-full h-auto mx-12"
-              >
-                {allCourses?.map((video: any) => (
-                  <SwiperSlide key={video.id} className="!w-auto mt-2">
-                    <div onClick={() => handleCourseClick(video)}>
-                      <VideoCard
-                        imageSrc="/harvinlogo.jpg"
-                        title={video.title}
-                        instructor={video.instructor}
-                        rating={video.rating}
-                        reviewsCount={video.reviewsCount}
-                        price={Number(video.price)}
-                        originalPrice={video.originalPrice || 0}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          )}
-        </div>
+            {coursesLoading ? (
+              <div className="text-center text-gray-500">
+                Loading courses...
+              </div>
+            ) : !allCourses?.length ? (
+              <div className="text-center text-gray-500">
+                You have no courses available.
+              </div>
+            ) : (
+              <div>
+                <Swiper
+                  slidesPerView="auto"
+                  spaceBetween={10}
+                  freeMode={true}
+                  mousewheel={true}
+                  modules={[FreeMode, Mousewheel]}
+                  className="w-full h-auto mx-12"
+                >
+                  {allCourses?.map((video: any) => (
+                    <SwiperSlide key={video.id} className="!w-auto mt-2">
+                      <div onClick={() => handleCourseClick(video)}>
+                        <VideoCard
+                          imageSrc="/harvinlogo.jpg"
+                          title={video.title}
+                          instructor={video.instructor}
+                          rating={video.rating}
+                          reviewsCount={video.reviewsCount}
+                          price={Number(video.price)}
+                          originalPrice={video.originalPrice || 0}
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="p-4 text-center text-gray-500">
+            No courses found. Please enroll in a course to get started.
+          </div>
+        )}
       </div>
     </div>
   );

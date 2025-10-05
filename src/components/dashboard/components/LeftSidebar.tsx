@@ -21,6 +21,7 @@ import { logout } from '@/redux/authSlice';
 import { GrCertificate } from 'react-icons/gr';
 import useProfile from '@/hooks/useProfile';
 import { courseMap } from '@/constants/courses/coursesMap';
+import { nextApiClient } from '@/services/apiClient';
 
 const LeftSidebar = () => {
   const pathname = usePathname();
@@ -30,8 +31,31 @@ const LeftSidebar = () => {
   const { user: currentUser } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
   const { userCourseId } = useProfile();
+  const [userStatus, setUserStatus] = useState();
+  const [statusLoading, setStatusLoading] = useState<boolean>(true);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
+
+  useEffect(() => {
+    try {
+      // console.log("leftsidebar",userId)
+      const userId = currentUser?._id;
+      setStatusLoading(true);
+      const fetchUserData = async () => {
+        const userDataWithCourseId = await nextApiClient.get(
+          `/api/private/users/${userId}`
+        );
+        setUserStatus(userDataWithCourseId?.data?.data?._doc?.status);
+        // console.log("leftsidebar",userDataWithCourseId?.data?.data?._doc?.status)
+      };
+      setStatusLoading(false);
+      fetchUserData();
+    } catch (err) {
+      console.log('something went wrong', err);
+    } finally {
+      setStatusLoading(false);
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -72,14 +96,17 @@ const LeftSidebar = () => {
     .filter(Boolean); // removes undefined values
 
   // Dynamically insert each course into the sidebar (after Python at index 3)
-  accessedCourses.forEach((courseName, idx) => {
-    studentSidebarItems.splice(3 + idx, 0, {
-      icon: <FaBookOpen />,
-      label: courseName.charAt(0).toUpperCase() + courseName.slice(1), // Capitalize label
-      href: `/dashboard/${courseName.toLowerCase()}`,
-      active: pathname === `/dashboard/${courseName.toLowerCase()}`,
-    });
-  });
+  {
+    userStatus &&
+      accessedCourses.forEach((courseName, idx) => {
+        studentSidebarItems.splice(3 + idx, 0, {
+          icon: <FaBookOpen />,
+          label: courseName.charAt(0).toUpperCase() + courseName.slice(1), // Capitalize label
+          href: `/dashboard/${courseName.toLowerCase()}`,
+          active: pathname === `/dashboard/${courseName.toLowerCase()}`,
+        });
+      });
+  }
 
   // Always add Certificate at the end
   studentSidebarItems.push({
