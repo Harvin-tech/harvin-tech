@@ -11,10 +11,9 @@ const courses: any = {
   nanoscience: nanoScienceCourses,
   python: python,
   aiml: aiml,
-  medicalcoding:MedicalCoding,
-  certifieddigitalmarketing:Cdm,
-  pharmacovigilance:Pharmacovogilance
-
+  medicalcoding: MedicalCoding,
+  certifieddigitalmarketing: Cdm,
+  pharmacovigilance: Pharmacovogilance,
 };
 
 export default function CoursePage({ params }: { params: { slug: string } }) {
