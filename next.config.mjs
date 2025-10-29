@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'harvinn-tech.s3.ap-south-1.amazonaws.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn3.gstatic.com',
+      },
     ],
   },
 };
