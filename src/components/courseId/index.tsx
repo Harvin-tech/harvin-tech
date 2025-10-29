@@ -76,6 +76,24 @@ const CourseDetails = () => {
         },
       ],
     },
+    {
+  title: 'Advance Training',
+  price: '₹ 24,999',
+  highlight: 'Best for professionals seeking advanced upskilling',
+  features: [
+    { text: '2 Courses', included: true },
+    { text: '5 Certifications and 1 Letter of Recommendation (LOR)', included: true },
+    { text: '1 Minor Project and 1 Major Project', included: true },
+    { text: 'Co-branded Certifications', included: true },
+    { text: 'Industry Working Mentors', included: true },
+    { text: '50+ Hours of Learning Content', included: true },
+    { text: 'Classes Available in App', included: true },
+    { text: 'Lifetime LMS Access', included: true },
+    { text: 'Job Assistance', included: true },
+    { text: 'Free Complimentary Course', included: true },
+  ],
+},
+
   ];
 
   if (!course && !loading) return <NotFound />;
@@ -254,31 +272,36 @@ const CourseDetails = () => {
             foundation for your future. We will add the golden bricks for you
             with certificates from Partnered Companies.
           </p>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid grid-cols-1 gap-2">
+          <div className="grid grid-cols-2  gap-4">
               <div className="transform hover:scale-[1.02] transition-transform">
                 <img
-                  src="/images/certificate/exce.jpeg"
+                  src="/images/certificate/exce-new.jpg"
                   alt="Certificate Sample 1"
                   className="w-full rounded-xl shadow-lg"
                 />
               </div>
-              <div className="transform hover:scale-[1.02] transition-transform">
-                <img
-                  src="/images/certificate/comp.jpeg"
-                  alt="Certificate Sample 3"
-                  className="w-full rounded-xl shadow-lg"
-                />
-              </div>
-            </div>
             <div className="transform hover:scale-[1.02] transition-transform">
               <img
-                src="/images/certificate/intern.jpeg"
+                src="/images/certificate/intern-new.jpg"
                 alt="Certificate Sample 2"
                 className="w-full rounded-xl shadow-lg"
               />
             </div>
+              <div className="transform hover:scale-[1.02] transition-transform">
+                <img
+                  src="/images/certificate/comp-new.jpg"
+                  alt="Certificate Sample 3"
+                  className="w-full rounded-xl shadow-lg"
+                />
+              </div>
+            <div className="transform hover:scale-[1.02] transition-transform">
+              <img
+                src="/images/certificate/project.jpg"
+                alt="Certificate Sample 2"
+                className="w-full rounded-xl shadow-lg"
+              />
           </div>
+            </div>
         </div>
       </div>
 
@@ -292,13 +315,14 @@ const CourseDetails = () => {
             Select the plan that best fits your learning style and goals. Both
             paths lead to success, but choose the one that matches your pace.
           </p>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             {pricingPlans.map((plan, index) => (
               <Card
                 key={index}
                 className="border-2 hover:border-primary transition-all transform hover:-translate-y-1 hover:shadow-xl"
               >
-                <CardContent className="p-8">
+                <CardContent className="p-8 flex flex-col justify-between h-full">
+                  <div>
                   <div className="font-medium text-primary mb-2">
                     {plan.highlight}
                   </div>
@@ -316,6 +340,8 @@ const CourseDetails = () => {
                       </li>
                     ))}
                   </ul>
+
+                  </div>
                   <Link href={'/contact'}>
                     <Button className="w-full text-white text-md">
                       Enroll Now
