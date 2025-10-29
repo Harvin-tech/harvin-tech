@@ -101,12 +101,22 @@ const Dashboard = () => {
   }
 
   const handleCourseClick = (courseVideo: any) => {
-    // console.log(courseVideo , 'courseVideo');
-    if (courseVideo?.title?.split(' ')[0].includes('Nanoscience')) {
-      router.push(`/dashboard/nanoscience`);
-    } else {
-      router.push(`/dashboard/python`);
-    }
+    console.log(courseVideo , 'courseVideo');
+ const courseRoutes = {
+  Nanoscience: '/dashboard/nanoscience',
+  Artificial: '/dashboard/aiml',
+  Python:'/dashboard/python',
+  Pharmacovigilance:'/dashboard/pharmacovigilance',
+  Medical:'/dashboard/medicalcoding',
+  certifieddigitalmarketing:'/dashboard/certifieddigitalmarketing'
+};
+
+const firstWord = courseVideo?.title?.split(' ')[0];
+const targetRoute = Object.entries(courseRoutes).find(([key]) =>
+  firstWord?.includes(key)
+)?.[1];
+
+if (targetRoute) router.push(targetRoute);
   };
 
   return (
