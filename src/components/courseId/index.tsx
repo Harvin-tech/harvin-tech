@@ -54,7 +54,7 @@ const CourseDetails = () => {
       features: [
         { text: 'Certificate for Course Completion', included: true },
         { text: '1 Minor and 1 Major project', included: true },
-        { text: '25+ hours of Video Content Access', included: true },
+        { text: '40+ hours of Video Content Access', included: true },
         { text: '6 Months LMS Access', included: true },
         { text: 'Up to 4 hours of mentor assistance', included: true },
         { text: 'Co - Branded Course Certificate', included: false },
@@ -104,7 +104,7 @@ const CourseDetails = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-5 h-5" />
-                <span>25+ Hours</span>
+                <span>40+ Hours</span>
               </div>
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5" />
@@ -216,7 +216,7 @@ const CourseDetails = () => {
               </div>
               <h3 className="font-semibold text-lg mb-2">Video Content</h3>
               <p className="text-gray-600">
-                25+ hours of high-quality video lessons with practical examples
+                40+ hours of high-quality video lessons with practical examples
               </p>
             </CardContent>
           </Card>
