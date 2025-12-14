@@ -1,6 +1,6 @@
 const Cdm = {
-  course_name: 'Certificate Digital Marketing',
-  slug: 'certifieddigitalmarketing',
+  course_name: 'Clinical Data Management',
+  slug: 'clinicaldatamanagement',
   pdfs: [
     // {
     //   pdf_name: 'PDF 1',
