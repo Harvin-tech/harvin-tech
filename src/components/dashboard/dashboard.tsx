@@ -108,7 +108,12 @@ const Dashboard = () => {
   Python:'/dashboard/python',
   Pharmacovigilance:'/dashboard/pharmacovigilance',
   Medical:'/dashboard/medicalcoding',
-  certifieddigitalmarketing:'/dashboard/certifieddigitalmarketing'
+  clinicaldatamanagement:'/dashboard/clinicaldatamanagement',
+  clinicaldatamanagementb1:'/dashboard/clinicaldatamanagementb1',
+  Medicalcodingb3:'/dashboard/medicalcodingb3',
+  Pharmacovigilanceb2:'/dashboard/pharmacovigilanceb2',
+  Generative:'/dashboard/generativeai',
+  Pharmacovigilanceb3:'/dashboard/pharmacovigilanceb3'
 };
 
 const firstWord = courseVideo?.title?.split(' ')[0];
